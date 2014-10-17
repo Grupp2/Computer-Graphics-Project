@@ -193,6 +193,58 @@ void drawQuad()
 	}
 }
 
+void drawQuad_XZ()
+{
+	for (int b = arr[0][2]; b < arr[2][2]; b++)
+	{
+		for (int i = arr[0][0]; i < arr[1][0]; i++)
+		{
+			glColor3f(1, 0, 0);
+
+			glBindTexture(GL_TEXTURE_2D, texture_brickwall);
+			glBegin(GL_QUADS);
+
+			glTexCoord2f(0, 0);
+			glVertex3f(i, b, 0);
+			glTexCoord2f(1, 0);
+			glVertex3f(i + 1, b, 0);
+
+			glTexCoord2f(1, 1);
+			glVertex3f(i + 1, b + 1, 0);
+			glTexCoord2f(0, 1);
+			glVertex3f(i, b + 1, 0);
+
+			glEnd();
+		}
+	}
+}
+
+void drawQuad_YZ()
+{
+	for (int b = arr[0][2]; b < arr[2][2]; b++)
+	{
+		for (int i = arr[0][1]; i < arr[1][1]; i++)
+		{
+			glColor3f(1, 0, 0);
+
+			glBindTexture(GL_TEXTURE_2D, texture_brickwall);
+			glBegin(GL_QUADS);
+
+			glTexCoord2f(0, 0);
+			glVertex3f(i, b, 0);
+			glTexCoord2f(1, 0);
+			glVertex3f(i + 1, b, 0);
+
+			glTexCoord2f(1, 1);
+			glVertex3f(i + 1, b + 1, 0);
+			glTexCoord2f(0, 1);
+			glVertex3f(i, b + 1, 0);
+
+			glEnd();
+		}
+	}
+}
+
 
 void render() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
