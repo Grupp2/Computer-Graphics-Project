@@ -1,2 +1,3 @@
-Compu
+Computer-Graphics-Project
 =====
+Wew
