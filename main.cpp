@@ -17,8 +17,8 @@
 void drawQuad();
 
 // The position of the origin of the scene:
-float x_pos = 0.0;
-float y_pos = 5.0;
+float x_pos = -5.0;
+float y_pos = -5.0;
 float z_pos = -30;
 
 float theta = 0.0;
