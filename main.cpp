@@ -13,10 +13,13 @@
 #include "imagefile.h"
 #include "exceptioninfo.h"
 
+//Func def
+void drawQuad();
+
 // The position of the origin of the scene:
 float x_pos = 0.0;
-float y_pos = 0.0;
-float z_pos = -6.5;
+float y_pos = 5.0;
+float z_pos = -30;
 
 float theta = 0.0;
 float phi = 0.0;
@@ -50,6 +53,8 @@ int indices[12][3] = {
 		{ 0, 4, 7 }, { 0, 3, 7 },
 		{ 2, 5, 6 }, { 1, 2, 5 }
 };
+
+GLuint texture_brickwall;
 
 GLfloat colors[3][3] = { { 1.0, 0.0, 0.0 },
 { 0.0, 1.0, 0.0 },
@@ -138,12 +143,40 @@ void reshape(int width, int height) {
 	glViewport(0, 0, (GLsizei)width, (GLsizei)height);
 }
 
+float arr[4][3] = {
+			{0, 0, 0}, {10, 0, 0}, {0, 10, 0}, {10, 10, 0}
+	};
+
+void drawQuad()
+{
+	for (int b = arr[0][1]; b < arr[2][1]; b++)
+	{
+		for (int i = arr[0][0]; i < arr[1][0]; i++)
+		{
+			glColor3f(1, 0, 0);
+
+			glBegin(GL_QUADS);
+
+			glVertex3f(i, 0, 0);
+			glVertex3f(i + 1, 0, 0);
+
+			glVertex3f(i + 1, b + 1, 0);
+			glVertex3f(i, b + 1, 0);
+
+			glEnd();
+		}
+	}
+}
+
+
 void render() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glLoadIdentity();
 
 	glTranslatef(x_pos, y_pos, z_pos);
+
+	drawQuad();
 
 	glutSwapBuffers();
 }
@@ -257,6 +290,8 @@ void init(void) {
 	glClearColor(0.0, 0.0, 0.0, 0.0);
 }
 
+
+
 void getimagefromfile(const char *src, GLuint *texname)
 {
 	// Step 1: Create an instance of class ImageFile:
@@ -294,7 +329,7 @@ int main(int argc, char** argv) {
 	glutInitWindowSize(w, h);
 	glutInitWindowPosition(100, 100);
 	glutCreateWindow("Computer Graphics, Project");
-
+	//getimagefromfile("floor.tif", &texture_brickwall);
 	init();
 
 	glutMainLoop();
