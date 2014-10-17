@@ -10,6 +10,8 @@
 #include <string.h>
 #include <stdarg.h>
 #include <GL/glut.h>
+#include "imagefile.h"
+#include "exceptioninfo.h"
 
 // The position of the origin of the scene:
 float x_pos = 0.0;
@@ -232,10 +234,38 @@ void init(void) {
 	glutKeyboardFunc(buttons);
 	glutSpecialFunc(special_buttons);
 	glutMotionFunc(mouse_motion);
-
 	glClearColor(0.0, 0.0, 0.0, 0.0);
+}
 
-
+void getimagefromfile(const char *src, GLuint *texname)
+{
+	// Step 1: Create an instance of class ImageFile:
+	ImageFile* ifile;
+	try
+	{
+		ifile = new ImageFile (src, 0);
+	} catch (ExceptionInfo ei)
+	{
+		throw ei;
+	}
+	// Step 2: How many bits per pixel?
+	// If 24: Image without alpha channel, i.e. RGB image.
+	// If 32: Image with alpha channel, i.e. RGBA image.
+	GLenum img_type = GL_RGBA;
+	if (ifile->getBPP() == 24)
+	img_type = GL_RGB;
+	// Step 3: Create and bind a texture object
+	glGenTextures (1, texname);
+	glBindTexture (GL_TEXTURE_2D, *texname);
+	// Step 4: Set texture parameters (wrapping etc.)
+	glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	// Step 5: Assign the data from the image file to the texture object:
+	glTexImage2D (GL_TEXTURE_2D, 0, 3, ifile->getWidth(),
+			ifile->getHeight(), 0, GL_RGB, GL_UNSIGNED_BYTE, ifile->getData());
+    glTexEnvf (GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+	// Step 6: Unbind the texture object.
+	glBindTexture (GL_TEXTURE_2D, 0);
 }
 
 int main(int argc, char** argv) {
