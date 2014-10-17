@@ -11,16 +11,6 @@
 #include <stdarg.h>
 #include <GL/glut.h>
 
-/*
-// Include GLM core features
-#include "Labb_2_parametric_Curves_Hermite\Labb2\glm\glm\vec3.hpp"
-#include "Labb_2_parametric_Curves_Hermite\Labb2\glm\glm\vec4.hpp"
-#include "Labb_2_parametric_Curves_Hermite\Labb2\glm\glm\mat4x4.hpp"
-
-// Include GLM extensions
-#include "Labb_2_parametric_Curves_Hermite\Labb2\glm\glm\gtc\matrix_transform.hpp"
-*/
-
 // The position of the origin of the scene:
 float x_pos = 0.0;
 float y_pos = 0.0;
@@ -42,35 +32,6 @@ int h = 600;
 GLfloat colors[3][3] = { { 1.0, 0.0, 0.0 },
 { 0.0, 1.0, 0.0 },
 { 1.0, 1.0, 0.0 } };
-
-// Positions of vertices for the coordinate system:
-float coords[6][3] = { { -2.0, 0.0, 0.0 },
-{ 2.0, 0.0, 0.0 },
-{ 0.0, -2.0, 0.0 },
-{ 0.0, 2.0, 0.0 },
-{ 0.0, 0.0, -2.0 },
-{ 0.0, 0.0, 2.0 } };
-
-GLfloat ctrl_point_pos[4][3] = { { -2.0, 0.0, 0.0 },
-{ -1.0, 0.0, 0.0 },
-{ 1.0, 0.0, 0.0 },
-{ 2.0, 0.0, 0.0 } };
-
-enum ctrl_points { P0, P1, P2, P3 };
-
-GLfloat ctrlpoints[4][3] = {
-		{ -4.0, -4.0, 0.0 },
-		{ -2.0, 4.0, 0.0 },
-		{ 2.0, -4.0, 0.0 },
-		{ 4.0, 4.0, 0.0 }
-};
-
-GLfloat dp_points[2][3] = {
-		{ 0.0, 0.0, 0.0 },
-		{ 0.0, 0.0, 0.0 }
-};
-
-int ctrlp = P0;
 
 float ctrl_delta = 0.01;
 
@@ -140,50 +101,6 @@ void draw_string(float x, float y, char *string)
 	}
 }
 
-void render_info()
-{
-	float green[] = { 0.0, 1.0, 0.0 };
-	float white[] = { 1.0, 1.0, 1.0 };
-
-	float *p0_col = white;
-	float *p1_col = white;
-	float *p2_col = white;
-	float *p3_col = white;
-
-	if (ctrlp == P0)
-		p0_col = green;
-	else if (ctrlp == P1)
-		p1_col = green;
-	else if (ctrlp == P2)
-		p2_col = green;
-	else if (ctrlp == P3)
-		p3_col = green;
-
-	glDisable(GL_LIGHTING);
-	setfont("8x13", 20);
-	setOrthographicProjection();
-	glPushMatrix();
-	glLoadIdentity();
-
-	glColor3fv(white);
-	draw_string(30, 20, "Control Points");
-	sprintf(buf, "P0:   %.2f:%.2f:%.2f", ctrl_point_pos[0][0], ctrl_point_pos[0][1], ctrl_point_pos[0][2]);
-	glColor3fv(p0_col);
-	draw_string(30, 40, buf);
-	sprintf(buf, "P1:   %.2f:%.2f:%.2f", ctrl_point_pos[1][0], ctrl_point_pos[1][1], ctrl_point_pos[1][2]);
-	glColor3fv(p1_col);
-	draw_string(30, 60, buf);
-	sprintf(buf, "P2:   %.2f:%.2f:%.2f", ctrl_point_pos[2][0], ctrl_point_pos[2][1], ctrl_point_pos[2][2]);
-	glColor3fv(p2_col);
-	draw_string(30, 80, buf);
-	sprintf(buf, "P3:   %.2f:%.2f:%.2f", ctrl_point_pos[3][0], ctrl_point_pos[3][1], ctrl_point_pos[3][2]);
-	glColor3fv(p3_col);
-	draw_string(30, 100, buf);
-
-	glPopMatrix();
-	resetPerspectiveProjection();
-}
-
 void do_idle()
 {
 	glutPostRedisplay();
@@ -216,27 +133,26 @@ void buttons(unsigned char key, int x, int y) {
 		break;
 	case 'x':
 		// decrease x-component of active control point
-		(ctrlpoints[ctrlp][0]) -= 0.1;
 		break;
 	case 'X':
 		// increase x-component of active control point
-		(ctrlpoints[ctrlp][0]) += 0.1;
+		
 		break;
 	case 'y':
 		// decrease y-component of active control point
-		(ctrlpoints[ctrlp][1]) -= 0.1;
+		
 		break;
 	case 'Y':
 		// increase y-component of active control point
-		(ctrlpoints[ctrlp][1]) += 0.1;
+		
 		break;
 	case 'z':
 		// decrease z-component of active control point
-		(ctrlpoints[ctrlp][2]) -= 0.1;
+		
 		break;
 	case 'Z':
 		// increase z-component of active control point
-		(ctrlpoints[ctrlp][2]) += 0.1;
+		
 		break;
 	default:
 		// do nothing...
@@ -296,16 +212,12 @@ void mouse_motion(int x, int y) {
 void ctrl_point_menu(int value) {
 	switch (value) {
 	case 'a':
-		ctrlp = P0;
 		break;
 	case 'b':
-		ctrlp = P1;
 		break;
 	case 'c':
-		ctrlp = P2;
 		break;
 	case 'd':
-		ctrlp = P3;
 		break;
 	default:
 		// do nothing...
