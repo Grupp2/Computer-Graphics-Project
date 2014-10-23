@@ -165,7 +165,7 @@ float arr[4][3] = {
 			{0, 0, 0}, {10, 0, 0}, {0, 10, 0}, {10, 10, 0}
 	};
 
-void drawQuad() {
+void drawQuad_XY() {
 	for (int b = arr[0][1]; b < arr[2][1]; b++)	{
 		for (int i = arr[0][0]; i < arr[1][0]; i++) {
 			glColor3f(1, 0, 0);
@@ -242,7 +242,7 @@ void render() {
 
 	glTranslatef(x_pos, y_pos, z_pos);
 
-	drawQuad();
+	drawQuad_XY();
 
 	glutSwapBuffers();
 }
