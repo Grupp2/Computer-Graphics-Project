@@ -210,21 +210,21 @@ void drawQuad_XZ(float arr[][3], GLuint texture) {
 
 void drawQuad_YZ(float arr[][3], GLuint texture) {
 	for (int b = arr[0][2]; b < arr[2][2]; b++) {
-		for (int i = arr[0][1]; i < arr[1][1]; i++)	{
+		for (int i = arr[0][0]; i < arr[1][0]; i++)	{
 			glColor3f(1, 0, 0);
 
 			glBindTexture(GL_TEXTURE_2D, texture);
 			glBegin(GL_QUADS);
 
 			glTexCoord2f(0, 0);
-			glVertex3f(i, b, 0);
+			glVertex3f(i, arr[0][1], b);
 			glTexCoord2f(1, 0);
-			glVertex3f(i + 1, b, 0);
+			glVertex3f(i + 1, arr[1][1], b);
 
 			glTexCoord2f(1, 1);
-			glVertex3f(i + 1, b + 1, 0);
+			glVertex3f(i + 1, arr[3][1], b + 1);
 			glTexCoord2f(0, 1);
-			glVertex3f(i, b + 1, 0);
+			glVertex3f(i, arr[2][1], b + 1);
 
 			glEnd();
 		}
