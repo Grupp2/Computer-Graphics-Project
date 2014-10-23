@@ -334,16 +334,16 @@ void buttons(unsigned char key, int x, int y) {
 }
 
 void special_buttons(int key, int xx, int yy) {
-	float fraction = 0.1f;
+	float fraction = 0.5f;
 
 		switch (key) {
 			case GLUT_KEY_LEFT :
-				angle -= 0.01f;
+				angle -= 0.05f;
 				lx = sin(angle);
 				lz = -cos(angle);
 				break;
 			case GLUT_KEY_RIGHT :
-				angle += 0.01f;
+				angle += 0.05f;
 				lx = sin(angle);
 				lz = -cos(angle);
 				break;
