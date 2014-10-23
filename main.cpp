@@ -240,19 +240,34 @@ void drawCube() {
 			{ 0, 0, 0 }, { 10, 0, 0 }, { 0, 10, 0 }, { 10, 10, 0 }
 	};
 	glPushMatrix();
-		glTranslatef(0.0, 0.0, 10.0);
-		drawQuad_XY(arr, texture_brickwall);
-	//glPopMatrix();
-	//glPushMatrix();
-		glRotatef(90, 0.0, 1.0, 0.0);
-		drawQuad_XY(arr, texture_brickwall);
-	//glPopMatrix();
-	//glPushMatrix();
-		glRotatef(90, 1.0, 0.0, 0.0);
-		//glTranslatef(0.0, 0.0, 0.0);
-		drawQuad_XY(arr, texture_brickwall);
+	glPushMatrix(); // Back
+	glTranslatef(0.0, 0.0, -10.0);
+	drawQuad_XY(arr, texture_brickwall);
 	glPopMatrix();
-	//glPushMatrix();
+	glPushMatrix(); // front
+	glTranslatef(0.0, 0.0, 0.0);
+	drawQuad_XY(arr, texture_brickwall);
+	glPopMatrix();
+	glPushMatrix(); // left
+	glRotatef(90, 0.0, 1.0, 0.0);
+	drawQuad_XY(arr, texture_brickwall);
+	glPopMatrix();
+	glPushMatrix(); // right
+	glRotatef(90, 0.0, 1.0, 0.0);
+	glTranslatef(0.0, 0.0, 10.0);
+	drawQuad_XY(arr, texture_brickwall);
+	glPopMatrix();
+	glPushMatrix(); // roof
+	glRotatef(270, 1.0, 0.0, 0.0);
+	//glTranslatef(0.0, 0.0, 0.0);
+	drawQuad_XY(arr, texture_brickwall);
+	glPopMatrix();
+	glPushMatrix(); // floor
+	glRotatef(270, 1.0, 0.0, 0.0);
+	glTranslatef(0.0, 0.0, 10.0);
+	drawQuad_XY(arr, texture_brickwall);
+	glPopMatrix();
+	glPopMatrix();
 }
 
 
