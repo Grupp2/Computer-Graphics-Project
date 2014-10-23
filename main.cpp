@@ -76,9 +76,11 @@ int indices[12][3] = {
 
 GLuint texture_brickwall;
 
-GLfloat colors[3][3] = { { 1.0, 0.0, 0.0 },
-{ 0.0, 1.0, 0.0 },
-{ 1.0, 1.0, 0.0 } };
+GLfloat colors[3][3] = { 
+	{ 1.0, 0.0, 0.0 },
+	{ 0.0, 1.0, 0.0 },
+	{ 1.0, 1.0, 0.0 } 
+};
 
 float ctrl_delta = 0.01;
 
@@ -113,8 +115,7 @@ void resetPerspectiveProjection() {
 	glMatrixMode(GL_MODELVIEW);
 }
 
-void setfont(char* name, int size)
-{
+void setfont(char* name, int size) {
 	font_style = GLUT_BITMAP_HELVETICA_10;
 	if (strcmp(name, "helvetica") == 0) {
 		if (size == 12)
@@ -135,21 +136,18 @@ void setfont(char* name, int size)
 	}
 }
 
-void draw_string(float x, float y, char *string)
-{
+void draw_string(float x, float y, char *string) {
 	//char *s;
 	int i = 0;
 
 	glRasterPos2f(x, y);
-	while (string[i] != '\0')
-	{
+	while (string[i] != '\0') {
 		glutBitmapCharacter(font_style, string[i]);
 		i++;
 	}
 }
 
-void do_idle()
-{
+void do_idle() {
 	glutPostRedisplay();
 }
 
@@ -167,12 +165,9 @@ float arr[4][3] = {
 			{0, 0, 0}, {10, 0, 0}, {0, 10, 0}, {10, 10, 0}
 	};
 
-void drawQuad()
-{
-	for (int b = arr[0][1]; b < arr[2][1]; b++)
-	{
-		for (int i = arr[0][0]; i < arr[1][0]; i++)
-		{
+void drawQuad() {
+	for (int b = arr[0][1]; b < arr[2][1]; b++)	{
+		for (int i = arr[0][0]; i < arr[1][0]; i++) {
 			glColor3f(1, 0, 0);
 
 			glBindTexture(GL_TEXTURE_2D, texture_brickwall);
@@ -193,12 +188,9 @@ void drawQuad()
 	}
 }
 
-void drawQuad_XZ()
-{
-	for (int b = arr[0][2]; b < arr[2][2]; b++)
-	{
-		for (int i = arr[0][0]; i < arr[1][0]; i++)
-		{
+void drawQuad_XZ() {
+	for (int b = arr[0][2]; b < arr[2][2]; b++) {
+		for (int i = arr[0][0]; i < arr[1][0]; i++) {
 			glColor3f(1, 0, 0);
 
 			glBindTexture(GL_TEXTURE_2D, texture_brickwall);
@@ -219,12 +211,9 @@ void drawQuad_XZ()
 	}
 }
 
-void drawQuad_YZ()
-{
-	for (int b = arr[0][2]; b < arr[2][2]; b++)
-	{
-		for (int i = arr[0][1]; i < arr[1][1]; i++)
-		{
+void drawQuad_YZ() {
+	for (int b = arr[0][2]; b < arr[2][2]; b++) {
+		for (int i = arr[0][1]; i < arr[1][1]; i++)	{
 			glColor3f(1, 0, 0);
 
 			glBindTexture(GL_TEXTURE_2D, texture_brickwall);
@@ -369,15 +358,12 @@ void init(void) {
 
 
 
-void getimagefromfile(const char *src, GLuint *texname)
-{
+void getimagefromfile(const char *src, GLuint *texname) {
 	// Step 1: Create an instance of class ImageFile:
 	ImageFile* ifile;
-	try
-	{
+	try {
 		ifile = new ImageFile (src, 0);
-	} catch (ExceptionInfo ei)
-	{
+	} catch (ExceptionInfo ei) {
 		throw ei;
 	}
 	// Step 2: How many bits per pixel?
