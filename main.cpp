@@ -13,9 +13,6 @@
 #include "imagefile.h"
 #include "exceptioninfo.h"
 
-//Func def
-void drawQuad(float *arr, GLuint texture);
-
 // The position of the origin of the scene:
 float x_pos = -5.0;
 float y_pos = -5.0;
