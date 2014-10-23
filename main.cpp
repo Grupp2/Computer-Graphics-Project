@@ -237,36 +237,41 @@ void drawQuad_YZ(float arr[][3], GLuint texture) {
 void drawCube() {
 
 	float arr[4][3] = {
-			{ 0, 0, 0 }, { 10, 0, 0 }, { 0, 10, 0 }, { 10, 10, 0 }
+			{ 0, 0, 0 }, { 20, 0, 0 }, { 0, 10, 0 }, { 20, 10, 0 }
 	};
 	glPushMatrix();
-	glPushMatrix(); // Back
-	glTranslatef(0.0, 0.0, -10.0);
-	drawQuad_XY(arr, texture_brickwall);
-	glPopMatrix();
-	glPushMatrix(); // front
-	glTranslatef(0.0, 0.0, 0.0);
-	drawQuad_XY(arr, texture_brickwall);
-	glPopMatrix();
-	glPushMatrix(); // left
-	glRotatef(90, 0.0, 1.0, 0.0);
-	drawQuad_XY(arr, texture_brickwall);
-	glPopMatrix();
-	glPushMatrix(); // right
-	glRotatef(90, 0.0, 1.0, 0.0);
-	glTranslatef(0.0, 0.0, 10.0);
-	drawQuad_XY(arr, texture_brickwall);
-	glPopMatrix();
-	glPushMatrix(); // roof
-	glRotatef(270, 1.0, 0.0, 0.0);
-	//glTranslatef(0.0, 0.0, 0.0);
-	drawQuad_XY(arr, texture_brickwall);
-	glPopMatrix();
-	glPushMatrix(); // floor
-	glRotatef(270, 1.0, 0.0, 0.0);
-	glTranslatef(0.0, 0.0, 10.0);
-	drawQuad_XY(arr, texture_brickwall);
-	glPopMatrix();
+		glPushMatrix(); // Back
+			glTranslatef(0.0, 0.0, -arr[1][0]);
+			drawQuad_XY(arr, texture_brickwall);
+		glPopMatrix();
+
+		glPushMatrix(); // front
+			glTranslatef(0.0, 0.0, 0.0);
+			drawQuad_XY(arr, texture_brickwall);
+		glPopMatrix();
+
+		glPushMatrix(); // left
+			glRotatef(90, 0.0, 1.0, 0.0);
+			drawQuad_XY(arr, texture_brickwall);
+		glPopMatrix();
+
+		glPushMatrix(); // right
+			glRotatef(90, 0.0, 1.0, 0.0);
+			glTranslatef(0.0, 0.0, arr[1][0]);
+			drawQuad_XY(arr, texture_brickwall);
+		glPopMatrix();
+
+		glPushMatrix(); // roof
+			glRotatef(270, 1.0, 0.0, 0.0);
+			drawQuad_XY(arr, texture_brickwall);
+		glPopMatrix();
+
+		glPushMatrix(); // floor
+			glRotatef(270, 1.0, 0.0, 0.0);
+			glTranslatef(0.0, 0.0, arr[1][0]);
+			drawQuad_XY(arr, texture_brickwall);
+		glPopMatrix();
+
 	glPopMatrix();
 }
 
@@ -281,7 +286,7 @@ void render() {
 				0.0f, 1.0f,  0.0f);
 
 	glTranslatef(-2, -5, -20);
-	glRotatef(30, 0, 1, 0);
+	//glRotatef(30, 0, 1, 0);
 
 	drawCube();
 	/*
