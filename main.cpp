@@ -159,6 +159,9 @@ void reshape(int width, int height) {
 }
 
 
+
+
+
 void drawQuad_XY(float arr[][3], GLuint texture) {
 	for (int b = arr[0][1]; b < arr[2][1]; b++)	{
 		for (int i = arr[0][0]; i < arr[1][0]; i++) {
@@ -228,6 +231,27 @@ void drawQuad_YZ(float arr[][3], GLuint texture) {
 	}
 }
 
+void drawCube() {
+
+	float arr[4][3] = {
+			{ 0, 0, 0 }, { 10, 0, 0 }, { 0, 10, 0 }, { 10, 10, 0 }
+	};
+	glPushMatrix();
+		glTranslatef(0.0, 0.0, 10.0);
+		drawQuad_XY(arr, texture_brickwall);
+	//glPopMatrix();
+	//glPushMatrix();
+		glRotatef(90, 0.0, 1.0, 0.0);
+		drawQuad_XY(arr, texture_brickwall);
+	//glPopMatrix();
+	//glPushMatrix();
+		glRotatef(90, 1.0, 0.0, 0.0);
+		//glTranslatef(0.0, 0.0, 0.0);
+		drawQuad_XY(arr, texture_brickwall);
+	glPopMatrix();
+	//glPushMatrix();
+}
+
 
 void render() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -237,7 +261,8 @@ void render() {
 	glRotatef(30, 0, 1, 0);
 	glTranslatef(x_pos, y_pos, z_pos);
 
-
+	drawCube();
+	/*
 	float arr[4][3] = {
 				{0, 0, 0}, {10, 0, 0}, {0, 10, 0}, {10, 10, 0}
 		};
@@ -248,7 +273,7 @@ void render() {
 					{0, 10, 0}, {10, 10, 0}, {0, 10, 10}, {10, 10, 10}
 	};
 	drawQuad_YZ(roof, texture_brickwall);
-
+	*/
 	glutSwapBuffers();
 }
 
@@ -359,6 +384,7 @@ void init(void) {
 	glutSpecialFunc(special_buttons);
 	glutMotionFunc(mouse_motion);
 	glClearColor(0.0, 0.0, 0.0, 0.0);
+	glEnable(GL_DEPTH_TEST);
 }
 
 
