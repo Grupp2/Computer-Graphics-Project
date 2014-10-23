@@ -12,11 +12,14 @@
 #include <GL/glut.h>
 #include "imagefile.h"
 #include "exceptioninfo.h"
+#include <math.h>
 
-// The position of the origin of the scene:
-float x_pos = -5.0;
-float y_pos = -5.0;
-float z_pos = -30;
+// angle of rotation for the camera direction
+float angle=0.0;
+// actual vector representing the camera's direction
+float lx=0.0f,lz=-1.0f;
+// XZ position of the camera
+float x=0.0f,z=5.0f;
 
 float theta = 0.0;
 float phi = 0.0;
@@ -258,8 +261,12 @@ void render() {
 
 	glLoadIdentity();
 
+	gluLookAt(	x, 1.0f, z,
+				x+lx, 1.0f,  z+lz,
+				0.0f, 1.0f,  0.0f);
+
+	glTranslatef(-2, -5, -20);
 	glRotatef(30, 0, 1, 0);
-	glTranslatef(x_pos, y_pos, z_pos);
 
 	drawCube();
 	/*
@@ -311,32 +318,29 @@ void buttons(unsigned char key, int x, int y) {
 	}
 }
 
-void special_buttons(int key, int x, int y) {
-	float step = 0.1;
+void special_buttons(int key, int xx, int yy) {
+	float fraction = 0.1f;
 
-	switch (key) {
-	case GLUT_KEY_RIGHT:
-		x_pos -= step;
-		break;
-	case GLUT_KEY_LEFT:
-		x_pos += step;
-		break;
-	case GLUT_KEY_UP:
-		z_pos += step;
-		break;
-	case GLUT_KEY_DOWN:
-		z_pos -= step;
-		break;
-	case 104:
-		y_pos -= step;
-		break;
-	case 105:
-		y_pos += step;
-		break;
-	default:
-		// do nothing...
-		break;
-	}
+		switch (key) {
+			case GLUT_KEY_LEFT :
+				angle -= 0.01f;
+				lx = sin(angle);
+				lz = -cos(angle);
+				break;
+			case GLUT_KEY_RIGHT :
+				angle += 0.01f;
+				lx = sin(angle);
+				lz = -cos(angle);
+				break;
+			case GLUT_KEY_UP :
+				x += lx * fraction;
+				z += lz * fraction;
+				break;
+			case GLUT_KEY_DOWN :
+				x -= lx * fraction;
+				z -= lz * fraction;
+				break;
+		}
 }
 
 void mouse_motion(int x, int y) {
