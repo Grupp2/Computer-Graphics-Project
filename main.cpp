@@ -14,7 +14,7 @@
 #include "exceptioninfo.h"
 
 //Func def
-void drawQuad();
+void drawQuad(float *arr, GLuint texture);
 
 // The position of the origin of the scene:
 float x_pos = -5.0;
@@ -161,16 +161,13 @@ void reshape(int width, int height) {
 	glViewport(0, 0, (GLsizei)width, (GLsizei)height);
 }
 
-float arr[4][3] = {
-			{0, 0, 0}, {10, 0, 0}, {0, 10, 0}, {10, 10, 0}
-	};
 
-void drawQuad_XY() {
+void drawQuad_XY(float arr[][3], GLuint texture) {
 	for (int b = arr[0][1]; b < arr[2][1]; b++)	{
 		for (int i = arr[0][0]; i < arr[1][0]; i++) {
 			glColor3f(1, 0, 0);
 
-			glBindTexture(GL_TEXTURE_2D, texture_brickwall);
+			glBindTexture(GL_TEXTURE_2D, texture);
 			glBegin(GL_QUADS);
 
 			glTexCoord2f(0, 0);
@@ -188,12 +185,12 @@ void drawQuad_XY() {
 	}
 }
 
-void drawQuad_XZ() {
+void drawQuad_XZ(float arr[][3], GLuint texture) {
 	for (int b = arr[0][2]; b < arr[2][2]; b++) {
 		for (int i = arr[0][0]; i < arr[1][0]; i++) {
 			glColor3f(1, 0, 0);
 
-			glBindTexture(GL_TEXTURE_2D, texture_brickwall);
+			glBindTexture(GL_TEXTURE_2D, texture);
 			glBegin(GL_QUADS);
 
 			glTexCoord2f(0, 0);
@@ -211,12 +208,12 @@ void drawQuad_XZ() {
 	}
 }
 
-void drawQuad_YZ() {
+void drawQuad_YZ(float arr[][3], GLuint texture) {
 	for (int b = arr[0][2]; b < arr[2][2]; b++) {
 		for (int i = arr[0][1]; i < arr[1][1]; i++)	{
 			glColor3f(1, 0, 0);
 
-			glBindTexture(GL_TEXTURE_2D, texture_brickwall);
+			glBindTexture(GL_TEXTURE_2D, texture);
 			glBegin(GL_QUADS);
 
 			glTexCoord2f(0, 0);
@@ -240,9 +237,20 @@ void render() {
 
 	glLoadIdentity();
 
+	glRotatef(30, 0, 1, 0);
 	glTranslatef(x_pos, y_pos, z_pos);
 
-	drawQuad_XY();
+
+	float arr[4][3] = {
+				{0, 0, 0}, {10, 0, 0}, {0, 10, 0}, {10, 10, 0}
+		};
+
+	drawQuad_XY(arr, texture_brickwall);
+
+	float roof[4][3] = {
+					{0, 10, 0}, {10, 10, 0}, {0, 10, 10}, {10, 10, 10}
+	};
+	drawQuad_YZ(roof, texture_brickwall);
 
 	glutSwapBuffers();
 }
