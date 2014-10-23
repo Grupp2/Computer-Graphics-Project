@@ -238,7 +238,7 @@ void drawQuad_YZ(float arr[][3], GLuint texture) {
 void drawCube() {
 
 	float arr[4][3] = {
-			{ 0, 0, 0 }, { 20, 0, 0 }, { 0, 10, 0 }, { 20, 10, 0 }
+			{ 0, 0, 0 }, { 10, 0, 0 }, { 0, 10, 0 }, { 10, 10, 0 }
 	};
 	glPushMatrix();
 		glPushMatrix(); // Back
