@@ -235,6 +235,86 @@ void drawQuad_YZ(float arr[][3], GLuint texture) {
 	}
 }
 
+void drawCube(float endPoint[3]) {
+	float backarr[4][3] = {
+			{ 0.0, 0.0, 0.0 },
+			{ endPoint[0], 0.0, 0.0 },
+			{ 0.0, endPoint[1], 0.0 },
+			{ endPoint[0], endPoint[1], 0.0 }
+	};
+
+	float frontarr[4][3] = {
+			{ 0.0, 0.0, 0.0 },
+			{ endPoint[0], 0.0, 0.0 },
+			{ 0.0, endPoint[1], 0.0 },
+			{ endPoint[0], endPoint[1], 0.0 }
+	};
+
+	float leftarr[4][3] = {
+			{ 0.0, 0.0, 0.0 },
+			{ endPoint[2], 0.0, 0.0 },
+			{ 0.0, endPoint[1], 0.0 },
+			{ endPoint[2], endPoint[1], 0.0 }
+	};
+
+	float rightarr[4][3] = {
+			{ 0.0, 0.0, 0.0 },
+			{ endPoint[2], 0.0, 0.0 },
+			{ 0.0, endPoint[1], 0.0 },
+			{ endPoint[2], endPoint[1], 0.0 }
+	};
+
+	float roofarr[4][3] = {
+			{ 0.0, 0.0, 0.0 },
+			{ endPoint[0], 0.0, 0.0 },
+			{ 0.0, endPoint[2], 0.0 },
+			{ endPoint[0], endPoint[2], 0.0 }
+	};
+
+	float floorarr[4][3] = {
+			{ 0.0, 0.0, 0.0 },
+			{ endPoint[0], 0.0, 0.0 },
+			{ 0.0, endPoint[2], 0.0 },
+			{ endPoint[0], endPoint[2], 0.0 }
+	};
+
+	glPushMatrix();
+		glPushMatrix(); // Back
+		glTranslatef(0.0, 0.0, -endPoint[2]);
+		drawQuad_XY(backarr, texture_brickwall);
+		glPopMatrix();
+
+		glPushMatrix(); // front
+			glTranslatef(0.0, 0.0, 0.0);
+			drawQuad_XY(frontarr, texture_brickwall);
+		glPopMatrix();
+
+		glPushMatrix(); // left
+			glRotatef(90, 0.0, 1.0, 0.0);
+			drawQuad_XY(leftarr, texture_brickwall);
+		glPopMatrix();
+
+		glPushMatrix(); // right
+			glRotatef(90, 0.0, 1.0, 0.0);
+			glTranslatef(0.0, 0.0, endPoint[0]);
+			drawQuad_XY(rightarr, texture_brickwall);
+		glPopMatrix();
+
+		glPushMatrix(); // roof
+			glRotatef(270, 1.0, 0.0, 0.0);
+			drawQuad_XY(roofarr, texture_floor);
+		glPopMatrix();
+
+		glPushMatrix(); // floor
+			glRotatef(270, 1.0, 0.0, 0.0);
+			glTranslatef(0.0, 0.0, endPoint[1]);
+			drawQuad_XY(floorarr, texture_floor);
+		glPopMatrix();
+
+	glPopMatrix();
+
+}
+
 void drawCube() {
 
 	float arr[4][3] = {
@@ -289,7 +369,11 @@ void render() {
 	glTranslatef(-2, -5, -20);
 	//glRotatef(30, 0, 1, 0);
 
-	drawCube();
+	float endPoint[3] = {
+		20, 10, 10
+	};
+
+	drawCube(endPoint);
 	/*
 	float arr[4][3] = {
 				{0, 0, 0}, {10, 0, 0}, {0, 10, 0}, {10, 10, 0}
