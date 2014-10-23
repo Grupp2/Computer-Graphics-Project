@@ -75,6 +75,7 @@ int indices[12][3] = {
 
 
 GLuint texture_brickwall;
+GLuint texture_floor;
 
 GLfloat colors[3][3] = { 
 	{ 1.0, 0.0, 0.0 },
@@ -263,13 +264,13 @@ void drawCube() {
 
 		glPushMatrix(); // roof
 			glRotatef(270, 1.0, 0.0, 0.0);
-			drawQuad_XY(arr, texture_brickwall);
+			drawQuad_XY(arr, texture_floor);
 		glPopMatrix();
 
 		glPushMatrix(); // floor
 			glRotatef(270, 1.0, 0.0, 0.0);
 			glTranslatef(0.0, 0.0, arr[1][0]);
-			drawQuad_XY(arr, texture_brickwall);
+			drawQuad_XY(arr, texture_floor);
 		glPopMatrix();
 
 	glPopMatrix();
@@ -449,6 +450,7 @@ int main(int argc, char** argv) {
 	glutCreateWindow("Computer Graphics, Project");
 	glEnable(GL_TEXTURE_2D);
 	getimagefromfile("brickwall.tif", &texture_brickwall);
+	getimagefromfile("floor.tif", &texture_floor);
 	init();
 
 	glutMainLoop();
