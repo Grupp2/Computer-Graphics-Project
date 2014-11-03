@@ -277,7 +277,7 @@ void render() {
 
 	glTranslatef(-2, -5, -20);
 	//glRotatef(30, 0, 1, 0);
-
+	/*
 	float endPoint[3] = {
 		50, 10, 50
 	};
@@ -296,6 +296,9 @@ void render() {
 	float textures_container[] = { texture_floor, texture_brickwall, texture_floor };
 
 	drawCube(endPoint, sideSelector, textures_container);
+	*/
+
+	smallRoom();
 	/*
 	float arr[4][3] = {
 				{0, 0, 0}, {10, 0, 0}, {0, 10, 0}, {10, 10, 0}
