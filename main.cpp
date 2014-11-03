@@ -490,52 +490,52 @@ void drawSkybox() {
 		glVertex3fv(bbl);
 	glEnd();
 
-	// back
+	// left
 	glBegin(GL_QUADS);
-	glTexCoord2f(0.25, 0.33);
-	glVertex3fv(fbl);
+	glTexCoord2f(0.0, 0.33);
+	glVertex3fv(bbl);
+	glTexCoord2f(0.0, 0.66);
+	glVertex3fv(btl);
 	glTexCoord2f(0.25, 0.66);
 	glVertex3fv(ftl);
-	glTexCoord2f(0.5, 0.66);
-	glVertex3fv(ftr);
-	glTexCoord2f(0.5, 0.33);
-	glVertex3fv(fbr);
+	glTexCoord2f(0.25, 0.33);
+	glVertex3fv(fbl);
 	glEnd();
 
-	// back
+	// right
 	glBegin(GL_QUADS);
-	glTexCoord2f(0.25, 0.33);
-	glVertex3fv(fbl);
-	glTexCoord2f(0.25, 0.66);
-	glVertex3fv(ftl);
-	glTexCoord2f(0.5, 0.66);
-	glVertex3fv(ftr);
-	glTexCoord2f(0.5, 0.33);
+	glTexCoord2f(0.50, 0.33);
 	glVertex3fv(fbr);
+	glTexCoord2f(0.50, 0.66);
+	glVertex3fv(ftr);
+	glTexCoord2f(0.75, 0.66);
+	glVertex3fv(btr);
+	glTexCoord2f(0.75, 0.33);
+	glVertex3fv(bbr);
 	glEnd();
 
-	// back
+	// top
 	glBegin(GL_QUADS);
-	glTexCoord2f(0.25, 0.33);
-	glVertex3fv(fbl);
 	glTexCoord2f(0.25, 0.66);
 	glVertex3fv(ftl);
+	glTexCoord2f(0.25, 1.0);
+	glVertex3fv(btl);
+	glTexCoord2f(0.5, 1.0);
+	glVertex3fv(btr);
 	glTexCoord2f(0.5, 0.66);
 	glVertex3fv(ftr);
-	glTexCoord2f(0.5, 0.33);
-	glVertex3fv(fbr);
 	glEnd();
 
-	// back
+	// bottom
 	glBegin(GL_QUADS);
+	glTexCoord2f(0.25, 0.0);
+	glVertex3fv(bbl);
 	glTexCoord2f(0.25, 0.33);
 	glVertex3fv(fbl);
-	glTexCoord2f(0.25, 0.66);
-	glVertex3fv(ftl);
-	glTexCoord2f(0.5, 0.66);
-	glVertex3fv(ftr);
-	glTexCoord2f(0.5, 0.33);
-	glVertex3fv(fbr);
+	glTexCoord2f(0.50, 0.33);
+	glVertex3fv(bbr);
+	glTexCoord2f(0.5, 0.0);
+	glVertex3fv(bbr);
 	glEnd();
 }
 
