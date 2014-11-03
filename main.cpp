@@ -176,12 +176,12 @@ void drawQuad_XY(float arr[][3], GLuint texture) {
 
 			glTexCoord2f(0, 0);
 			glVertex3f(i, b, 0);
-			glTexCoord2f(1, 0);
+			glTexCoord2f(0.5, 0);
 			glVertex3f(i + 1, b, 0);
 
-			glTexCoord2f(1, 1);
+			glTexCoord2f(0.5, 0.5);
 			glVertex3f(i + 1, b + 1, 0);
-			glTexCoord2f(0, 1);
+			glTexCoord2f(0, 0.5);
 			glVertex3f(i, b + 1, 0);
 
 			glEnd();
@@ -412,7 +412,7 @@ void render() {
 		1 // ground
 	};
 
-	float textures_container[] = { texture_brickwall, texture_floor };
+	float textures_container[] = { texture_floor, texture_brickwall, texture_floor };
 
 	drawCube(endPoint, sideSelector, textures_container);
 	/*
