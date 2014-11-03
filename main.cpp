@@ -343,6 +343,47 @@ void drawCube() {
 	glPopMatrix();
 }
 
+void smallRoom() {
+	float leftSegment[3] = {
+		5 ,8 ,15
+	};
+
+	float MiddleSegment[3] = {
+		5, 8, 15
+	};
+
+	float rightSegment[3] = {
+		5, 8, 15
+	};
+
+}
+
+void largeRoom() {
+	float leftSegment[3] = {
+		15, 8, 15
+	};
+
+	float MiddleSegment[3] = {
+		5, 8, 15
+	};
+
+	float rightSegment[3] = {
+		15, 8, 15
+	};
+}
+
+void smallCorridore() {
+	float segment[3] = {
+		5, 8, 15
+	};
+}
+
+void largeCorridore() {
+	float segment[3] = {
+		35, 8, 5
+	};
+}
+
 
 void render() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -357,8 +398,10 @@ void render() {
 	//glRotatef(30, 0, 1, 0);
 
 	float endPoint[3] = {
-		20, 10, 10
+		50, 10, 50
 	};
+
+	
 
 	int sideSelector[6] = {
 		1, // Back
