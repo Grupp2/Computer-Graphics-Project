@@ -41,6 +41,7 @@ float doorAngle = 0.0;
 GLuint texture_brickwall;
 GLuint texture_floor;
 GLuint texture_door;
+GLuint texture_grass;
 
 
 float ctrl_delta = 0.01;
@@ -613,6 +614,7 @@ int main(int argc, char** argv) {
 	getimagefromfile("brickwall_2.bmp", &texture_brickwall);
 	getimagefromfile("floor.tif", &texture_floor);
 	getimagefromfile("fancy_door.tif", &texture_door);
+	getimagefromfile("grass.tif", &texture_grass);
 	init();
 
 	glutMainLoop();
