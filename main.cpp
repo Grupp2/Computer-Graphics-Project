@@ -235,7 +235,7 @@ void drawQuad_YZ(float arr[][3], GLuint texture) {
 	}
 }
 
-void drawCube(float endPoint[3], int sideSelector[6]) {
+void drawCube(float endPoint[3], int sideSelector[6], float *texture_container) {
 
 	float frontbackarr[4][3] = {
 			{ 0.0, 0.0, 0.0 },
@@ -412,7 +412,9 @@ void render() {
 		1 // ground
 	};
 
-	drawCube(endPoint, sideSelector);
+	float textures_container[] = { texture_brickwall, texture_floor };
+
+	drawCube(endPoint, sideSelector, textures_container);
 	/*
 	float arr[4][3] = {
 				{0, 0, 0}, {10, 0, 0}, {0, 10, 0}, {10, 10, 0}
