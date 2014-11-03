@@ -37,6 +37,7 @@ int h = 600;
 
 GLuint texture_brickwall;
 GLuint texture_floor;
+GLuint texture_door;
 
 
 float ctrl_delta = 0.01;
@@ -357,6 +358,26 @@ void drawHouse(){
 
 }
 
+void drawDoors()
+{
+	glPushMatrix();
+
+	glTranslatef(15, 0, 0);
+	glBindTexture(GL_TEXTURE_2D, texture_door);
+	glBegin(GL_QUADS);
+	glTexCoord2f(0, 0);
+	glVertex3f(0, 0, 0);
+	glTexCoord2f(1, 0);
+	glVertex3f(5, 0, 0);
+	glTexCoord2f(0, 1);
+	glVertex3f(0, 8, 0);
+	glTexCoord2f(1, 1);
+	glVertex3f(5, 8, 0);
+	glPopMatrix();
+	glEnd();
+
+}
+
 void render() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -367,41 +388,10 @@ void render() {
 				0.0f, 1.0f,  0.0f);
 
 	glTranslatef(-2, -5, -20);
-	//glRotatef(30, 0, 1, 0);
-	/*
-	float endPoint[3] = {
-		50, 10, 50
-	};
-
 	
-
-	int sideSelector[6] = {
-		1, // Back
-		0, // front
-		1, // left
-		1, // right
-		1, // roof
-		1 // ground
-	};
-
-	float textures_container[] = { texture_floor, texture_brickwall, texture_floor };
-
-	drawCube(endPoint, sideSelector, textures_container);
-	*/
-
 	drawHouse();
-	/*
-	float arr[4][3] = {
-				{0, 0, 0}, {10, 0, 0}, {0, 10, 0}, {10, 10, 0}
-		};
+	drawDoors();
 
-	drawQuad_XY(arr, texture_brickwall);
-
-	float roof[4][3] = {
-					{0, 10, 0}, {10, 10, 0}, {0, 10, 10}, {10, 10, 10}
-	};
-	drawQuad_YZ(roof, texture_brickwall);
-	*/
 	glutSwapBuffers();
 }
 
@@ -551,6 +541,7 @@ int main(int argc, char** argv) {
 	glEnable(GL_TEXTURE_2D);
 	getimagefromfile("brickwall_2.bmp", &texture_brickwall);
 	getimagefromfile("floor.tif", &texture_floor);
+	getimagefromfile("floor.tif", &texture_door);
 	init();
 
 	glutMainLoop();
