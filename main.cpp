@@ -456,7 +456,7 @@ void render() {
 	glPopMatrix();
 
 	glPushMatrix();
-	glTranslatef(-75, 0, 75);
+	glTranslatef(-75, -0.1, 75);
 	drawGarden();
 	glPopMatrix();
 
