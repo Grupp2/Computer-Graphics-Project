@@ -190,18 +190,53 @@ void drawCube(float endPoint[3], int sideSelector[6], float *texture_container) 
 }
 
 void smallRoom() {
+	float textures_container[] = { texture_floor, texture_brickwall, texture_floor };
+
+	int leftSideSelector[6] = {
+		1, // Back
+		1, // front
+		1, // left
+		0, // right
+		1, // roof
+		1 // ground
+	};
 	float leftSegment[3] = {
 		5 ,8 ,15
 	};
 
+	drawCube(leftSegment, leftSideSelector, textures_container);
+
+	int middleSideSelector[6] = {
+		0, // Back
+		1, // front
+		0, // left
+		0, // right
+		1, // roof
+		1 // ground
+	};
 	float MiddleSegment[3] = {
 		5, 8, 15
 	};
 
+	glPushMatrix();
+	glTranslatef(5, 0, 0);
+	drawCube(MiddleSegment, middleSideSelector, textures_container);
+	glPopMatrix();
+	int rightSideSelector[6] = {
+		1, // Back
+		1, // front
+		0, // left
+		1, // right
+		1, // roof
+		1 // ground
+	};
 	float rightSegment[3] = {
 		5, 8, 15
 	};
-
+	glPushMatrix();
+	glTranslatef(10, 0, 0);
+	drawCube(rightSegment, rightSideSelector, textures_container);
+	glPopMatrix();
 }
 
 void largeRoom() {
