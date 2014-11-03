@@ -34,78 +34,15 @@ int y_prev = 0;
 int w = 800;
 int h = 600;
 
-float OuterPositions[8][3] = {
-		{ -50.0, 00.0, -50.0 }, /* 0 */
-		{ -50.0, 50.0, -50.0 }, /* 1 */
-		{ 50.0, 50.0, -50.0 },	/* 2 */
-		{ 50.0, 00.0, -50.0 },	/* 3 */
-		{ -50.0, 00.0, 50.0 },	/* 4 */
-		{ -50.0, 50.0, 50.0 },	/* 5 */
-		{ 50.0, 50.0, 50.0 },	/* 6 */
-		{ 50.0, 00.0, 50.0 }	/* 7 */
-};
-
-float WallPositions[4][3] = {
-		{ -50.0, 00.0, -50.0 }, /* 0 */
-		{ -50.0, 50.0, -50.0 }, /* 1 */
-		{ 50.0, 50.0, -50.0 },	/* 2 */
-		{ 50.0, 00.0, -50.0 }	/* 3 */
-};
-
-float InnerPositions[8][3] = {
-		{ -30.0, 00.0, -30.0 }, /* 0 */
-		{ -30.0, 20.0, -30.0 }, /* 1 */
-		{ 30.0, 20.0, -30.0 },	/* 2 */
-		{ 30.0, 00.0, -30.0 },	/* 3 */
-		{ -30.0, 00.0, 30.0 },	/* 4 */
-		{ -30.0, 20.0, 30.0 },	/* 5 */
-		{ 30.0, 20.0, 30.0 },	/* 6 */
-		{ 30.0, 00.0, 30.0 }	/* 7 */
-
-};
-		
-int indices[12][3] = {
-		{ 0, 4, 1 }, { 4, 5, 1 },
-		{ 0, 3, 2 }, { 0, 1, 2 },
-		{ 3, 7, 6 }, { 3, 2, 6 },
-		{ 4, 5, 7 }, { 5, 7, 6 },
-		{ 0, 4, 7 }, { 0, 3, 7 },
-		{ 2, 5, 6 }, { 1, 2, 5 }
-};
-
 
 GLuint texture_brickwall;
 GLuint texture_floor;
 
-GLfloat colors[3][3] = { 
-	{ 1.0, 0.0, 0.0 },
-	{ 0.0, 1.0, 0.0 },
-	{ 1.0, 1.0, 0.0 } 
-};
 
 float ctrl_delta = 0.01;
 
 char s[30], buf[100];
 GLvoid *font_style = GLUT_BITMAP_TIMES_ROMAN_10;
-
-
-void setOrthographicProjection() {
-	// switch to projection mode
-	glMatrixMode(GL_PROJECTION);
-	// save previous matrix which contains the
-	//settings for the perspective projection
-	glPushMatrix();
-	// reset matrix
-	glLoadIdentity();
-	// set a 2D orthographic projection
-	gluOrtho2D(0, w, 0, h);
-	// invert the y axis, down is positive
-	glScalef(1, -1, 1);
-	// move the origin from the bottom left corner
-	// to the upper left corner
-	glTranslatef(0, -h, 0);
-	glMatrixMode(GL_MODELVIEW);
-}
 
 void resetPerspectiveProjection() {
 	// set the current matrix to GL_PROJECTION
@@ -162,10 +99,6 @@ void reshape(int width, int height) {
 	glViewport(0, 0, (GLsizei)width, (GLsizei)height);
 }
 
-
-
-
-
 void drawQuad_XY(float arr[][3], GLuint texture) {
 	for (int b = arr[0][1]; b < arr[2][1]; b++)	{
 		for (int i = arr[0][0]; i < arr[1][0]; i++) {
@@ -183,52 +116,6 @@ void drawQuad_XY(float arr[][3], GLuint texture) {
 			glVertex3f(i + 1, b + 1, 0);
 			glTexCoord2f(0, 1.0);
 			glVertex3f(i, b + 1, 0);
-
-			glEnd();
-		}
-	}
-}
-
-void drawQuad_XZ(float arr[][3], GLuint texture) {
-	for (int b = arr[0][2]; b < arr[2][2]; b++) {
-		for (int i = arr[0][0]; i < arr[1][0]; i++) {
-			glColor3f(1, 0, 0);
-
-			glBindTexture(GL_TEXTURE_2D, texture);
-			glBegin(GL_QUADS);
-
-			glTexCoord2f(0, 0);
-			glVertex3f(i, b, 0);
-			glTexCoord2f(1, 0);
-			glVertex3f(i + 1, b, 0);
-
-			glTexCoord2f(1, 1);
-			glVertex3f(i + 1, b + 1, 0);
-			glTexCoord2f(0, 1);
-			glVertex3f(i, b + 1, 0);
-
-			glEnd();
-		}
-	}
-}
-
-void drawQuad_YZ(float arr[][3], GLuint texture) {
-	for (int b = arr[0][2]; b < arr[2][2]; b++) {
-		for (int i = arr[0][0]; i < arr[1][0]; i++)	{
-			glColor3f(1, 0, 0);
-
-			glBindTexture(GL_TEXTURE_2D, texture);
-			glBegin(GL_QUADS);
-
-			glTexCoord2f(0, 0);
-			glVertex3f(i, arr[0][1], b);
-			glTexCoord2f(1, 0);
-			glVertex3f(i + 1, arr[1][1], b);
-
-			glTexCoord2f(1, 1);
-			glVertex3f(i + 1, arr[3][1], b + 1);
-			glTexCoord2f(0, 1);
-			glVertex3f(i, arr[2][1], b + 1);
 
 			glEnd();
 		}
@@ -300,47 +187,6 @@ void drawCube(float endPoint[3], int sideSelector[6], float *texture_container) 
 	}
 	glPopMatrix();
 
-}
-
-void drawCube() {
-
-	float arr[4][3] = {
-			{ 0, 0, 0 }, { 10, 0, 0 }, { 0, 10, 0 }, { 10, 10, 0 }
-	};
-	glPushMatrix();
-		glPushMatrix(); // Back
-			glTranslatef(0.0, 0.0, -arr[1][0]);
-			drawQuad_XY(arr, texture_brickwall);
-		glPopMatrix();
-
-		glPushMatrix(); // front
-			glTranslatef(0.0, 0.0, 0.0);
-			drawQuad_XY(arr, texture_brickwall);
-		glPopMatrix();
-
-		glPushMatrix(); // left
-			glRotatef(90, 0.0, 1.0, 0.0);
-			drawQuad_XY(arr, texture_brickwall);
-		glPopMatrix();
-
-		glPushMatrix(); // right
-			glRotatef(90, 0.0, 1.0, 0.0);
-			glTranslatef(0.0, 0.0, arr[1][0]);
-			drawQuad_XY(arr, texture_brickwall);
-		glPopMatrix();
-
-		glPushMatrix(); // roof
-			glRotatef(270, 1.0, 0.0, 0.0);
-			drawQuad_XY(arr, texture_floor);
-		glPopMatrix();
-
-		glPushMatrix(); // floor
-			glRotatef(270, 1.0, 0.0, 0.0);
-			glTranslatef(0.0, 0.0, arr[1][0]);
-			drawQuad_XY(arr, texture_floor);
-		glPopMatrix();
-
-	glPopMatrix();
 }
 
 void smallRoom() {
