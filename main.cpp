@@ -358,85 +358,66 @@ void drawHouse(){
 
 }
 
-void drawDoors()
-{
+void drawDoors() {
 	glPushMatrix();
-
-	glTranslatef(15, 0, 0);
-	glBindTexture(GL_TEXTURE_2D, texture_door);
-	glBegin(GL_QUADS);
-	glTexCoord2f(0, 0);
-	glVertex3f(0, 0, 0);
-	glTexCoord2f(1, 0);
-	glVertex3f(5, 0, 0);
-	glTexCoord2f(1, 1);
-	glVertex3f(5, 8, 0);
-	glTexCoord2f(0, 1);
-	glVertex3f(0, 8, 0);
-	
-	
-	glEnd();
-
+		glTranslatef(15, 0, 0);
+		glBindTexture(GL_TEXTURE_2D, texture_door);
+		glBegin(GL_QUADS);
+			glTexCoord2f(0, 0);
+			glVertex3f(0, 0, 0);
+			glTexCoord2f(1, 0);
+			glVertex3f(5, 0, 0);
+			glTexCoord2f(1, 1);
+			glVertex3f(5, 8, 0);
+			glTexCoord2f(0, 1);
+			glVertex3f(0, 8, 0);
+		glEnd();
 	glPopMatrix();
 
 	glPushMatrix();
-
-	glTranslatef(5, 0, -15);
-	glBindTexture(GL_TEXTURE_2D, texture_door);
-	glBegin(GL_QUADS);
-	glTexCoord2f(0, 0);
-	glVertex3f(0, 0, 0);
-	glTexCoord2f(1, 0);
-	glVertex3f(5, 0, 0);
-	glTexCoord2f(1, 1);
-	glVertex3f(5, 8, 0);
-	glTexCoord2f(0, 1);
-	glVertex3f(0, 8, 0);
-
-
-	glEnd();
-
+		glTranslatef(5, 0, -15);
+		glBindTexture(GL_TEXTURE_2D, texture_door);
+		glBegin(GL_QUADS);
+			glTexCoord2f(0, 0);
+			glVertex3f(0, 0, 0);
+			glTexCoord2f(1, 0);
+			glVertex3f(5, 0, 0);
+			glTexCoord2f(1, 1);
+			glVertex3f(5, 8, 0);
+			glTexCoord2f(0, 1);
+			glVertex3f(0, 8, 0);
+		glEnd();
 	glPopMatrix();
 
 	glPushMatrix();
-
-	glTranslatef(25, 0, -15);
-	glBindTexture(GL_TEXTURE_2D, texture_door);
-	glBegin(GL_QUADS);
-	glTexCoord2f(0, 0);
-	glVertex3f(0, 0, 0);
-	glTexCoord2f(1, 0);
-	glVertex3f(5, 0, 0);
-	glTexCoord2f(1, 1);
-	glVertex3f(5, 8, 0);
-	glTexCoord2f(0, 1);
-	glVertex3f(0, 8, 0);
-
-
-	glEnd();
-
+		glTranslatef(25, 0, -15);
+		glBindTexture(GL_TEXTURE_2D, texture_door);
+		glBegin(GL_QUADS);
+			glTexCoord2f(0, 0);
+			glVertex3f(0, 0, 0);
+			glTexCoord2f(1, 0);
+			glVertex3f(5, 0, 0);
+			glTexCoord2f(1, 1);
+			glVertex3f(5, 8, 0);
+			glTexCoord2f(0, 1);
+			glVertex3f(0, 8, 0);
+		glEnd();
 	glPopMatrix();
 
 	glPushMatrix();
-
-	glTranslatef(15, 0, -20);
-	glBindTexture(GL_TEXTURE_2D, texture_door);
-	glBegin(GL_QUADS);
-	glTexCoord2f(0, 0);
-	glVertex3f(0, 0, 0);
-	glTexCoord2f(1, 0);
-	glVertex3f(5, 0, 0);
-	glTexCoord2f(1, 1);
-	glVertex3f(5, 8, 0);
-	glTexCoord2f(0, 1);
-	glVertex3f(0, 8, 0);
-
-
-	glEnd();
-
+		glTranslatef(15, 0, -20);
+		glBindTexture(GL_TEXTURE_2D, texture_door);
+		glBegin(GL_QUADS);
+			glTexCoord2f(0, 0);
+			glVertex3f(0, 0, 0);
+			glTexCoord2f(1, 0);
+			glVertex3f(5, 0, 0);
+			glTexCoord2f(1, 1);
+			glVertex3f(5, 8, 0);
+			glTexCoord2f(0, 1);
+			glVertex3f(0, 8, 0);
+		glEnd();
 	glPopMatrix();
-
-
 }
 
 void render() {
