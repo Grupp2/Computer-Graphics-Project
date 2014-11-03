@@ -378,6 +378,65 @@ void drawDoors()
 	glEnd();
 
 	glPopMatrix();
+
+	glPushMatrix();
+
+	glTranslatef(5, 0, -15);
+	glBindTexture(GL_TEXTURE_2D, texture_door);
+	glBegin(GL_QUADS);
+	glTexCoord2f(0, 0);
+	glVertex3f(0, 0, 0);
+	glTexCoord2f(1, 0);
+	glVertex3f(5, 0, 0);
+	glTexCoord2f(1, 1);
+	glVertex3f(5, 8, 0);
+	glTexCoord2f(0, 1);
+	glVertex3f(0, 8, 0);
+
+
+	glEnd();
+
+	glPopMatrix();
+
+	glPushMatrix();
+
+	glTranslatef(25, 0, -15);
+	glBindTexture(GL_TEXTURE_2D, texture_door);
+	glBegin(GL_QUADS);
+	glTexCoord2f(0, 0);
+	glVertex3f(0, 0, 0);
+	glTexCoord2f(1, 0);
+	glVertex3f(5, 0, 0);
+	glTexCoord2f(1, 1);
+	glVertex3f(5, 8, 0);
+	glTexCoord2f(0, 1);
+	glVertex3f(0, 8, 0);
+
+
+	glEnd();
+
+	glPopMatrix();
+
+	glPushMatrix();
+
+	glTranslatef(15, 0, -20);
+	glBindTexture(GL_TEXTURE_2D, texture_door);
+	glBegin(GL_QUADS);
+	glTexCoord2f(0, 0);
+	glVertex3f(0, 0, 0);
+	glTexCoord2f(1, 0);
+	glVertex3f(5, 0, 0);
+	glTexCoord2f(1, 1);
+	glVertex3f(5, 8, 0);
+	glTexCoord2f(0, 1);
+	glVertex3f(0, 8, 0);
+
+
+	glEnd();
+
+	glPopMatrix();
+
+
 }
 
 void render() {
@@ -543,7 +602,7 @@ int main(int argc, char** argv) {
 	glEnable(GL_TEXTURE_2D);
 	getimagefromfile("brickwall_2.bmp", &texture_brickwall);
 	getimagefromfile("floor.tif", &texture_floor);
-	getimagefromfile("floor.tif", &texture_door);
+	getimagefromfile("door.bmp", &texture_door);
 	init();
 
 	glutMainLoop();
