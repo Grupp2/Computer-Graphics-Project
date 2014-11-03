@@ -176,12 +176,12 @@ void drawQuad_XY(float arr[][3], GLuint texture) {
 
 			glTexCoord2f(0, 0);
 			glVertex3f(i, b, 0);
-			glTexCoord2f(0.5, 0);
+			glTexCoord2f(1.0, 0);
 			glVertex3f(i + 1, b, 0);
 
-			glTexCoord2f(0.5, 0.5);
+			glTexCoord2f(1.0, 1.0);
 			glVertex3f(i + 1, b + 1, 0);
-			glTexCoord2f(0, 0.5);
+			glTexCoord2f(0, 1.0);
 			glVertex3f(i, b + 1, 0);
 
 			glEnd();
@@ -574,7 +574,7 @@ int main(int argc, char** argv) {
 	glutInitWindowPosition(100, 100);
 	glutCreateWindow("Computer Graphics, Project");
 	glEnable(GL_TEXTURE_2D);
-	getimagefromfile("brickwall.tif", &texture_brickwall);
+	getimagefromfile("brickwall_2.bmp", &texture_brickwall);
 	getimagefromfile("floor.tif", &texture_floor);
 	init();
 
