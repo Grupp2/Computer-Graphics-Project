@@ -419,6 +419,24 @@ void drawDoors()
 
 }
 
+void drawGarden() {
+	float textures_container[] = { texture_floor, texture_brickwall, texture_floor };
+
+	int leftSideSelector[6] = {
+		1, // Back
+		1, // front
+		1, // left
+		1, // right
+		1, // ground
+		0 // roof
+	};
+	float leftSegment[3] = {
+		150, 5, 150
+	};
+
+	drawCube(leftSegment, leftSideSelector, textures_container);
+}
+
 void render() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -430,8 +448,17 @@ void render() {
 
 	glTranslatef(-2, -5, -20);
 	
+	glPushMatrix();
+	glTranslatef(-17.5, 0, 17.5);
 	drawHouse();
 	drawDoors();
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(-75, 0, 75);
+	drawGarden();
+	glPopMatrix();
+
 
 	glutSwapBuffers();
 }
