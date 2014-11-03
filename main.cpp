@@ -180,13 +180,13 @@ void drawCube(float endPoint[3], int sideSelector[6], float *texture_container) 
 	if (sideSelector[4] == 1) {
 		glPushMatrix(); // roof
 		glRotatef(270, 1.0, 0.0, 0.0);
+		glTranslatef(0.0, 0.0, endPoint[1]);
 		drawQuad_XY(roofgroundarr, texture_container[2]);
 		glPopMatrix();
 	}
 	if (sideSelector[5] == 1) {
 		glPushMatrix(); // ground
 		glRotatef(270, 1.0, 0.0, 0.0);
-		glTranslatef(0.0, 0.0, endPoint[1]);
 		drawQuad_XY(roofgroundarr, texture_container[0]);
 		glPopMatrix();
 	}
@@ -428,8 +428,8 @@ void drawGarden() {
 		1, // front
 		1, // left
 		1, // right
-		1, // ground
-		0 // roof
+		0, // roof
+		1 // ground
 	};
 	float leftSegment[3] = {
 		150, 5, 150
