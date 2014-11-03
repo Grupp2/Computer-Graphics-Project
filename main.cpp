@@ -295,15 +295,41 @@ void largeRoom() {
 }
 
 void smallCorridore() {
+	float textures_container[] = { texture_floor, texture_brickwall, texture_floor };
+
+	int SideSelector[6] = {
+		0, // Back
+		0, // front
+		0, // left
+		0, // right
+		1, // roof
+		1 // ground
+	};
+
 	float segment[3] = {
 		5, 8, 15
 	};
+
+	drawCube(segment, SideSelector, textures_container);
 }
 
 void largeCorridore() {
+	float textures_container[] = { texture_floor, texture_brickwall, texture_floor };
+
 	float segment[3] = {
 		35, 8, 5
 	};
+
+	int SideSelector[6] = {
+		0, // Back
+		0, // front
+		1, // left
+		1, // right
+		1, // roof
+		1 // ground
+	};
+
+	drawCube(segment, SideSelector, textures_container);
 }
 
 
