@@ -421,7 +421,7 @@ void drawDoors()
 }
 
 void drawGarden() {
-	float textures_container[] = { texture_floor, texture_brickwall, texture_floor };
+	float textures_container[] = { texture_grass, texture_brickwall, texture_floor };
 
 	int leftSideSelector[6] = {
 		1, // Back
@@ -614,7 +614,7 @@ int main(int argc, char** argv) {
 	getimagefromfile("brickwall_2.bmp", &texture_brickwall);
 	getimagefromfile("floor.tif", &texture_floor);
 	getimagefromfile("fancy_door.tif", &texture_door);
-	getimagefromfile("grass.tif", &texture_grass);
+	getimagefromfile("grass_3.bmp", &texture_grass);
 	init();
 
 	glutMainLoop();
