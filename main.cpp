@@ -43,6 +43,8 @@ GLuint texture_floor;
 GLuint texture_door;
 GLuint texture_grass;
 GLuint texture_sky;
+GLuint texture_wall;
+GLuint texture_glass;
 
 float ctrl_delta = 0.01;
 
@@ -195,7 +197,7 @@ void drawCube(float endPoint[3], int sideSelector[6], float *texture_container) 
 }
 
 void smallRoom() {
-	float textures_container[] = { texture_floor, texture_brickwall, texture_floor };
+	float textures_container[] = { texture_floor, texture_wall, texture_floor };
 
 	int leftSideSelector[6] = {
 		1, // Back
@@ -245,7 +247,7 @@ void smallRoom() {
 }
 
 void largeRoom() {
-	float textures_container[] = { texture_floor, texture_brickwall, texture_floor };
+	float textures_container[] = { texture_floor, texture_wall, texture_floor };
 
 	
 	int leftSideSelector[6] = {
@@ -262,6 +264,8 @@ void largeRoom() {
 	};
 
 	drawCube(leftSegment, leftSideSelector, textures_container);
+
+	textures_container[1] = texture_glass;
 
 	int middleSideSelector[6] = {
 		1, // Back
@@ -280,6 +284,9 @@ void largeRoom() {
 	glTranslatef(15, 0, 0);
 	drawCube(MiddleSegment, middleSideSelector, textures_container);
 	glPopMatrix();
+
+	textures_container[1] = texture_wall;
+
 	int rightSideSelector[6] = {
 		1, // Back
 		1, // front
@@ -300,7 +307,7 @@ void largeRoom() {
 }
 
 void smallCorridore() {
-	float textures_container[] = { texture_floor, texture_brickwall, texture_floor };
+	float textures_container[] = { texture_floor, texture_wall, texture_floor };
 
 	int SideSelector[6] = {
 		0, // Back
@@ -319,7 +326,7 @@ void smallCorridore() {
 }
 
 void largeCorridore() {
-	float textures_container[] = { texture_floor, texture_brickwall, texture_floor };
+	float textures_container[] = { texture_floor, texture_wall, texture_floor };
 
 	float segment[3] = {
 		35, 8, 5
@@ -722,6 +729,8 @@ int main(int argc, char** argv) {
 	getimagefromfile("fancy_door.tif", &texture_door);
 	getimagefromfile("grass_3.bmp", &texture_grass);
 	getimagefromfile("sky.bmp", &texture_sky);
+	getimagefromfile("plaster_texture.bmp", &texture_wall);
+	getimagefromfile("glass.bmp", &texture_glass);
 	init();
 
 	glutMainLoop();
