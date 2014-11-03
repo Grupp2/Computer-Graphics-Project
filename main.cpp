@@ -363,10 +363,12 @@ void drawHouse(){
 
 void rotateDoor(float x, float y, float z)
 {
+	
+	glRotatef(-doorAngle, 0, 1, 0);
 	glTranslatef(-x, -y, -z);
 	if (isActive)
 	{
-		glRotatef(doorAngle, 0, 1, 0);
+		
 		if (isOpen)
 			doorAngle--;
 		else
@@ -388,8 +390,10 @@ void drawDoor(float x, float y, float z)
 {
 
 	glPushMatrix();
-	rotateDoor(x, y, z);
+
 	glTranslatef(x, y, z);
+	rotateDoor(x, y, z);
+	
 	glBindTexture(GL_TEXTURE_2D, texture_door);
 	glBegin(GL_QUADS);
 	glTexCoord2f(0, 0);
@@ -460,7 +464,7 @@ void buttons(unsigned char key, int x, int y) {
 		// increase z-component of active control point
 		
 		break;
-	case 'O':
+	case 'o':
 		isActive = true;
 		break;
 	default:
