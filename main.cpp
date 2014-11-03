@@ -42,7 +42,7 @@ GLuint texture_brickwall;
 GLuint texture_floor;
 GLuint texture_door;
 GLuint texture_grass;
-
+GLuint texture_sky;
 
 float ctrl_delta = 0.01;
 
@@ -438,6 +438,107 @@ void drawGarden() {
 	drawCube(leftSegment, leftSideSelector, textures_container);
 }
 
+void drawSkybox() {
+	float fbl[3] = {
+		0.0, 0.0, 0.0
+	};
+	float ftl[3] = {
+		0.0, 1000.0, 0.0
+	};
+	float ftr[3] = {
+		1000.0, 1000.0, 0.0
+	};
+	float fbr[3] = {
+		1000.0, 0.0, 0.0
+	};
+	float bbl[3] = {
+		0.0, 0.0, 1000.0
+	};
+	float btl[3] = {
+		0.0, 1000.0, 1000.0
+	};
+	float btr[3] = {
+		1000.0, 1000.0, 1000.0
+	};
+	float bbr[3] = {
+		1000.0, 0.0, 1000.0
+	};
+
+	glBindTexture(GL_TEXTURE_2D, texture_sky);
+
+	// front
+	glBegin(GL_QUADS);
+		glTexCoord2f(0.25, 0.33);
+		glVertex3fv(fbl);
+		glTexCoord2f(0.25, 0.66);
+		glVertex3fv(ftl);
+		glTexCoord2f(0.5, 0.66);
+		glVertex3fv(ftr);
+		glTexCoord2f(0.5, 0.33);
+		glVertex3fv(fbr);
+	glEnd();
+
+	// back
+	glBegin(GL_QUADS);
+		glTexCoord2f(0.75, 0.33);
+		glVertex3fv(bbr);
+		glTexCoord2f(0.75, 0.66);
+		glVertex3fv(btr);
+		glTexCoord2f(1.0, 0.66);
+		glVertex3fv(btl);
+		glTexCoord2f(1.0, 0.33);
+		glVertex3fv(bbl);
+	glEnd();
+
+	// back
+	glBegin(GL_QUADS);
+	glTexCoord2f(0.25, 0.33);
+	glVertex3fv(fbl);
+	glTexCoord2f(0.25, 0.66);
+	glVertex3fv(ftl);
+	glTexCoord2f(0.5, 0.66);
+	glVertex3fv(ftr);
+	glTexCoord2f(0.5, 0.33);
+	glVertex3fv(fbr);
+	glEnd();
+
+	// back
+	glBegin(GL_QUADS);
+	glTexCoord2f(0.25, 0.33);
+	glVertex3fv(fbl);
+	glTexCoord2f(0.25, 0.66);
+	glVertex3fv(ftl);
+	glTexCoord2f(0.5, 0.66);
+	glVertex3fv(ftr);
+	glTexCoord2f(0.5, 0.33);
+	glVertex3fv(fbr);
+	glEnd();
+
+	// back
+	glBegin(GL_QUADS);
+	glTexCoord2f(0.25, 0.33);
+	glVertex3fv(fbl);
+	glTexCoord2f(0.25, 0.66);
+	glVertex3fv(ftl);
+	glTexCoord2f(0.5, 0.66);
+	glVertex3fv(ftr);
+	glTexCoord2f(0.5, 0.33);
+	glVertex3fv(fbr);
+	glEnd();
+
+	// back
+	glBegin(GL_QUADS);
+	glTexCoord2f(0.25, 0.33);
+	glVertex3fv(fbl);
+	glTexCoord2f(0.25, 0.66);
+	glVertex3fv(ftl);
+	glTexCoord2f(0.5, 0.66);
+	glVertex3fv(ftr);
+	glTexCoord2f(0.5, 0.33);
+	glVertex3fv(fbr);
+	glEnd();
+}
+
 void render() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -450,14 +551,19 @@ void render() {
 	glTranslatef(-2, -5, -20);
 	
 	glPushMatrix();
-	glTranslatef(-17.5, 0, 17.5);
-	drawHouse();
-	drawDoors();
+		glTranslatef(-500.0, -500.0, -500.0);
+		drawSkybox();
 	glPopMatrix();
 
 	glPushMatrix();
-	glTranslatef(-75, -0.1, 75);
-	drawGarden();
+		glTranslatef(-17.5, 0, 17.5);
+		drawHouse();
+		drawDoors();
+	glPopMatrix();
+
+	glPushMatrix();
+		glTranslatef(-75, -0.1, 75);
+		drawGarden();
 	glPopMatrix();
 
 
@@ -615,6 +721,7 @@ int main(int argc, char** argv) {
 	getimagefromfile("floor.tif", &texture_floor);
 	getimagefromfile("fancy_door.tif", &texture_door);
 	getimagefromfile("grass_3.bmp", &texture_grass);
+	getimagefromfile("sky.bmp", &texture_sky);
 	init();
 
 	glutMainLoop();
