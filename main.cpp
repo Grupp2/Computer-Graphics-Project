@@ -34,6 +34,9 @@ int y_prev = 0;
 int w = 800;
 int h = 600;
 
+bool isOpen = false;
+bool isActive = false;
+float doorAngle = 0.0;
 
 GLuint texture_brickwall;
 GLuint texture_floor;
@@ -358,83 +361,56 @@ void drawHouse(){
 
 }
 
+void rotateDoor(float x, float y, float z)
+{
+	glTranslatef(-x, -y, -z);
+	if (isActive)
+	{
+		glRotatef(doorAngle, 0, 1, 0);
+		if (isOpen)
+			doorAngle--;
+		else
+			doorAngle++;
+		if (doorAngle == 0)
+		{
+			isActive = false;
+			isOpen = false;
+		}
+		else if (doorAngle == 90)
+		{
+			isActive = false;
+			isOpen = true;
+		}
+	}
+	glTranslatef(x, y, z);
+}
+void drawDoor(float x, float y, float z)
+{
+
+	glPushMatrix();
+	rotateDoor(x, y, z);
+	glTranslatef(x, y, z);
+	glBindTexture(GL_TEXTURE_2D, texture_door);
+	glBegin(GL_QUADS);
+	glTexCoord2f(0, 0);
+	glVertex3f(0, 0, 0);
+	glTexCoord2f(1, 0);
+	glVertex3f(5, 0, 0);
+	glTexCoord2f(1, 1);
+	glVertex3f(5, 8, 0);
+	glTexCoord2f(0, 1);
+	glVertex3f(0, 8, 0);
+	glEnd();
+	glPopMatrix();
+}
 void drawDoors()
 {
-	glPushMatrix();
-
-	glTranslatef(15, 0, 0);
-	glBindTexture(GL_TEXTURE_2D, texture_door);
-	glBegin(GL_QUADS);
-	glTexCoord2f(0, 0);
-	glVertex3f(0, 0, 0);
-	glTexCoord2f(1, 0);
-	glVertex3f(5, 0, 0);
-	glTexCoord2f(1, 1);
-	glVertex3f(5, 8, 0);
-	glTexCoord2f(0, 1);
-	glVertex3f(0, 8, 0);
 
 
-	glEnd();
-
-	glPopMatrix();
-
-	glPushMatrix();
-
-	glTranslatef(5, 0, -15);
-	glBindTexture(GL_TEXTURE_2D, texture_door);
-	glBegin(GL_QUADS);
-	glTexCoord2f(0, 0);
-	glVertex3f(0, 0, 0);
-	glTexCoord2f(1, 0);
-	glVertex3f(5, 0, 0);
-	glTexCoord2f(1, 1);
-	glVertex3f(5, 8, 0);
-	glTexCoord2f(0, 1);
-	glVertex3f(0, 8, 0);
-
-
-	glEnd();
-
-	glPopMatrix();
-
-	glPushMatrix();
-
-	glTranslatef(25, 0, -15);
-	glBindTexture(GL_TEXTURE_2D, texture_door);
-	glBegin(GL_QUADS);
-	glTexCoord2f(0, 0);
-	glVertex3f(0, 0, 0);
-	glTexCoord2f(1, 0);
-	glVertex3f(5, 0, 0);
-	glTexCoord2f(1, 1);
-	glVertex3f(5, 8, 0);
-	glTexCoord2f(0, 1);
-	glVertex3f(0, 8, 0);
-
-
-	glEnd();
-
-	glPopMatrix();
-
-	glPushMatrix();
-
-	glTranslatef(15, 0, -20);
-	glBindTexture(GL_TEXTURE_2D, texture_door);
-	glBegin(GL_QUADS);
-	glTexCoord2f(0, 0);
-	glVertex3f(0, 0, 0);
-	glTexCoord2f(1, 0);
-	glVertex3f(5, 0, 0);
-	glTexCoord2f(1, 1);
-	glVertex3f(5, 8, 0);
-	glTexCoord2f(0, 1);
-	glVertex3f(0, 8, 0);
-
-
-	glEnd();
-
-	glPopMatrix();
+	drawDoor(15, 0, 0);
+	drawDoor(5, 0, -15);
+	drawDoor(25, 0, -15);
+	drawDoor(15, 0, -20);
 
 
 }
@@ -483,6 +459,9 @@ void buttons(unsigned char key, int x, int y) {
 	case 'Z':
 		// increase z-component of active control point
 		
+		break;
+	case 'O':
+		isActive = true;
 		break;
 	default:
 		// do nothing...
