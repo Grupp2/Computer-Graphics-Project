@@ -344,7 +344,42 @@ void largeCorridore() {
 	drawCube(segment, SideSelector, textures_container);
 }
 
-void drawHouse(){
+void drawRoof() {
+	float frontSide[4][3] = {
+			{ 00.0, 0.0, 00.0 },
+			{ 35.0, 0.0, 00.0 },
+			{ 35.0, 5.0, -17.5 },
+			{ 00.0, 5.0, -17.5 }
+	};
+
+	float backSide[4][3] = {
+			{ 00.0, 0.0, -35.0 },
+			{ 35.0, 0.0, -35.0 },
+			{ 35.0, 5.0, -17.5 },
+			{ 00.0, 5.0, -17.5 }
+	};
+
+	glBegin(GL_QUADS);
+	for (int i = 0; i < 4; i++)
+		glVertex3fv(frontSide[i]);
+	glEnd();
+	glBegin(GL_QUADS);
+	for (int i = 0; i < 4; i++)
+		glVertex3fv(backSide[i]);
+	glEnd();
+	glBegin(GL_TRIANGLES);
+		glVertex3fv(frontSide[0]);
+		glVertex3fv(frontSide[3]);
+		glVertex3fv(backSide[0]);
+	glEnd();
+	glBegin(GL_TRIANGLES);
+		glVertex3fv(frontSide[1]);
+		glVertex3fv(frontSide[2]);
+		glVertex3fv(backSide[3]);
+	glEnd();
+}
+
+void drawHouse() {
 
 	smallRoom();
 	glPushMatrix();
@@ -367,6 +402,10 @@ void drawHouse(){
 	largeRoom();
 	glPopMatrix();
 
+	glPushMatrix();
+	glTranslatef(0, 8, 0);
+	drawRoof();
+	glPopMatrix();
 }
 
 void rotateDoor(float x, float y, float z)
