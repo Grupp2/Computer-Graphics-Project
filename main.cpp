@@ -379,40 +379,48 @@ void drawRoof() {
 
 	glBindTexture(GL_TEXTURE_2D, texture_roof);
 	glBegin(GL_QUADS);
-	glTexCoord2f(0.0, 0.0);
+		glTexCoord2f(0.0, 0.0);
 		glVertex3fv(frontSide[0]);
 
-			glTexCoord2f(1.0, 0.0);
+		glTexCoord2f(1.0, 0.0);
 		glVertex3fv(frontSide[1]);
 
-			glTexCoord2f(1.0, 1.0);
+		glTexCoord2f(1.0, 1.0);
 		glVertex3fv(frontSide[2]);
 
-			glTexCoord2f(0.0, 1.0);
+		glTexCoord2f(0.0, 1.0);
 		glVertex3fv(frontSide[3]);
 	glEnd();
 	glBegin(GL_QUADS);
 
-	glTexCoord2f(0.0, 0.0);
+		glTexCoord2f(0.0, 0.0);
 		glVertex3fv(backSide[0]);
 
-			glTexCoord2f(1.0, 0.0);
+		glTexCoord2f(1.0, 0.0);
 		glVertex3fv(backSide[1]);
 
-			glTexCoord2f(1.0, 1.0);
+		glTexCoord2f(1.0, 1.0);
 		glVertex3fv(backSide[2]);
 
-			glTexCoord2f(0.0, 1.0);
+		glTexCoord2f(0.0, 1.0);
 		glVertex3fv(backSide[3]);
 	glEnd();
+
+	glBindTexture(GL_TEXTURE_2D, texture_wall);
 	glBegin(GL_TRIANGLES);
+		glTexCoord2f(0.0, 0.0);
 		glVertex3fv(frontSide[0]);
+		glTexCoord2f(0.5, 0.5);
 		glVertex3fv(frontSide[3]);
+		glTexCoord2f(1.0, 0.0);
 		glVertex3fv(backSide[0]);
 	glEnd();
 	glBegin(GL_TRIANGLES);
+		glTexCoord2f(0.0, 0.0);
 		glVertex3fv(frontSide[1]);
+		glTexCoord2f(0.5, 0.5);
 		glVertex3fv(frontSide[2]);
+		glTexCoord2f(1.0, 0.0);
 		glVertex3fv(backSide[3]);
 	glEnd();
 }
