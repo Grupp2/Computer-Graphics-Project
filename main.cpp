@@ -107,6 +107,16 @@ void reshape(int width, int height) {
 	glViewport(0, 0, (GLsizei)width, (GLsizei)height);
 }
 
+void addMtrl() {
+	GLfloat ambientMtrl[4] = {
+		1.0, 1.0, 1.0, 1.0
+	};
+
+	GLfloat diffuseMtrl[4] = {
+		0.1, 0.1, 0.1, 1.0
+	};
+}
+
 void drawQuad_XY(float arr[][3], GLuint texture) {
 	for (int b = arr[0][1]; b < arr[2][1]; b++)	{
 		for (int i = arr[0][0]; i < arr[1][0]; i++) {
