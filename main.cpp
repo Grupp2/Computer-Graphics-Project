@@ -38,6 +38,17 @@ bool isOpen = false;
 bool isActive = false;
 float doorAngle = 0.0;
 
+float teapotAngle = 0.0;
+
+int normalVectors[6][3] = {
+		{ 0, 0, 1 },
+		{ 0, 0, -1 },
+		{ 1, 0, 0 },
+		{ -1, 0, 0 },
+		{ 0, 1, 0 },
+		{ 0, -1, 0 }
+};
+
 GLuint texture_brickwall;
 GLuint texture_floor;
 GLuint texture_door;
@@ -160,8 +171,13 @@ void addTeapot() {
 	glPushMatrix();
 	glBindTexture(GL_TEXTURE_2D, 0);
 		glTranslatef(-10.0, 0.0, -30.0);
+		glRotatef(teapotAngle, 0.0, 1.0, 0.0);
 		glutSolidTeapot(1.0);
 	glPopMatrix();
+	if (teapotAngle == 360.0)
+		teapotAngle = 0.0;
+	else
+		teapotAngle += 0.5;
 };
 
 void addMtrl() {
@@ -752,7 +768,7 @@ void render() {
 
 	//addMtrl();
 
-	//addTeapot();
+	addTeapot();
 
 	glTranslatef(-2, -5, -20);
 	
