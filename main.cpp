@@ -156,6 +156,13 @@ void addLights() {
 	light3(lightColor1, lightColor2, lightColor3);
 }
 
+void addTeapot() {
+	glPushMatrix();
+		glTranslatef(-10.0, 0.0, -10.0);
+		glutSolidTeapot(1.0);
+	glPopMatrix();
+};
+
 void addMtrl() {
 	GLfloat ambientMtrl[4] = {
 		0.1, 0.1, 0.1, 0.1
@@ -731,13 +738,19 @@ void render() {
 	glEnable(GL_LIGHTING);
 	spotlight();
 
-	addLights();
+	
 
-	addMtrl();
 	gluLookAt(	x, 1.0f, z,
 				x+lx, 1.0f,  z+lz,
 				0.0f, 1.0f,  0.0f);
 	//glDisable(GL_LIGHT0);
+
+	addLights();
+
+	addMtrl();
+
+	addTeapot();
+
 	glTranslatef(-2, -5, -20);
 	
 	glPushMatrix();
