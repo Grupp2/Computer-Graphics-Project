@@ -338,7 +338,7 @@ void smallRoom() {
 void largeRoom() {
 	float textures_container[] = { texture_floor, texture_wall, texture_floor };
 
-	
+
 	int leftSideSelector[6] = {
 		1, // Back
 		1, // front
@@ -403,7 +403,7 @@ void drawWindow()
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, windowMtrl);
 
 	glBindTexture(GL_TEXTURE_2D, texture_glass);
-	
+
 
 	//glColor4f(0, 0, 0, 0.5f);
 	glBegin(GL_QUADS);
