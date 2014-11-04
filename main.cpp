@@ -631,6 +631,21 @@ void drawSkybox() {
 	glEnd();
 }
 
+void spotlight() {
+	GLdouble lightPosition[] = { -9.0, 3.0, 6.0, 1.0 };
+	GLdouble spotDirection[] = { -1.0, -1.0, 0.0 };
+	GLdouble lightDiffuseSpecular[] = { 0.94, 0.9, 0.8, 0.0 };
+	GLdouble lightAmbient[] = { 0.47, 0.45, 0.4, 1.0 };
+
+	glLightdv(GL_LIGHT0, GL_POSITION, lightPosition);
+	glLightdv(GL_LIGHT0, GL_AMBIENT, lightAmbient);
+	glLightdv(GL_LIGHT0, GL_DIFFUSE, lightDiffuseSpecular);
+	glLightdv(GL_LIGHT0, GL_SPECULAR, lightDiffuseSpecular);
+	glLightdv(GL_LIGHT0, GL_SPOT_DIRECTION, spotDirection);
+	glLightd(GL_LIGHT0, GL_SPOT_CUTOFF, 20.0);
+	glLightd(GL_LIGHT0, GL_SPOT_EXPONENT, 1.5);
+}
+
 void render() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
