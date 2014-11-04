@@ -107,6 +107,55 @@ void reshape(int width, int height) {
 	glViewport(0, 0, (GLsizei)width, (GLsizei)height);
 }
 
+void light1(GLfloat *col1, GLfloat *col2, GLfloat *col3) {
+	GLfloat lightPos[4] = {
+		-10.0, 7.9, 10.0, 1.0
+	};
+	glLightfv(GL_LIGHT1, GL_POSITION, lightPos);
+	glLightfv(GL_LIGHT1, GL_AMBIENT, col1);
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, col2);
+	glLightfv(GL_LIGHT1, GL_SPECULAR, col3);
+}
+
+void light2(GLfloat *col1, GLfloat *col2, GLfloat *col3) {
+	GLfloat lightPos[4] = {
+		10.0, 7.9, 10.0, 1.0
+	};
+	glLightfv(GL_LIGHT2, GL_POSITION, lightPos);
+	glLightfv(GL_LIGHT1, GL_AMBIENT, col2);
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, col3);
+	glLightfv(GL_LIGHT1, GL_SPECULAR, col1);
+}
+
+void light3(GLfloat *col1, GLfloat *col2, GLfloat *col3) {
+	GLfloat lightPos[4] = {
+		0.0, 7.9, -10.0, 1.0
+	};
+	glLightfv(GL_LIGHT3, GL_POSITION, lightPos);
+	glLightfv(GL_LIGHT1, GL_AMBIENT, col3);
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, col2);
+	glLightfv(GL_LIGHT1, GL_SPECULAR, col1);
+}
+
+void addLights() {
+	glEnable(GL_LIGHT1);
+	glEnable(GL_LIGHT2);
+	glEnable(GL_LIGHT3);
+
+	GLfloat lightColor1[4] = {
+		1.0, 1.0, 0.0, 0.6
+	};
+	GLfloat lightColor2[4] = {
+		0.0, 0.5, 0.5, 0.5
+	};
+	GLfloat lightColor3[4] = {
+		0.2, 0.7, 0.1, 0.3
+	};
+	light1(lightColor1, lightColor2, lightColor3);
+	light2(lightColor1, lightColor2, lightColor3);
+	light3(lightColor1, lightColor2, lightColor3);
+}
+
 void addMtrl() {
 	GLfloat ambientMtrl[4] = {
 		0.1, 0.1, 0.1, 0.1
@@ -681,6 +730,9 @@ void render() {
 	glEnable(GL_LIGHT0);
 	glEnable(GL_LIGHTING);
 	spotlight();
+
+	addLights();
+
 	addMtrl();
 	gluLookAt(	x, 1.0f, z,
 				x+lx, 1.0f,  z+lz,
