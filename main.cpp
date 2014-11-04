@@ -632,18 +632,18 @@ void drawSkybox() {
 }
 
 void spotlight() {
-	GLdouble lightPosition[] = { -9.0, 3.0, 6.0, 1.0 };
-	GLdouble spotDirection[] = { -1.0, -1.0, 0.0 };
-	GLdouble lightDiffuseSpecular[] = { 0.94, 0.9, 0.8, 0.0 };
-	GLdouble lightAmbient[] = { 0.47, 0.45, 0.4, 1.0 };
+	GLfloat lightPosition[] = { 20.0, 3.0, 20.0, 1.0 };
+	GLfloat spotDirection[] = { -1.0, -1.0, 0.0 };
+	GLfloat lightDiffuseSpecular[] = { 0.94, 0.9, 0.8, 0.0 };
+	GLfloat lightAmbient[] = { 0.47, 0.45, 0.4, 1.0 };
 
-	glLightdv(GL_LIGHT0, GL_POSITION, lightPosition);
-	glLightdv(GL_LIGHT0, GL_AMBIENT, lightAmbient);
-	glLightdv(GL_LIGHT0, GL_DIFFUSE, lightDiffuseSpecular);
-	glLightdv(GL_LIGHT0, GL_SPECULAR, lightDiffuseSpecular);
-	glLightdv(GL_LIGHT0, GL_SPOT_DIRECTION, spotDirection);
-	glLightd(GL_LIGHT0, GL_SPOT_CUTOFF, 20.0);
-	glLightd(GL_LIGHT0, GL_SPOT_EXPONENT, 1.5);
+	glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
+	glLightfv(GL_LIGHT0, GL_AMBIENT, lightAmbient);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, lightDiffuseSpecular);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, lightDiffuseSpecular);
+	glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, spotDirection);
+	glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 20.0);
+	glLightf(GL_LIGHT0, GL_SPOT_EXPONENT, 1.5);
 }
 
 void render() {
@@ -676,6 +676,9 @@ void render() {
 			drawDoors();
 			drawHouse();
 	glPopMatrix();
+	glEnable(GL_LIGHT0);
+	glEnable(GL_LIGHTING);
+	spotlight();
 
 	glutSwapBuffers();
 }
