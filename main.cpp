@@ -949,6 +949,7 @@ int main(int argc, char** argv) {
 	getimagefromfile("plaster_texture.bmp", &texture_wall);
 	getimagefromfile("glass.bmp", &texture_glass);
 	getimagefromfile("roof.bmp", &texture_roof);
+	glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
 	init();
 
 	glutMainLoop();
