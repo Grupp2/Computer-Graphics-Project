@@ -265,10 +265,8 @@ void largeRoom() {
 
 	drawCube(leftSegment, leftSideSelector, textures_container);
 
-	textures_container[1] = texture_glass;
-
 	int middleSideSelector[6] = {
-		1, // Back
+		0, // Back
 		0, // front
 		0, // left
 		0, // right
@@ -284,8 +282,6 @@ void largeRoom() {
 	glTranslatef(15, 0, 0);
 	drawCube(MiddleSegment, middleSideSelector, textures_container);
 	glPopMatrix();
-
-	textures_container[1] = texture_wall;
 
 	int rightSideSelector[6] = {
 		1, // Back
@@ -304,6 +300,27 @@ void largeRoom() {
 	glTranslatef(20, 0, 0);
 	drawCube(rightSegment, rightSideSelector, textures_container);
 	glPopMatrix();
+}
+
+void drawWindow()
+{
+	glDisable(GL_DEPTH_TEST);
+	glPushMatrix();
+	glTranslatef(15, 0, -35);
+	glBindTexture(GL_TEXTURE_2D, texture_glass);
+	glColor4f(0, 0, 0, 0.5f);
+	glBegin(GL_QUADS);
+	glTexCoord2f(0, 0);
+	glVertex3f(0, 0, 0);
+	glTexCoord2f(0, 1);
+	glVertex3f(0, 8, 0);
+	glTexCoord2f(1, 1);
+	glVertex3f(5, 8, 0);
+	glTexCoord2f(1, 0);
+	glVertex3f(5, 0, 0);
+	glEnd();
+	glPopMatrix();
+	glEnable(GL_DEPTH_TEST);
 }
 
 void smallCorridore() {
@@ -405,6 +422,10 @@ void drawHouse() {
 	glPushMatrix();
 	glTranslatef(0, 8, 0);
 	drawRoof();
+	glPopMatrix();
+
+	glPushMatrix();
+	drawWindow();
 	glPopMatrix();
 }
 
@@ -763,6 +784,7 @@ int main(int argc, char** argv) {
 	glutInitWindowPosition(100, 100);
 	glutCreateWindow("Computer Graphics, Project");
 	glEnable(GL_TEXTURE_2D);
+	glEnable(GL_BLEND);
 	getimagefromfile("brickwall_2.bmp", &texture_brickwall);
 	getimagefromfile("floor.tif", &texture_floor);
 	getimagefromfile("fancy_door.tif", &texture_door);
