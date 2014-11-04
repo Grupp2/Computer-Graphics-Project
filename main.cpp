@@ -49,6 +49,14 @@ int normalVectors[6][3] = {
 		{ 0, -1, 0 }
 };
 
+GLfloat ambientMtrl[4] = {
+	0.1, 0.1, 0.1, 1.0
+};
+
+GLfloat diffuseMtrl[4] = {
+	0.35, 0.55, 0.35, 1.0
+};
+
 GLuint texture_brickwall;
 GLuint texture_floor;
 GLuint texture_door;
@@ -170,27 +178,21 @@ void addLights() {
 void addTeapot() {
 	glPushMatrix();
 	glBindTexture(GL_TEXTURE_2D, 0);
-		glTranslatef(-10.0, 0.0, -30.0);
+		glTranslatef(-10.0, -4.0, -30.0);
 		glRotatef(teapotAngle, 0.0, 1.0, 0.0);
+		glMaterialfv(GL_FRONT, GL_AMBIENT, ambientMtrl);
+		glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuseMtrl);
 		glutSolidTeapot(1.0);
 	glPopMatrix();
 	if (teapotAngle == 360.0)
 		teapotAngle = 0.0;
 	else
-		teapotAngle += 0.5;
+		teapotAngle += 1.0;
 };
 
 void addMtrl() {
-	GLfloat ambientMtrl[4] = {
-		0.1, 0.1, 0.1, 1.0
-	};
-
-	GLfloat diffuseMtrl[4] = {
-		0.35, 0.55, 0.35, 1.0
-	};
-
-	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, ambientMtrl);
-	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diffuseMtrl);
+	glMaterialfv(GL_FRONT, GL_AMBIENT, ambientMtrl);
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuseMtrl);
 }
 
 void drawQuad_XY(float arr[][3], GLuint texture) {
@@ -754,20 +756,14 @@ void render() {
 	
 	glEnable(GL_LIGHT0);
 	glEnable(GL_LIGHTING);
-
-
-	
 	spotlight();
+
 	gluLookAt(	x, 1.0f, z,
 				x+lx, 1.0f,  z+lz,
 				0.0f, 1.0f,  0.0f);
 
-	//glDisable(GL_LIGHT0);
-
-	//addLights();
-
+	addLights();
 	//addMtrl();
-
 	addTeapot();
 
 	glTranslatef(-2, -5, -20);
