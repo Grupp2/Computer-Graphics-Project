@@ -45,6 +45,7 @@ GLuint texture_grass;
 GLuint texture_sky;
 GLuint texture_wall;
 GLuint texture_glass;
+GLuint texture_roof;
 
 float ctrl_delta = 0.01;
 
@@ -376,13 +377,33 @@ void drawRoof() {
 			{ 00.0, 5.0, -17.5 }
 	};
 
+	glBindTexture(GL_TEXTURE_2D, texture_roof);
 	glBegin(GL_QUADS);
-	for (int i = 0; i < 4; i++)
-		glVertex3fv(frontSide[i]);
+	glTexCoord2f(0.0, 0.0);
+		glVertex3fv(frontSide[0]);
+
+			glTexCoord2f(1.0, 0.0);
+		glVertex3fv(frontSide[1]);
+
+			glTexCoord2f(1.0, 1.0);
+		glVertex3fv(frontSide[2]);
+
+			glTexCoord2f(0.0, 1.0);
+		glVertex3fv(frontSide[3]);
 	glEnd();
 	glBegin(GL_QUADS);
-	for (int i = 0; i < 4; i++)
-		glVertex3fv(backSide[i]);
+
+	glTexCoord2f(0.0, 0.0);
+		glVertex3fv(backSide[0]);
+
+			glTexCoord2f(1.0, 0.0);
+		glVertex3fv(backSide[1]);
+
+			glTexCoord2f(1.0, 1.0);
+		glVertex3fv(backSide[2]);
+
+			glTexCoord2f(0.0, 1.0);
+		glVertex3fv(backSide[3]);
 	glEnd();
 	glBegin(GL_TRIANGLES);
 		glVertex3fv(frontSide[0]);
@@ -792,6 +813,7 @@ int main(int argc, char** argv) {
 	getimagefromfile("sky.bmp", &texture_sky);
 	getimagefromfile("plaster_texture.bmp", &texture_wall);
 	getimagefromfile("glass.bmp", &texture_glass);
+	getimagefromfile("roof.bmp", &texture_roof);
 	init();
 
 	glutMainLoop();
