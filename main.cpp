@@ -143,7 +143,7 @@ void addLights() {
 	glEnable(GL_LIGHT3);
 
 	GLfloat lightColor1[4] = {
-		1.0, 1.0, 0.0, 0.6
+		1.0, 1.0, 1.0, 0.6
 	};
 	GLfloat lightColor2[4] = {
 		0.0, 0.5, 0.5, 0.5
@@ -183,7 +183,6 @@ void drawQuad_XY(float arr[][3], GLuint texture) {
 		for (int i = arr[0][0]; i < arr[1][0]; i++) {
 			glColor3f(1, 0, 0);
 			glBindTexture(GL_TEXTURE_2D, texture);
-			addMtrl();
 			glBegin(GL_QUADS);
 			glTexCoord2f(0, 0);
 			glVertex3f(i, b, 0);
@@ -400,8 +399,11 @@ void drawWindow()
 		glTexCoord2f(1, 0);
 		glVertex3f(5, 0, 0);
 	glEnd();
-	glPopMatrix();
+
 	glPopAttrib();
+	GLfloat defaultmtrl[4] = {0, 0, 0, 1};
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, defaultmtrl);
+	glPopMatrix();
 }
 
 void smallCorridore() {
@@ -535,7 +537,6 @@ void drawHouse() {
 	drawRoof();
 	glPopMatrix();
 
-	glPopAttrib();
 
 	glPushMatrix();
 	drawWindow();
@@ -737,20 +738,21 @@ void render() {
 	
 	glEnable(GL_LIGHT0);
 	glEnable(GL_LIGHTING);
-	spotlight();
+
 
 	
-
+	spotlight();
 	gluLookAt(	x, 1.0f, z,
 				x+lx, 1.0f,  z+lz,
 				0.0f, 1.0f,  0.0f);
+
 	//glDisable(GL_LIGHT0);
 
-	addLights();
+	//addLights();
 
-	addMtrl();
+	//addMtrl();
 
-	addTeapot();
+	//addTeapot();
 
 	glTranslatef(-2, -5, -20);
 	
