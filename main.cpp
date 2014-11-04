@@ -806,6 +806,7 @@ int main(int argc, char** argv) {
 	glutCreateWindow("Computer Graphics, Project");
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	getimagefromfile("brickwall_2.bmp", &texture_brickwall);
 	getimagefromfile("floor.tif", &texture_floor);
 	getimagefromfile("fancy_door.tif", &texture_door);
