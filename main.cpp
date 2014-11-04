@@ -632,7 +632,7 @@ void drawSkybox() {
 }
 
 void spotlight() {
-	GLfloat lightPosition[] = { 20.0, 3.0, 20.0, 1.0 };
+	GLfloat lightPosition[] = { 0.0, 2.0, 0.0, 1.0 };
 	GLfloat spotDirection[] = { -1.0, -1.0, 0.0 };
 	GLfloat lightDiffuseSpecular[] = { 0.94, 0.9, 0.8, 0.0 };
 	GLfloat lightAmbient[] = { 0.47, 0.45, 0.4, 1.0 };
@@ -650,11 +650,15 @@ void render() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glLoadIdentity();
-
+	/*
+	glEnable(GL_LIGHT0);
+	glEnable(GL_LIGHTING);
+	spotlight();
+	*/
 	gluLookAt(	x, 1.0f, z,
 				x+lx, 1.0f,  z+lz,
 				0.0f, 1.0f,  0.0f);
-
+	glDisable(GL_LIGHT0);
 	glTranslatef(-2, -5, -20);
 	
 	glPushMatrix();
@@ -676,10 +680,7 @@ void render() {
 			drawDoors();
 			drawHouse();
 	glPopMatrix();
-	glEnable(GL_LIGHT0);
-	glEnable(GL_LIGHTING);
-	spotlight();
-
+	
 	glutSwapBuffers();
 }
 
