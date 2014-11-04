@@ -115,6 +115,9 @@ void addMtrl() {
 	GLfloat diffuseMtrl[4] = {
 		0.1, 0.1, 0.1, 1.0
 	};
+
+	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, ambientMtrl);
+	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diffuseMtrl);
 }
 
 void drawQuad_XY(float arr[][3], GLuint texture) {
@@ -222,6 +225,8 @@ void smallRoom() {
 		5 ,8 ,15
 	};
 
+
+
 	drawCube(leftSegment, leftSideSelector, textures_container);
 
 	int middleSideSelector[6] = {
@@ -318,17 +323,25 @@ void drawWindow()
 	glPushAttrib(GL_CURRENT_BIT);
 	glPushMatrix();
 	glTranslatef(15, 0, -35);
+
+	GLfloat windowMtrl[4] = {
+		0.0, 0.0, 0.0, 0.5
+	};
+	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, windowMtrl);
+
 	glBindTexture(GL_TEXTURE_2D, texture_glass);
-	glColor4f(0, 0, 0, 0.5f);
+	
+
+	//glColor4f(0, 0, 0, 0.5f);
 	glBegin(GL_QUADS);
-	glTexCoord2f(0, 0);
-	glVertex3f(0, 0, 0);
-	glTexCoord2f(0, 1);
-	glVertex3f(0, 8, 0);
-	glTexCoord2f(1, 1);
-	glVertex3f(5, 8, 0);
-	glTexCoord2f(1, 0);
-	glVertex3f(5, 0, 0);
+		glTexCoord2f(0, 0);
+		glVertex3f(0, 0, 0);
+		glTexCoord2f(0, 1);
+		glVertex3f(0, 8, 0);
+		glTexCoord2f(1, 1);
+		glVertex3f(5, 8, 0);
+		glTexCoord2f(1, 0);
+		glVertex3f(5, 0, 0);
 	glEnd();
 	glPopMatrix();
 	glPopAttrib();
@@ -643,7 +656,7 @@ void drawSkybox() {
 
 void spotlight() {
 	GLfloat lightPosition[] = { 0.0, 2.0, 0.0, 1.0 };
-	GLfloat spotDirection[] = { -1.0, -1.0, 0.0 };
+	GLfloat spotDirection[] = { 0.0, 0.0, -1.0 };
 	GLfloat lightDiffuseSpecular[] = { 0.94, 0.9, 0.8, 0.0 };
 	GLfloat lightAmbient[] = { 0.47, 0.45, 0.4, 1.0 };
 
@@ -660,11 +673,11 @@ void render() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glLoadIdentity();
-	/*
+	
 	glEnable(GL_LIGHT0);
 	glEnable(GL_LIGHTING);
 	spotlight();
-	*/
+
 	gluLookAt(	x, 1.0f, z,
 				x+lx, 1.0f,  z+lz,
 				0.0f, 1.0f,  0.0f);
