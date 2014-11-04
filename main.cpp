@@ -244,19 +244,19 @@ void drawCube(float endPoint[3], int sideSelector[6], float *texture_container) 
 	if (sideSelector[0] == 1) {
 		glPushMatrix(); // Back
 			glTranslatef(0.0, 0.0, -endPoint[2]);
-			drawQuad_XY(frontbackarr, texture_container[1], normalVectors[0]);
+			drawQuad_XY(frontbackarr, texture_container[1], normalVectors[1]);
 		glPopMatrix();
 	}
 	if (sideSelector[1] == 1) {
 		glPushMatrix(); // front
 		glTranslatef(0.0, 0.0, 0.0);
-		drawQuad_XY(frontbackarr, texture_container[1], normalVectors[1]);
+		drawQuad_XY(frontbackarr, texture_container[1], normalVectors[0]);
 		glPopMatrix();
 	}
 	if (sideSelector[2] == 1) {
 		glPushMatrix(); // left
 		glRotatef(90, 0.0, 1.0, 0.0);
-		drawQuad_XY(leftrightarr, texture_container[1], normalVectors[2]);
+		drawQuad_XY(leftrightarr, texture_container[1], normalVectors[3]);
 		glPopMatrix();
 	}
 	if (sideSelector[3] == 1) {
@@ -407,6 +407,7 @@ void drawWindow()
 
 	//glColor4f(0, 0, 0, 0.5f);
 	glBegin(GL_QUADS);
+		glNormal3fv(normalVectors[1]);
 		glTexCoord2f(0, 0);
 		glVertex3f(0, 0, 0);
 		glTexCoord2f(0, 1);
@@ -595,14 +596,15 @@ void drawDoor(float x, float y, float z)
 	
 	glBindTexture(GL_TEXTURE_2D, texture_door);
 	glBegin(GL_QUADS);
-	glTexCoord2f(0, 0);
-	glVertex3f(0, 0, 0);
-	glTexCoord2f(1, 0);
-	glVertex3f(5, 0, 0);
-	glTexCoord2f(1, 1);
-	glVertex3f(5, 8, 0);
-	glTexCoord2f(0, 1);
-	glVertex3f(0, 8, 0);
+		glNormal3fv(normalVectors[1]);
+		glTexCoord2f(0, 0);
+		glVertex3f(0, 0, 0);
+		glTexCoord2f(1, 0);
+		glVertex3f(5, 0, 0);
+		glTexCoord2f(1, 1);
+		glVertex3f(5, 8, 0);
+		glTexCoord2f(0, 1);
+		glVertex3f(0, 8, 0);
 	glEnd();
 	glPopMatrix();
 }
