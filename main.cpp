@@ -109,11 +109,11 @@ void reshape(int width, int height) {
 
 void addMtrl() {
 	GLfloat ambientMtrl[4] = {
-		1.0, 1.0, 1.0, 1.0
+		0.0, 0.0, 0.0, 0.1
 	};
 
 	GLfloat diffuseMtrl[4] = {
-		0.1, 0.1, 0.1, 1.0
+		0.35, 0.55, 0.35, 1.0
 	};
 
 	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, ambientMtrl);
@@ -449,6 +449,8 @@ void drawRoof() {
 }
 
 void drawHouse() {
+	glPushAttrib(GL_LIGHTING_BIT);
+	addMtrl();
 
 	smallRoom();
 	glPushMatrix();
@@ -475,6 +477,8 @@ void drawHouse() {
 	glTranslatef(0, 8, 0);
 	drawRoof();
 	glPopMatrix();
+
+	glPopAttrib();
 
 	glPushMatrix();
 	drawWindow();
