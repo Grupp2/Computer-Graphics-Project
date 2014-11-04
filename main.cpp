@@ -498,14 +498,10 @@ void drawDoor(float x, float y, float z)
 }
 void drawDoors()
 {
-
-
 	drawDoor(15, 0, 0);
 	drawDoor(5, 0, -15);
 	drawDoor(25, 0, -15);
 	drawDoor(15, 0, -20);
-
-
 }
 
 void drawGarden() {
@@ -653,8 +649,9 @@ void render() {
 
 	glPushMatrix();
 			glTranslatef(-17.5, 0, 17.5);
-			drawHouse();
+
 			drawDoors();
+			drawHouse();
 	glPopMatrix();
 
 	glutSwapBuffers();
