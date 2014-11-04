@@ -421,7 +421,7 @@ void drawRoof() {
 		glTexCoord2f(0.5, 0.5);
 		glVertex3fv(frontSide[2]);
 		glTexCoord2f(1.0, 0.0);
-		glVertex3fv(backSide[3]);
+		glVertex3fv(backSide[1]);
 	glEnd();
 }
 
