@@ -166,7 +166,7 @@ void addTeapot() {
 
 void addMtrl() {
 	GLfloat ambientMtrl[4] = {
-		0.1, 0.1, 0.1, 0.1
+		0.1, 0.1, 0.1, 1.0
 	};
 
 	GLfloat diffuseMtrl[4] = {
@@ -178,13 +178,13 @@ void addMtrl() {
 }
 
 void drawQuad_XY(float arr[][3], GLuint texture) {
+
 	for (int b = arr[0][1]; b < arr[2][1]; b++)	{
 		for (int i = arr[0][0]; i < arr[1][0]; i++) {
 			glColor3f(1, 0, 0);
-
 			glBindTexture(GL_TEXTURE_2D, texture);
+			addMtrl();
 			glBegin(GL_QUADS);
-
 			glTexCoord2f(0, 0);
 			glVertex3f(i, b, 0);
 			glTexCoord2f(1.0, 0);
@@ -912,7 +912,7 @@ void getimagefromfile(const char *src, GLuint *texname) {
 	// Step 5: Assign the data from the image file to the texture object:
 	glTexImage2D (GL_TEXTURE_2D, 0, 3, ifile->getWidth(),
 			ifile->getHeight(), 0, GL_RGB, GL_UNSIGNED_BYTE, ifile->getData());
-    glTexEnvf (GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+    glTexEnvf (GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 	// Step 6: Unbind the texture object.
 	glBindTexture (GL_TEXTURE_2D, 0);
 }
