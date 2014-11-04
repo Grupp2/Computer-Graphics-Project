@@ -320,14 +320,14 @@ void largeRoom() {
 
 void drawWindow()
 {
-	glPushAttrib(GL_CURRENT_BIT);
+	glPushAttrib(GL_LIGHTING_BIT);
 	glPushMatrix();
 	glTranslatef(15, 0, -35);
 
 	GLfloat windowMtrl[4] = {
 		0.0, 0.0, 0.0, 0.5
 	};
-	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, windowMtrl);
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, windowMtrl);
 
 	glBindTexture(GL_TEXTURE_2D, texture_glass);
 	
