@@ -305,7 +305,7 @@ void largeRoom() {
 
 void drawWindow()
 {
-	glDisable(GL_DEPTH_TEST);
+	glPushAttrib(GL_CURRENT_BIT);
 	glPushMatrix();
 	glTranslatef(15, 0, -35);
 	glBindTexture(GL_TEXTURE_2D, texture_glass);
@@ -321,7 +321,7 @@ void drawWindow()
 	glVertex3f(5, 0, 0);
 	glEnd();
 	glPopMatrix();
-	glEnable(GL_DEPTH_TEST);
+	glPopAttrib();
 }
 
 void smallCorridore() {
@@ -643,17 +643,19 @@ void render() {
 		drawSkybox();
 	glPopMatrix();
 
-	glPushMatrix();
-		glTranslatef(-17.5, 0, 17.5);
-		drawHouse();
-		drawDoors();
-	glPopMatrix();
+
 
 	glPushMatrix();
 		glTranslatef(-75, -0.1, 75);
 		drawGarden();
 	glPopMatrix();
 
+
+	glPushMatrix();
+			glTranslatef(-17.5, 0, 17.5);
+			drawHouse();
+			drawDoors();
+	glPopMatrix();
 
 	glutSwapBuffers();
 }
@@ -807,6 +809,7 @@ int main(int argc, char** argv) {
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glBlendEquation(GL_FUNC_ADD);
 	getimagefromfile("brickwall_2.bmp", &texture_brickwall);
 	getimagefromfile("floor.tif", &texture_floor);
 	getimagefromfile("fancy_door.tif", &texture_door);
