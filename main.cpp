@@ -158,7 +158,8 @@ void addLights() {
 
 void addTeapot() {
 	glPushMatrix();
-		glTranslatef(-10.0, 0.0, -10.0);
+	glBindTexture(GL_TEXTURE_2D, 0);
+		glTranslatef(-10.0, 0.0, -30.0);
 		glutSolidTeapot(1.0);
 	glPopMatrix();
 };
@@ -715,7 +716,7 @@ void drawSkybox() {
 }
 
 void spotlight() {
-	GLfloat lightPosition[] = { 0.0, 2.0, 0.0, 1.0 };
+	GLfloat lightPosition[] = { 0.0, 0.0, 0.0, 1.0 };
 	GLfloat spotDirection[] = { 0.0, 0.0, -1.0 };
 	GLfloat lightDiffuseSpecular[] = { 0.94, 0.9, 0.8, 0.0 };
 	GLfloat lightAmbient[] = { 0.47, 0.45, 0.4, 1.0 };
