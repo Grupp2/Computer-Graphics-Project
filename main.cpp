@@ -109,7 +109,7 @@ void reshape(int width, int height) {
 
 void addMtrl() {
 	GLfloat ambientMtrl[4] = {
-		0.0, 0.0, 0.0, 0.1
+		0.1, 0.1, 0.1, 0.1
 	};
 
 	GLfloat diffuseMtrl[4] = {
@@ -449,8 +449,8 @@ void drawRoof() {
 }
 
 void drawHouse() {
-	glPushAttrib(GL_LIGHTING_BIT);
-	addMtrl();
+	//glPushAttrib(GL_LIGHTING_BIT);
+	//addMtrl();
 
 	smallRoom();
 	glPushMatrix();
@@ -681,11 +681,11 @@ void render() {
 	glEnable(GL_LIGHT0);
 	glEnable(GL_LIGHTING);
 	spotlight();
-
+	addMtrl();
 	gluLookAt(	x, 1.0f, z,
 				x+lx, 1.0f,  z+lz,
 				0.0f, 1.0f,  0.0f);
-	glDisable(GL_LIGHT0);
+	//glDisable(GL_LIGHT0);
 	glTranslatef(-2, -5, -20);
 	
 	glPushMatrix();
@@ -859,6 +859,7 @@ int main(int argc, char** argv) {
 	glutCreateWindow("Computer Graphics, Project");
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_BLEND);
+	glDisable(GL_COLOR_MATERIAL);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	//glBlendEquation(GL_FUNC_ADD);
 	getimagefromfile("brickwall_2.bmp", &texture_brickwall);
