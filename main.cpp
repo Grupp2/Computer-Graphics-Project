@@ -808,8 +808,8 @@ int main(int argc, char** argv) {
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	getimagefromfile("brickwall_2.bmp", &texture_brickwall);
-	getimagefromfile("floor.bmp", &texture_floor);
-	getimagefromfile("fancy_door.bmp", &texture_door);
+	getimagefromfile("floor.tif", &texture_floor);
+	getimagefromfile("fancy_door.tif", &texture_door);
 	getimagefromfile("grass_3.bmp", &texture_grass);
 	getimagefromfile("sky.bmp", &texture_sky);
 	getimagefromfile("plaster_texture.bmp", &texture_wall);
