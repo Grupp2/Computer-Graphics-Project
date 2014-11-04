@@ -165,10 +165,10 @@ void addLights() {
 		1.0, 1.0, 1.0, 0.6
 	};
 	GLfloat lightColor2[4] = {
-		0.0, 0.5, 0.5, 0.5
+		0.5, 0.5, 0.5, 0.5
 	};
 	GLfloat lightColor3[4] = {
-		0.2, 0.7, 0.1, 0.3
+		0.2, 0.2, 0.2, 0.2
 	};
 	light1(lightColor1, lightColor2, lightColor3);
 	light2(lightColor1, lightColor2, lightColor3);
