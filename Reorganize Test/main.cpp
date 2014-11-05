@@ -27,6 +27,7 @@ float angle=0.0;
 float lx=0.0f,lz=-1.0f;
 // XZ position of the camera
 float x=0.0f,z=5.0f;
+float y=1.0;
 
 float theta = 0.0;
 float phi = 0.0;
@@ -45,11 +46,11 @@ float teapotAngle = 0.0;
 
 
 GLfloat ambientMtrl[4] = {
-	0.1, 0.1, 0.1, 1.0
+	0.01, 0.01, 0.01, 1.0
 };
 
 GLfloat diffuseMtrl[4] = {
-	0.35, 0.55, 0.35, 1.0
+	0.55, 0.55, 0.55, 1.0
 };
 
 float ctrl_delta = 0.01;
@@ -166,13 +167,13 @@ void render() {
 	
 	
 	spotlight();
-
-	gluLookAt(	x, 1.0f, z,
+	addLightColors();
+	gluLookAt(	x, y, z,
 				x+lx, 1.0f,  z+lz,
 				0.0f, 1.0f,  0.0f);
 
-	//addLights();
-	//addMtrl();
+	
+	
 	//addTeapot();
 
 	glTranslatef(-2, -5, -20);
@@ -191,6 +192,7 @@ void render() {
 
 
 	glPushMatrix();
+			//addMtrl();
 			glTranslatef(-17.5, 0, 17.5);
 			drawDoors();
 			drawHouse();
@@ -229,6 +231,18 @@ void buttons(unsigned char key, int x, int y) {
 		break;
 	case 'o':
 		setisactive(true);
+		break;
+	case 'L':
+		enableLights();
+		break;
+	case 'l':
+		disableLights();
+		break;
+	case 'S':
+		enableSpotlight();
+		break;
+	case 's':
+		disableSpotlight();
 		break;
 	default:
 		// do nothing...
@@ -359,11 +373,14 @@ int main(int argc, char** argv) {
 	glEnable(GL_LIGHTING);
 	glDisable(GL_COLOR_MATERIAL);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glShadeModel(GL_SMOOTH);
 	//glBlendEquation(GL_FUNC_ADD);
 	loadTextures();
 	glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
 	glClearColor(0.0, 0.0, 0.0, 0.0);
 	glEnable(GL_DEPTH_TEST);
+	enableLights();
+
 	init();
 
 	glutMainLoop();

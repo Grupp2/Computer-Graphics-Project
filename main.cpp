@@ -763,7 +763,7 @@ void render() {
 				x+lx, 1.0f,  z+lz,
 				0.0f, 1.0f,  0.0f);
 
-	//addLights();
+	addLights();
 	//addMtrl();
 	//addTeapot();
 
@@ -951,7 +951,7 @@ int main(int argc, char** argv) {
 	getimagefromfile("plaster_texture.bmp", &texture_wall);
 	getimagefromfile("glass.bmp", &texture_glass);
 	getimagefromfile("roof.bmp", &texture_roof);
-	glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
+	glLightModeli(GL_LIGHT_MODEL_AMBIENT, GL_TRUE);
 	init();
 
 	glutMainLoop();

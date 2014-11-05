@@ -9,6 +9,8 @@ GLfloat normalVectors[6][3] = {
 		{ 0, -1, 0 } // bottom
 };
 
+
+
 void drawQuad_XY(float arr[][3], GLuint texture, GLfloat *normVec) {
 
 	for (int b = arr[0][1]; b < arr[2][1]; b++)	{
@@ -16,7 +18,11 @@ void drawQuad_XY(float arr[][3], GLuint texture, GLfloat *normVec) {
 			glColor3f(1, 0, 0);
 			glBindTexture(GL_TEXTURE_2D, texture);
 			glBegin(GL_QUADS);
-				glNormal3fv(normVec);
+				glm::vec3 av(i, b, 0.0f);
+				glm::vec3 bv(i + 1.0f, b, 0.0f);
+				glm::vec3 cv(i + 1.0f, b + 1.0f, 0.0f);
+				glm::vec3 normalvec = computeNormal(av, bv, cv);
+				glNormal3f(normalvec.x, normalvec.y, normalvec.z);
 				glTexCoord2f(0, 0);
 				glVertex3f(i, b, 0);
 				glTexCoord2f(1.0, 0);
@@ -96,3 +102,11 @@ void drawCube(float endPoint[3], int sideSelector[6], float *texture_container) 
 
 }
 
+ 
+glm::vec3 computeNormal(
+glm::vec3 const & a, 
+glm::vec3 const & b,
+glm::vec3 const & c)
+{
+        return glm::normalize(glm::cross(c - a, b - a));
+}

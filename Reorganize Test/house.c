@@ -118,6 +118,8 @@ void drawWindow()
 		0.0, 0.0, 0.0, 0.5
 	};
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, windowMtrl);
+	glMaterialfv(GL_FRONT, GL_AMBIENT, windowMtrl);
+	glMaterialfv(GL_FRONT, GL_SPECULAR, windowMtrl);
 
 	glBindTexture(GL_TEXTURE_2D, texture_glass);
 	
@@ -137,6 +139,8 @@ void drawWindow()
 	glPopAttrib();
 	GLfloat defaultmtrl[4] = {0, 0, 0, 1};
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, defaultmtrl);
+	//glMaterialfv(GL_FRONT, GL_AMBIENT, defaultmtrl);
+	//glMaterialfv(GL_FRONT, GL_SPECULAR, defaultmtrl);
 	glPopMatrix();
 }
 

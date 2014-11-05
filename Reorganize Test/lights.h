@@ -7,7 +7,10 @@ void spotlight();
 void light1(GLfloat *col1, GLfloat *col2, GLfloat *col3);
 void light2(GLfloat *col1, GLfloat *col2, GLfloat *col3);
 void light3(GLfloat *col1, GLfloat *col2, GLfloat *col3);
-void addLights();
-
+void enableLights();
+void addLightColors();
+void disableLights();
+void enableSpotlight();
+void disableSpotlight();
 
 #endif
