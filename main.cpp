@@ -334,6 +334,61 @@ void smallRoom() {
 	drawCube(rightSegment, rightSideSelector, textures_container);
 	glPopMatrix();
 }
+void smallRoomOuterWall() {
+	float textures_container[] = {texture_wall};
+
+	int leftSideSelector[6] = {
+		0, // Back
+		1, // front
+		1, // left
+		0, // right
+		0, // roof
+		0 // ground
+	};
+	float leftSegment[3] = {
+		5 ,8 ,15
+	};
+
+	glPushMatrix();
+	glTranslatef(0.1, 0, 0.1);
+	drawCube(leftSegment, leftSideSelector, textures_container);
+	glPopMatrix();
+
+	int middleSideSelector[6] = {
+		0, // Back
+		1, // front
+		0, // left
+		0, // right
+		0, // roof
+		0 // ground
+	};
+	float MiddleSegment[3] = {
+		5, 8, 15
+	};
+
+	glPushMatrix();
+	glTranslatef(5.1, 0, 0.1);
+	drawCube(MiddleSegment, middleSideSelector, textures_container);
+	glPopMatrix();
+
+
+	int rightSideSelector[6] = {
+		0, // Back
+		1, // front
+		0, // left
+		1, // right
+		0, // roof
+		0 // ground
+	};
+
+	float rightSegment[3] = {
+		5, 8, 15
+	};
+	glPushMatrix();
+	glTranslatef(10.1, 0, 0.1);
+	drawCube(rightSegment, rightSideSelector, textures_container);
+	glPopMatrix();
+}
 
 void largeRoom() {
 	float textures_container[] = { texture_floor, texture_wall, texture_floor };
@@ -392,7 +447,7 @@ void largeRoom() {
 }
 
 void largeRoomOuterWall() {
-	float textures_container[] = { texture_floor, texture_wall, texture_floor };
+	float textures_container[] = {texture_wall};
 
 
 	int leftSideSelector[6] = {
@@ -573,6 +628,12 @@ void drawHouse() {
 
 	smallRoom();
 	glPushMatrix();
+	glTranslatef(-0.2, 0, 0);
+	smallRoomOuterWall();
+	glPopMatrix();
+	
+
+	glPushMatrix();
 	glTranslatef(15, 0, 0);
 	smallCorridore();
 	glPopMatrix();
@@ -580,6 +641,11 @@ void drawHouse() {
 	glPushMatrix();
 	glTranslatef(20, 0, 0);
 	smallRoom();
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(20, 0, 0);
+	smallRoomOuterWall();
 	glPopMatrix();
 
 	glPushMatrix();
