@@ -327,9 +327,9 @@ void drawCube(float endPoint[3], int sideSelector[6], float *texture_container, 
 	GLfloat normVect[6][3];
 
 	if (isOuterWall)
-		GLfloat *normVect = *normalVectorsOuterWalls;
+		GLfloat (&normVect)[6][3] = normalVectorsOuterWalls;
 	else
-		GLfloat *normVect = *normalVectorsInnerWalls;
+		GLfloat (&normVect)[6][3] = normalVectorsInnerWalls;
 
 
 	glPushMatrix();
