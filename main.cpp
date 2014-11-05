@@ -953,7 +953,6 @@ int main(int argc, char** argv) {
 	getimagefromfile("roof.bmp", &texture_roof);
 	glLightModeli(GL_LIGHT_MODEL_AMBIENT, GL_TRUE);
 	init();
-
 	glutMainLoop();
 	return 0;
 }

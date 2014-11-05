@@ -46,7 +46,7 @@ float teapotAngle = 0.0;
 
 
 GLfloat ambientMtrl[4] = {
-	0.01, 0.01, 0.01, 1.0
+	0.1, 0.1, 0.1, 1.0
 };
 
 GLfloat diffuseMtrl[4] = {
@@ -116,10 +116,10 @@ void reshape(int width, int height) {
 void addTeapot() {
 	glPushMatrix();
 	glBindTexture(GL_TEXTURE_2D, 0);
-		glTranslatef(-10.0, -4.0, -30.0);
+		glTranslatef(-10.0, -4.0, -15.0);
 		glRotatef(teapotAngle, 0.0, 1.0, 0.0);
-		glMaterialfv(GL_FRONT, GL_AMBIENT, ambientMtrl);
-		glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuseMtrl);
+		//glMaterialfv(GL_FRONT, GL_AMBIENT, ambientMtrl);
+		//glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuseMtrl);
 		glutSolidTeapot(1.0);
 	glPopMatrix();
 	if (teapotAngle == 360.0)
@@ -165,16 +165,16 @@ void render() {
 
 	glLoadIdentity();
 	
-	
+
 	spotlight();
-	addLightColors();
+
 	gluLookAt(	x, y, z,
 				x+lx, 1.0f,  z+lz,
 				0.0f, 1.0f,  0.0f);
 
 	
 	
-	//addTeapot();
+	addTeapot();
 
 	glTranslatef(-2, -5, -20);
 	
@@ -192,10 +192,13 @@ void render() {
 
 
 	glPushMatrix();
-			//addMtrl();
 			glTranslatef(-17.5, 0, 17.5);
+			//glPushAttrib(GL_LIGHTING_BIT);
+			addLightColors();
+			addMtrl();
 			drawDoors();
 			drawHouse();
+			//glPopAttrib();
 	glPopMatrix();
 	
 	glutSwapBuffers();
