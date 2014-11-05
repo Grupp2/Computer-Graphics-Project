@@ -67,7 +67,6 @@ ImageFile::ImageFile(const char *path, int flag)
 		ExceptionInfo ei (msg, 3);
 		throw ei;
 	}
-
 	imgBPP = FreeImage_GetBPP(image);
 	if (imgBPP != 24 &&  imgBPP != 32)
 	{

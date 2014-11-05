@@ -18,7 +18,7 @@ void spotlight() {
 
 void light1(GLfloat *col1, GLfloat *col2, GLfloat *col3) {
 	GLfloat lightPos[4] = {
-		6.0, -7.0, -10.0, 1.0
+		6.0, 7.0, -10.0, 1.0
 	};
 	glLightfv(GL_LIGHT1, GL_POSITION, lightPos);
 	glLightfv(GL_LIGHT1, GL_AMBIENT, col1);
