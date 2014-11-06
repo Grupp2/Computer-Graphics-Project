@@ -959,7 +959,7 @@ void drawGarden() {
 		150, 5, 150
 	};
 
-	drawCube(leftSegment, leftSideSelector, textures_container);
+	drawCube(leftSegment, leftSideSelector, textures_container, false);
 }
 
 void drawSkybox() {
