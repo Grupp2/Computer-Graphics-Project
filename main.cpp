@@ -675,8 +675,8 @@ void smallCorridore() {
 	int SideSelector[6] = {
 		0, // Back
 		0, // front
-		0, // left
-		0, // right
+		1, // left
+		1, // right
 		1, // roof
 		1 // ground
 	};
@@ -691,20 +691,129 @@ void smallCorridore() {
 void largeCorridore() {
 	float textures_container[] = { texture_floor, texture_wall, texture_floor };
 
-	float segment[3] = {
-		35, 8, 10
+	float l1segment[3] = {
+		5, 8, 10
 	};
 
-	int SideSelector[6] = {
+	int l1SideSelector[6] = {
+		1, // Back
+		1, // front
+		1, // left
+		0, // right
+		1, // roof
+		1 // ground
+	};
+
+	drawCube(l1segment, l1SideSelector, textures_container);
+
+	float l2segment[3] = {
+		5, 8, 10
+	};
+
+	int l2SideSelector[6] = {
+		1, // Back
+		0, // front
+		0, // left
+		0, // right
+		1, // roof
+		1 // ground
+	};
+
+	glPushMatrix();
+	glTranslatef(5, 0, 0);
+	drawCube(l2segment, l2SideSelector, textures_container);
+	glPopMatrix();
+
+	float l3segment[3] = {
+		6, 8, 10
+	};
+
+	int l3SideSelector[6] = {
+		1, // Back
+		1, // front
+		0, // left
+		0, // right
+		1, // roof
+		1 // ground
+	};
+
+	glPushMatrix();
+	glTranslatef(10, 0, 0);
+	drawCube(l3segment, l3SideSelector, textures_container);
+	glPopMatrix();
+
+	float cSegment[3] = {
+		5, 8, 10
+	};
+
+	int cSideSelector[6] = {
 		0, // Back
 		0, // front
-		1, // left
+		0, // left
+		0, // right
+		1, // roof
+		1 // ground
+	};
+
+	glPushMatrix();
+	glTranslatef(16, 0, 0);
+	drawCube(cSegment, cSideSelector, textures_container);
+	glPopMatrix();
+
+	float r1segment[3] = {
+		6, 8, 10
+	};
+
+	int r1SideSelector[6] = {
+		1, // Back
+		1, // front
+		0, // left
+		0, // right
+		1, // roof
+		1 // ground
+	};
+
+	glPushMatrix();
+	glTranslatef(21, 0, 0);
+	drawCube(r1segment, r1SideSelector, textures_container);
+	glPopMatrix();
+
+	float r2Segment[3] = {
+		5, 8, 10
+	};
+
+	int r2SideSelector[6] = {
+		1, // Back
+		0, // front
+		0, // left
+		0, // right
+		1, // roof
+		1 // ground
+	};
+
+	glPushMatrix();
+	glTranslatef(26, 0, 0);
+	drawCube(r2Segment, r2SideSelector, textures_container);
+	glPopMatrix();
+
+	float r3Segment[3] = {
+		5, 8, 10
+	};
+
+	int r3SideSelector[6] = {
+		1, // Back
+		1, // front
+		0, // left
 		1, // right
 		1, // roof
 		1 // ground
 	};
 
-	drawCube(segment, SideSelector, textures_container);
+	glPushMatrix();
+	glTranslatef(31, 0, 0);
+	drawCube(r3Segment, r3SideSelector, textures_container);
+	glPopMatrix();
+
 }
 
 void drawRoof() {
@@ -803,7 +912,7 @@ void drawHouse() {
 	glPopMatrix();
 
 	glPushMatrix();
-	glTranslatef(0, 0, -28);
+	glTranslatef(0, 0, -33);
 	largeRoom();
 	glPopMatrix();
 
@@ -811,50 +920,6 @@ void drawHouse() {
 	glTranslatef(0, 8, 0);
 	drawRoof();
 	glPopMatrix();
-
-
-	/*
-	glPushMatrix();
-	glTranslatef(-0.2, 0, 0);
-	smallRoomOuterWall();
-	glPopMatrix();
-	*/
-	/*
-	glPushMatrix();
-	glTranslatef(15, 0, 0);
-	smallCorridore();
-	glPopMatrix();
-
-	
-
-
-
-	/*
-	glPushMatrix();
-	glTranslatef(20, 0, 0);
-	smallRoomOuterWall();
-	glPopMatrix();
-	*//*
-	glPushMatrix();
-	glTranslatef(0, 0, -15);
-	largeCorridore();
-	glPopMatrix();
-
-	glPushMatrix();
-	glTranslatef(0, 0, -20);
-	largeRoom();
-	glPopMatrix();
-	/*
-	glPushMatrix();
-	glTranslatef(0, 0, -20);
-	largeRoomOuterWall();
-	glPopMatrix();
-	*//*
-	glPushMatrix();
-	glTranslatef(0, 8, 0);
-	drawRoof();
-	glPopMatrix();
-	*/
 
 	glPushMatrix();
 	drawWindow();
