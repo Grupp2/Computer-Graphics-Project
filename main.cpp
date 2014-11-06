@@ -46,7 +46,10 @@ struct LightCoords
 	GLfloat w;
 };
 
+LightCoords *selectedLight;
 LightCoords l1coord;
+
+
 float teapotAngle = 0.0;
 
 GLfloat normalVectors[6][3] = {
@@ -124,6 +127,46 @@ void draw_string(float x, float y, char *string) {
 
 void do_idle() {
 	glutPostRedisplay();
+}
+
+void setOrthographicProjection()
+{
+	// switch to projection mode
+	glMatrixMode(GL_PROJECTION);
+	// save previous matrix which contains the 
+	//settings for the perspective projection
+	glPushMatrix();
+	// reset matrix
+	glLoadIdentity();
+	// set a 2D orthographic projection
+	gluOrtho2D(0, w, 0, h);
+	// invert the y axis, down is positive
+	glScalef(1, -1, 1);
+	// move the origin from the bottom left corner
+	// to the upper left corner
+	glTranslatef(0, -h, 0);
+	glMatrixMode(GL_MODELVIEW);
+}
+
+void render_info()
+{
+	float white[] = { 1.0, 1.0, 1.0 };
+
+	glDisable(GL_LIGHTING);
+	glBindTexture(GL_TEXTURE_2D, 0);
+	setfont("8x13", 20);
+	setOrthographicProjection();
+	glPushMatrix();
+	glLoadIdentity();
+
+	glColor3fv(white);
+	draw_string(30, 20, "Light 1 (Position is relative to house)");
+	sprintf_s(buf, "Position:  x: %.2f y: %.2f z: %.2f", l1coord.x, l1coord.y, l1coord.z);
+	draw_string(30, 40, buf);
+
+	glPopMatrix();
+	resetPerspectiveProjection();
+	glEnable(GL_LIGHTING);
 }
 
 void reshape(int width, int height) {
@@ -1103,11 +1146,6 @@ void spotlight() {
 
 void render() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	std::cout << "Light 1 Coordinates Relative to house" << std::endl;
-	std::cout << l1coord.x << std::endl;
-	std::cout << l1coord.y << std::endl;
-	std::cout << l1coord.z << std::endl;
-
 	glLoadIdentity();
 	glEnable(GL_LIGHTING);
 	//glEnable(GL_LIGHT0);
@@ -1146,7 +1184,8 @@ void render() {
 
 
 	glPopMatrix();
-	
+
+	render_info();
 	glutSwapBuffers();
 }
 
@@ -1188,22 +1227,22 @@ void buttons(unsigned char key, int x, int y) {
 		enableSpotlight();
 		break;
 	case 'u':
-		l1coord.x += 0.1;
+		selectedLight->x += 0.1;
 		break;
 	case 'U':
-		l1coord.x -= 0.1;
+		selectedLight->x -= 0.1;
 		break;
 	case 'j':
-		l1coord.y += 0.1;
+		selectedLight->y += 0.1;
 		break;
 	case 'J':
-		l1coord.y -= 0.1;
+		selectedLight->y -= 0.1;
 		break;
 	case 'm':
-		l1coord.z += 0.1;
+		selectedLight->z += 0.1;
 		break;
 	case 'M':
-		l1coord.z -= 0.1;
+		selectedLight->z -= 0.1;
 		break;
 	default:
 		// do nothing...
@@ -1257,15 +1296,13 @@ void mouse_motion(int x, int y) {
 	y_prev = y;
 }
 
-void ctrl_point_menu(int value) {
+void light_point_menu(int value) {
 	switch (value) {
 	case 'a':
-		break;
+		selectedLight = &l1coord;
 	case 'b':
 		break;
 	case 'c':
-		break;
-	case 'd':
 		break;
 	default:
 		// do nothing...
@@ -1282,6 +1319,15 @@ void init(void) {
 	glutMotionFunc(mouse_motion);
 	glClearColor(0.0, 0.0, 0.0, 0.0);
 	glEnable(GL_DEPTH_TEST);
+
+	glutCreateMenu(light_point_menu);
+	glutAddMenuEntry("Choose Light:", 0);
+	glutAddMenuEntry("Light 1", 'a');
+	glutAddMenuEntry("Light 2", 'b');
+	glutAddMenuEntry("Light 3", 'c');
+	glutAttachMenu(GLUT_RIGHT_BUTTON);
+
+
 }
 
 
