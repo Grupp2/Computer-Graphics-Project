@@ -470,8 +470,6 @@ void smallRoom() {
 		5 ,8 ,15
 	};
 
-
-
 	drawCube(leftSegment, leftSideSelector, textures_container, false);
 
 	int middleSideSelector[6] = {
@@ -1332,7 +1330,6 @@ void init(void) {
 }
 
 
-
 void getimagefromfile(const char *src, GLuint *texname) {
 	// Step 1: Create an instance of class ImageFile:
 	ImageFile* ifile;
@@ -1361,8 +1358,10 @@ void getimagefromfile(const char *src, GLuint *texname) {
 	glBindTexture (GL_TEXTURE_2D, 0);
 }
 
-void initializeLightPosition()
+void initializeLights()
 {
+	//Default
+	selectedLight = &l1coord;
 	//Light 1
 	l1coord.x = 8.0;
 	l1coord.y = 6;
@@ -1389,9 +1388,9 @@ int main(int argc, char** argv) {
 	getimagefromfile("glass.bmp", &texture_glass);
 	getimagefromfile("roof.bmp", &texture_roof);
 	getimagefromfile("wallpaper.bmp", &texture_wallpaper);
-	glLightModeli(GL_LIGHT_MODEL_AMBIENT, GL_TRUE);
+	//glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
 	glEnable(GL_LIGHT0);
-	initializeLightPosition();
+	initializeLights();
 	init();
 	glutMainLoop();
 	return 0;
