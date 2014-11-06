@@ -557,7 +557,7 @@ void drawWindow()
 {
 	glPushAttrib(GL_LIGHTING_BIT);
 	glPushMatrix();
-	glTranslatef(15, 0, -35);
+	glTranslatef(17, 0, -43);
 
 	GLfloat windowMtrl[4] = {
 		0.0, 0.0, 0.0, 0.5
@@ -952,10 +952,10 @@ void drawDoor(float x, float y, float z)
 }
 void drawDoors()
 {
-	drawDoor(15, 0, 0);
-	drawDoor(5, 0, -15);
-	drawDoor(25, 0, -15);
-	drawDoor(15, 0, -20);
+	drawDoor(17, 0, 0);
+	drawDoor(6, 0, -16);
+	drawDoor(28, 0, -16);
+	drawDoor(17, 0, -27);
 }
 
 void drawGarden() {
@@ -1127,7 +1127,7 @@ void render() {
 	glPushMatrix();
 			glTranslatef(-17.5, 0, 22);
 
-			//drawDoors();
+			drawDoors();
 			addTeapot();
 			addLights();
 			drawHouse();
@@ -1170,10 +1170,10 @@ void buttons(unsigned char key, int x, int y) {
 		isActive = true;
 		break;
 	case 's':
-		//disableSpotlight();
+		disableSpotlight();
 		break;
 	case 'S':
-		//enableSpotlight();
+		enableSpotlight();
 		break;
 	default:
 		// do nothing...
@@ -1294,7 +1294,6 @@ int main(int argc, char** argv) {
 	glEnable(GL_BLEND);
 	glDisable(GL_COLOR_MATERIAL);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	//glBlendEquation(GL_FUNC_ADD);
 	getimagefromfile("brickwall_2.bmp", &texture_brickwall);
 	getimagefromfile("floor.bmp", &texture_floor);
 	getimagefromfile("fancy_door.bmp", &texture_door);
