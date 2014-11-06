@@ -407,7 +407,7 @@ void smallRoom() {
 
 
 
-	drawCube(leftSegment, leftSideSelector, textures_container);
+	drawCube(leftSegment, leftSideSelector, textures_container, false);
 
 	int middleSideSelector[6] = {
 		0, // Back
@@ -423,7 +423,7 @@ void smallRoom() {
 
 	glPushMatrix();
 	glTranslatef(5, 0, 0);
-	drawCube(MiddleSegment, middleSideSelector, textures_container);
+	drawCube(MiddleSegment, middleSideSelector, textures_container, false);
 	glPopMatrix();
 	int rightSideSelector[6] = {
 		1, // Back
@@ -438,65 +438,10 @@ void smallRoom() {
 	};
 	glPushMatrix();
 	glTranslatef(10, 0, 0);
-	drawCube(rightSegment, rightSideSelector, textures_container);
+	drawCube(rightSegment, rightSideSelector, textures_container, false);
 	glPopMatrix();
 }
 
-void smallRoomOuterWall() {
-	float textures_container[] = {texture_wall};
-
-	int leftSideSelector[6] = {
-		0, // Back
-		1, // front
-		1, // left
-		0, // right
-		0, // roof
-		0 // ground
-	};
-	float leftSegment[3] = {
-		5 ,8 ,15
-	};
-
-	glPushMatrix();
-	glTranslatef(0.1, 0, 0.1);
-	drawCube(leftSegment, leftSideSelector, textures_container);
-	glPopMatrix();
-
-	int middleSideSelector[6] = {
-		0, // Back
-		1, // front
-		0, // left
-		0, // right
-		0, // roof
-		0 // ground
-	};
-	float MiddleSegment[3] = {
-		5, 8, 15
-	};
-
-	glPushMatrix();
-	glTranslatef(5.1, 0, 0.1);
-	drawCube(MiddleSegment, middleSideSelector, textures_container);
-	glPopMatrix();
-
-
-	int rightSideSelector[6] = {
-		0, // Back
-		1, // front
-		0, // left
-		1, // right
-		0, // roof
-		0 // ground
-	};
-
-	float rightSegment[3] = {
-		5, 8, 15
-	};
-	glPushMatrix();
-	glTranslatef(10.1, 0, 0.1);
-	drawCube(rightSegment, rightSideSelector, textures_container);
-	glPopMatrix();
-}
 
 void leftOuterWall() {
 	float textures_container[] = { texture_wall };
@@ -555,7 +500,7 @@ void largeRoom() {
 		16, 8, 15
 	};
 
-	drawCube(leftSegment, leftSideSelector, textures_container);
+	drawCube(leftSegment, leftSideSelector, textures_container, false);
 
 	int middleSideSelector[6] = {
 		0, // Back
@@ -572,7 +517,7 @@ void largeRoom() {
 
 	glPushMatrix();
 	glTranslatef(16, 0, 0);
-	drawCube(MiddleSegment, middleSideSelector, textures_container);
+	drawCube(MiddleSegment, middleSideSelector, textures_container, false);
 	glPopMatrix();
 
 	int rightSideSelector[6] = {
@@ -590,51 +535,10 @@ void largeRoom() {
 
 	glPushMatrix();
 	glTranslatef(21, 0, 0);
-	drawCube(rightSegment, rightSideSelector, textures_container);
+	drawCube(rightSegment, rightSideSelector, textures_container, false);
 	glPopMatrix();
 }
 
-void largeRoomOuterWall() {
-	float textures_container[] = {texture_wall};
-
-
-	int leftSideSelector[6] = {
-		1, // Back
-		0, // front
-		1, // left
-		0, // right
-		0, // roof
-		0 // ground
-	};
-
-	float leftSegment[3] = {
-		15, 8, 15
-	};
-
-	glPushMatrix();
-	glTranslatef(-0.1, 0, -0.1);
-	drawCube(leftSegment, leftSideSelector, textures_container);
-	glPopMatrix();
-
-
-	int rightSideSelector[6] = {
-		1, // Back
-		0, // front
-		0, // left
-		1, // right
-		0, // roof
-		0 // ground
-	};
-
-	float rightSegment[3] = {
-		15, 8, 15
-	};
-
-	glPushMatrix();
-	glTranslatef(20.1, 0, -0.1);
-	drawCube(rightSegment, rightSideSelector, textures_container);
-	glPopMatrix();
-}
 
 void drawWindow()
 {
@@ -685,7 +589,7 @@ void smallCorridore() {
 		5, 8, 17
 	};
 
-	drawCube(segment, SideSelector, textures_container);
+	drawCube(segment, SideSelector, textures_container, false);
 }
 
 void largeCorridore() {
@@ -704,7 +608,7 @@ void largeCorridore() {
 		1 // ground
 	};
 
-	drawCube(l1segment, l1SideSelector, textures_container);
+	drawCube(l1segment, l1SideSelector, textures_container, false);
 
 	float l2segment[3] = {
 		5, 8, 10
@@ -721,7 +625,25 @@ void largeCorridore() {
 
 	glPushMatrix();
 	glTranslatef(5, 0, 0);
-	drawCube(l2segment, l2SideSelector, textures_container);
+	drawCube(l2segment, l2SideSelector, textures_container, false);
+	glPopMatrix();
+
+	float l2fsegment[3] = {
+		5, 8, 1
+	};
+
+	int l2fSideSelector[6] = {
+		0, // Back
+		0, // front
+		1, // left
+		1, // right
+		1, // roof
+		1 // ground
+	};
+
+	glPushMatrix();
+	glTranslatef(5, 0, 1);
+	drawCube(l2fsegment, l2fSideSelector, textures_container, false);
 	glPopMatrix();
 
 	float l3segment[3] = {
@@ -739,7 +661,7 @@ void largeCorridore() {
 
 	glPushMatrix();
 	glTranslatef(10, 0, 0);
-	drawCube(l3segment, l3SideSelector, textures_container);
+	drawCube(l3segment, l3SideSelector, textures_container, false);
 	glPopMatrix();
 
 	float cSegment[3] = {
@@ -757,7 +679,30 @@ void largeCorridore() {
 
 	glPushMatrix();
 	glTranslatef(16, 0, 0);
-	drawCube(cSegment, cSideSelector, textures_container);
+	drawCube(cSegment, cSideSelector, textures_container, false);
+	glPopMatrix();
+
+	float cbSegment[3] = {
+		5, 8, 1
+	};
+
+	int cbSideSelector[6] = {
+		0, // Back
+		0, // front
+		1, // left
+		1, // right
+		1, // roof
+		1 // ground
+	};
+
+	glPushMatrix();
+	glTranslatef(16, 0, -10);
+	drawCube(cbSegment, cbSideSelector, textures_container, false);
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(16, 0, -26);
+	drawCube(cbSegment, cbSideSelector, textures_container, false);
 	glPopMatrix();
 
 	float r1segment[3] = {
@@ -775,7 +720,7 @@ void largeCorridore() {
 
 	glPushMatrix();
 	glTranslatef(21, 0, 0);
-	drawCube(r1segment, r1SideSelector, textures_container);
+	drawCube(r1segment, r1SideSelector, textures_container, false);
 	glPopMatrix();
 
 	float r2Segment[3] = {
@@ -793,7 +738,25 @@ void largeCorridore() {
 
 	glPushMatrix();
 	glTranslatef(27, 0, 0);
-	drawCube(r2Segment, r2SideSelector, textures_container);
+	drawCube(r2Segment, r2SideSelector, textures_container, false);
+	glPopMatrix();
+
+	float r2fSegment[3] = {
+		5, 8, 1
+	};
+
+	int r2fSideSelector[6] = {
+		0, // Back
+		0, // front
+		1, // left
+		1, // right
+		1, // roof
+		1 // ground
+	};
+
+	glPushMatrix();
+	glTranslatef(27, 0, 1);
+	drawCube(r2fSegment, r2fSideSelector, textures_container, false);
 	glPopMatrix();
 
 	float r3Segment[3] = {
@@ -811,7 +774,7 @@ void largeCorridore() {
 
 	glPushMatrix();
 	glTranslatef(32, 0, 0);
-	drawCube(r3Segment, r3SideSelector, textures_container);
+	drawCube(r3Segment, r3SideSelector, textures_container, false);
 	glPopMatrix();
 
 }
