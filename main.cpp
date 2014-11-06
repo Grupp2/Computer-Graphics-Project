@@ -14,6 +14,7 @@
 #include "exceptioninfo.h"
 #include <math.h>
 #include <iostream>
+#include <glm\glm.hpp>
 // angle of rotation for the camera direction
 float angle=0.0;
 // actual vector representing the camera's direction
@@ -62,11 +63,11 @@ GLfloat normalVectors[6][3] = {
 };
 
 GLfloat ambientMtrl[4] = {
-	0.2, 0.2, 0.2, 1.0
+	0.8, 0.8, 0.8, 1.0
 };
 
 GLfloat diffuseMtrl[4] = {
-	0.35, 0.55, 0.35, 1.0
+	0.43, 0.47, 0.54, 1.0
 };
 
 GLuint texture_brickwall;
@@ -183,6 +184,7 @@ void light1(GLfloat *col1, GLfloat *col2, GLfloat *col3) {
 	GLfloat lightPos[4] = {
 		l1coord.x, l1coord.y, l1coord.z, l1coord.w
 	};
+	glutSolidTeapot(1.0);
 	glLightfv(GL_LIGHT1, GL_POSITION, lightPos);
 	glLightfv(GL_LIGHT1, GL_AMBIENT, col1);
 	glLightfv(GL_LIGHT1, GL_DIFFUSE, col2);
@@ -215,13 +217,13 @@ void addLights() {
 	//glEnable(GL_LIGHT3);
 
 	GLfloat lightColor1[4] = {
-		1.0, 1.0, 1.0, 0.6
+		0.1, 0.1, 0.1, 1.0
 	};
 	GLfloat lightColor2[4] = {
-		0.5, 0.5, 0.5, 0.5
+		1.0, 1.0, 1.0, 1.0
 	};
 	GLfloat lightColor3[4] = {
-		0.2, 0.2, 0.2, 0.2
+		1.0, 1.0, 1.0, 1.0
 	};
 	light1(lightColor1, lightColor2, lightColor3);
 	//light2(lightColor1, lightColor2, lightColor3);
@@ -260,20 +262,51 @@ void addMtrl() {
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuseMtrl);
 }
 
-void drawQuad_XY(float arr[][3], GLuint texture, GLfloat *normVec) {
+enum Side
+{
+	front, back, right, left, top, bottom
+};
+
+enum WallType
+{
+	inner, outer
+};
+
+glm::vec3 computeNormal(
+	glm::vec3 const & a,
+	glm::vec3 const & b,
+	glm::vec3 const & c, Side side, WallType type)
+{
+	return glm::normalize(glm::cross(c - a, b - a));
+}
+
+
+void drawQuad_XY(float arr[][3], GLuint texture, GLfloat *normVec, Side side, WallType type) {
 
 	for (float b = arr[0][1]; b < arr[2][1]; b++)	{
 		for (float i = arr[0][0]; i < arr[1][0]; i++) {
 			glColor3f(1, 0, 0);
 			glBindTexture(GL_TEXTURE_2D, texture);
 			glBegin(GL_QUADS);
-				glNormal3fv(normVec);
+				//
+				glm::vec3 av(i, b, 0.0f);
+				glm::vec3 bv(i + 1.0f, b, 0.0f);
+				glm::vec3 cv(i, b + 1.0f, 0.0f);
+				GLfloat t1 = normVec[0];
+				GLfloat t2 = normVec[1];
+				GLfloat t3 = normVec[2];
+				//glm::vec3 normalvec = computeNormal(av, bv, cv, side, type);
+				//glNormal3f(normalvec.x, normalvec.y, normalvec.z);
+				glNormal3f(t1, t2, t3);
 				glTexCoord2f(0, 0);
 				glVertex3f(i, b, 0);
+				glNormal3fv(normVec);
 				glTexCoord2f(1.0, 0);
 				glVertex3f(i + 1.0f, b, 0);
+				glNormal3fv(normVec);
 				glTexCoord2f(1.0, 1.0);
 				glVertex3f(i + 1.0f, b + 1.0f, 0);
+				glNormal3fv(normVec);
 				glTexCoord2f(0, 1.0);
 				glVertex3f(i, b + 1.0f, 0);
 			glEnd();
@@ -281,73 +314,87 @@ void drawQuad_XY(float arr[][3], GLuint texture, GLfloat *normVec) {
 	}
 }
 
-void drawCube(float endPoint[3], int sideSelector[6], GLuint *texture_container) {
-
-	float frontbackarr[4][3] = {
-			{ 0.0, 0.0, 0.0 },
-			{ endPoint[0], 0.0, 0.0 },
-			{ 0.0, endPoint[1], 0.0 },
-			{ endPoint[0], endPoint[1], 0.0 }
-	};
-
-	float leftrightarr[4][3] = {
-			{ 0.0, 0.0, 0.0 },
-			{ endPoint[2], 0.0, 0.0 },
-			{ 0.0, endPoint[1], 0.0 },
-			{ endPoint[2], endPoint[1], 0.0 }
-	};
-
-	float roofgroundarr[4][3] = {
-			{ 0.0, 0.0, 0.0 },
-			{ endPoint[0], 0.0, 0.0 },
-			{ 0.0, endPoint[2], 0.0 },
-			{ endPoint[0], endPoint[2], 0.0 }
-	};
-
-
-	glPushMatrix();
-	if (sideSelector[0] == 1) {
-		glPushMatrix(); // Back
-			glTranslatef(0.0, 0.0, -endPoint[2]);
-			drawQuad_XY(frontbackarr, texture_container[1], normalVectors[1]);
-		glPopMatrix();
-	}
-	if (sideSelector[1] == 1) {
-		glPushMatrix(); // front
-		glTranslatef(0.0, 0.0, 0.0);
-		drawQuad_XY(frontbackarr, texture_container[1], normalVectors[0]);
-		glPopMatrix();
-	}
-	if (sideSelector[2] == 1) {
-		glPushMatrix(); // left
-		glRotatef(90, 0.0, 1.0, 0.0);
-		drawQuad_XY(leftrightarr, texture_container[1], normalVectors[3]);
-		glPopMatrix();
-	}
-	if (sideSelector[3] == 1) {
-		glPushMatrix(); // right
-		glRotatef(90, 0.0, 1.0, 0.0);
-		glTranslatef(0.0, 0.0, endPoint[0]);
-		drawQuad_XY(leftrightarr, texture_container[1], normalVectors[3]);
-		glPopMatrix();
-	}
-	if (sideSelector[4] == 1) {
-		glPushMatrix(); // roof
-		glRotatef(270, 1.0, 0.0, 0.0);
-		glTranslatef(0.0, 0.0, endPoint[1]);
-		drawQuad_XY(roofgroundarr, texture_container[2], normalVectors[4]);
-		glPopMatrix();
-	}
-	if (sideSelector[5] == 1) {
-		glPushMatrix(); // ground
-		glRotatef(270, 1.0, 0.0, 0.0);
-		drawQuad_XY(roofgroundarr, texture_container[0], normalVectors[5]);
-		glPopMatrix();
-	}
-	glPopMatrix();
-
-}
-
+//void drawCube(float endPoint[3], int sideSelector[6], GLuint *texture_container) {
+//
+//	float frontbackarr[4][3] = {
+//			{ 0.0, 0.0, 0.0 },
+//			{ endPoint[0], 0.0, 0.0 },
+//			{ 0.0, endPoint[1], 0.0 },
+//			{ endPoint[0], endPoint[1], 0.0 }
+//	};
+//
+//	float leftrightarr[4][3] = {
+//			{ 0.0, 0.0, 0.0 },
+//			{ endPoint[2], 0.0, 0.0 },
+//			{ 0.0, endPoint[1], 0.0 },
+//			{ endPoint[2], endPoint[1], 0.0 }
+//	};
+//
+//	float roofgroundarr[4][3] = {
+//			{ 0.0, 0.0, 0.0 },
+//			{ endPoint[0], 0.0, 0.0 },
+//			{ 0.0, endPoint[2], 0.0 },
+//			{ endPoint[0], endPoint[2], 0.0 }
+//	};
+//
+//	glPushMatrix();
+//	if (sideSelector[0] == 1) {
+//		glPushMatrix(); // Back
+//			glTranslatef(0.0, 0.0, -endPoint[2]);
+//			drawQuad_XY(frontbackarr, texture_container[1], normalVectors[1]);
+//		glPopMatrix();
+//	}
+//	if (sideSelector[1] == 1) {
+//		glPushMatrix(); // front
+//		glTranslatef(0.0, 0.0, 0.0);
+//		drawQuad_XY(frontbackarr, texture_container[1], normalVectors[0]);
+//		glPopMatrix();
+//	}
+//	if (sideSelector[2] == 1) {
+//		glPushMatrix(); // left
+//		glRotatef(90, 0.0, 1.0, 0.0);
+//		drawQuad_XY(leftrightarr, texture_container[1], normalVectors[3]);
+//		glPopMatrix();
+//	}
+//	if (sideSelector[3] == 1) {
+//		glPushMatrix(); // right
+//		glRotatef(90, 0.0, 1.0, 0.0);
+//		glTranslatef(0.0, 0.0, endPoint[0]);
+//		drawQuad_XY(leftrightarr, texture_container[1], normalVectors[3]);
+//		glPopMatrix();
+//	}
+//	if (sideSelector[4] == 1) {
+//		glPushMatrix(); // roof
+//		glRotatef(270, 1.0, 0.0, 0.0);
+//		glTranslatef(0.0, 0.0, endPoint[1]);
+//		drawQuad_XY(roofgroundarr, texture_container[2], normalVectors[4]);
+//		glPopMatrix();
+//	}
+//	if (sideSelector[5] == 1) {
+//		glPushMatrix(); // ground
+//		glRotatef(270, 1.0, 0.0, 0.0);
+//		drawQuad_XY(roofgroundarr, texture_container[0], normalVectors[5]);
+//		glPopMatrix();
+//	}
+//	glPopMatrix();
+//
+//}
+GLfloat normalVectorsOuterWalls[6][3] = {
+		{ 0, 0, 1 }, // front
+		{ 0, 0, -1 }, // back
+		{ 1, 0, 0 }, // left
+		{ -1, 0, 0 }, // right
+		{ 0, 1, 0 }, // top
+		{ 0, -1, 0 } // bottom
+};
+GLfloat normalVectorsInnerWalls[6][3] = {
+		{ 0, 0, -1 }, // front
+		{ 0, 0, 1 }, // back
+		{ 1, 0, 0 }, // left
+		{ -1, 0, 0 }, // right
+		{ 0, -1, 0 }, // top
+		{ 0, 1, 0 } // bottom
+};
 void drawCube(float endPoint[3], int sideSelector[6], GLuint *texture_container, bool isOuterWall) {
 
 	float frontbackarr[4][3] = {
@@ -370,56 +417,33 @@ void drawCube(float endPoint[3], int sideSelector[6], GLuint *texture_container,
 			{ 0.0, endPoint[2], 0.0 },
 			{ endPoint[0], endPoint[2], 0.0 }
 	};
-
-	GLfloat normalVectorsOuterWalls[6][3];
-	GLfloat normalVectorsInnerWalls[6][3];
-
-	if (isOuterWall)
-		GLfloat normalVectorsOuterWalls[6][3] = {
-			{ 0, 0, 1 }, // front
-			{ 0, 0, -1 }, // back
-			{ 1, 0, 0 }, // left
-			{ -1, 0, 0 }, // right
-			{ 0, 1, 0 }, // top
-			{ 0, -1, 0 } // bottom
-		};
-	else
-		GLfloat normalVectorsInnerWalls[6][3] = {
-				{ 0, 0, -1 }, // front
-				{ 0, 0, 1 }, // back
-				{ -1, 0, 0 }, // left
-				{ 1, 0, 0 }, // right
-				{ 0, -1, 0 }, // top
-				{ 0, 1, 0 } // bottom
-		};
-
-
+		
 	glPushMatrix();
 	if (sideSelector[0] == 1) {
 		glPushMatrix(); // Back
 		glTranslatef(0.0, 0.0, -endPoint[2]);
 		if (isOuterWall)
-			drawQuad_XY(frontbackarr, texture_container[1], normalVectorsOuterWalls[1]);
+			drawQuad_XY(frontbackarr, texture_container[1], normalVectorsOuterWalls[1], back, outer);
 		else
-			drawQuad_XY(frontbackarr, texture_container[1], normalVectorsInnerWalls[1]);
+			drawQuad_XY(frontbackarr, texture_container[1], normalVectorsInnerWalls[1], back, inner);
 		glPopMatrix();
 	}
 	if (sideSelector[1] == 1) {
 		glPushMatrix(); // front
 		glTranslatef(0.0, 0.0, 0.0);
 		if (isOuterWall)
-			drawQuad_XY(frontbackarr, texture_container[1], normalVectorsOuterWalls[0]);
+			drawQuad_XY(frontbackarr, texture_container[1], normalVectorsOuterWalls[0], front, outer);
 		else
-			drawQuad_XY(frontbackarr, texture_container[1], normalVectorsInnerWalls[0]);
+			drawQuad_XY(frontbackarr, texture_container[1], normalVectorsInnerWalls[0], front, inner);
 		glPopMatrix();
 	}
 	if (sideSelector[2] == 1) {
 		glPushMatrix(); // left
 		glRotatef(90, 0.0, 1.0, 0.0);
 		if (isOuterWall)
-			drawQuad_XY(leftrightarr, texture_container[1], normalVectorsOuterWalls[2]);
+			drawQuad_XY(leftrightarr, texture_container[1], normalVectorsOuterWalls[2], left, outer);
 		else
-			drawQuad_XY(leftrightarr, texture_container[1], normalVectorsInnerWalls[2]);
+			drawQuad_XY(leftrightarr, texture_container[1], normalVectorsInnerWalls[2], left, inner);
 		glPopMatrix();
 	}
 	if (sideSelector[3] == 1) {
@@ -427,28 +451,28 @@ void drawCube(float endPoint[3], int sideSelector[6], GLuint *texture_container,
 		glRotatef(90, 0.0, 1.0, 0.0);
 		glTranslatef(0.0, 0.0, endPoint[0]);
 		if (isOuterWall)
-			drawQuad_XY(leftrightarr, texture_container[1], normalVectorsOuterWalls[3]);
+			drawQuad_XY(leftrightarr, texture_container[1], normalVectorsOuterWalls[3], right, outer);
 		else
-			drawQuad_XY(leftrightarr, texture_container[1], normalVectorsInnerWalls[3]);
+			drawQuad_XY(leftrightarr, texture_container[1], normalVectorsInnerWalls[3], right, inner);
 		glPopMatrix();
 	}
 	if (sideSelector[4] == 1) {
-		glPushMatrix(); // roof
+		glPushMatrix(); // ceiling
 		glRotatef(270, 1.0, 0.0, 0.0);
 		glTranslatef(0.0, 0.0, endPoint[1]);
 		if (isOuterWall)
-			drawQuad_XY(roofgroundarr, texture_container[2], normalVectorsOuterWalls[4]);
+			drawQuad_XY(roofgroundarr, texture_container[2], normalVectorsOuterWalls[4], top, outer);
 		else
-			drawQuad_XY(roofgroundarr, texture_container[2], normalVectorsInnerWalls[4]);
+			drawQuad_XY(roofgroundarr, texture_container[2], normalVectorsInnerWalls[4], top, inner);
 		glPopMatrix();
 	}
 	if (sideSelector[5] == 1) {
 		glPushMatrix(); // ground
 		glRotatef(270, 1.0, 0.0, 0.0);
 		if (isOuterWall)
-			drawQuad_XY(roofgroundarr, texture_container[0], normalVectorsOuterWalls[5]);
+			drawQuad_XY(roofgroundarr, texture_container[0], normalVectorsOuterWalls[5], bottom, outer);
 		else
-			drawQuad_XY(roofgroundarr, texture_container[0], normalVectorsInnerWalls[5]);
+			drawQuad_XY(roofgroundarr, texture_container[0], normalVectorsInnerWalls[5], bottom, inner);
 		glPopMatrix();
 	}
 	glPopMatrix();
@@ -1389,8 +1413,10 @@ int main(int argc, char** argv) {
 	getimagefromfile("glass.bmp", &texture_glass);
 	getimagefromfile("roof.bmp", &texture_roof);
 	getimagefromfile("wallpaper.bmp", &texture_wallpaper);
-	glLightModeli(GL_LIGHT_MODEL_AMBIENT, GL_TRUE);
-	glEnable(GL_LIGHT0);
+	glLightModelf(GL_LIGHT_MODEL_AMBIENT, GL_TRUE);
+	//glEnable(GL_LIGHT0);
+	glShadeModel(GL_SMOOTH);
+	glEnable(GL_NORMALIZE);
 	initializeLights();
 	init();
 	glutMainLoop();
