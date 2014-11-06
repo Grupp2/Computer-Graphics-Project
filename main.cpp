@@ -571,7 +571,7 @@ void largeRoom() {
 	};
 
 	glPushMatrix();
-	glTranslatef(15, 0, 0);
+	glTranslatef(16, 0, 0);
 	drawCube(MiddleSegment, middleSideSelector, textures_container);
 	glPopMatrix();
 
@@ -589,7 +589,7 @@ void largeRoom() {
 	};
 
 	glPushMatrix();
-	glTranslatef(20, 0, 0);
+	glTranslatef(21, 0, 0);
 	drawCube(rightSegment, rightSideSelector, textures_container);
 	glPopMatrix();
 }
@@ -792,7 +792,7 @@ void largeCorridore() {
 	};
 
 	glPushMatrix();
-	glTranslatef(26, 0, 0);
+	glTranslatef(27, 0, 0);
 	drawCube(r2Segment, r2SideSelector, textures_container);
 	glPopMatrix();
 
@@ -810,7 +810,7 @@ void largeCorridore() {
 	};
 
 	glPushMatrix();
-	glTranslatef(31, 0, 0);
+	glTranslatef(32, 0, 0);
 	drawCube(r3Segment, r3SideSelector, textures_container);
 	glPopMatrix();
 
