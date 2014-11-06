@@ -510,11 +510,10 @@ void leftOuterWall() {
 		0 // ground
 	};
 	float Segment[3] = {
-		15.1, 8, 35.2
+		17, 8, 44
 	};
 
 	glPushMatrix();
-	//glTranslatef(-0.1, 0, -0.1);
 	drawCube(Segment, SideSelector, textures_container, true);
 	glPopMatrix();
 }
@@ -531,11 +530,10 @@ void rightOuterWall() {
 		0 // ground
 	};
 	float Segment[3] = {
-		15.1, 8, 35.2
+		17, 8, 44
 	};
 
 	glPushMatrix();
-	//glTranslatef(0, 0, 0.1);
 	drawCube(Segment, SideSelector, textures_container, true);
 	glPopMatrix();
 }
@@ -694,7 +692,7 @@ void largeCorridore() {
 	float textures_container[] = { texture_floor, texture_wall, texture_floor };
 
 	float segment[3] = {
-		35, 8, 5
+		35, 8, 10
 	};
 
 	int SideSelector[6] = {
@@ -712,16 +710,16 @@ void largeCorridore() {
 void drawRoof() {
 	float frontSide[4][3] = {
 			{ 00.0, 0.0, 00.0 },
-			{ 35.0, 0.0, 00.0 },
-			{ 35.0, 5.0, -17.5 },
-			{ 00.0, 5.0, -17.5 }
+			{ 39.0, 0.0, 00.0 },
+			{ 39.0, 5.0, -22 },
+			{ 00.0, 5.0, -22 }
 	};
 
 	float backSide[4][3] = {
-			{ 00.0, 0.0, -35.0 },
-			{ 35.0, 0.0, -35.0 },
-			{ 35.0, 5.0, -17.5 },
-			{ 00.0, 5.0, -17.5 }
+			{ 00.0, 0.0, -44.0 },
+			{ 39.0, 0.0, -44.0 },
+			{ 39.0, 5.0, -22 },
+			{ 00.0, 5.0, -22 }
 	};
 
 	glBindTexture(GL_TEXTURE_2D, texture_roof);
@@ -776,17 +774,44 @@ void drawHouse() {
 	//glPushAttrib(GL_LIGHTING_BIT);
 	//addMtrl();
 
+	
+	leftOuterWall();
+
+	glPushMatrix();
+	glTranslatef(22, 0, 0);
+	rightOuterWall();
+	glPopMatrix();
+	
+	glPushMatrix();
+	glTranslatef(1, 0, -1);
 	smallRoom();
-
-	glPushMatrix();
-		glTranslatef(-0.1, 0, 0.1);
-		leftOuterWall();
 	glPopMatrix();
 
 	glPushMatrix();
-		glTranslatef(20, 0, 0.1);
-		rightOuterWall();
+	glTranslatef(23, 0, 0);
+	smallRoom();
 	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(17, 0, 0);
+	smallCorridore();
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(0, 0, -17);
+	largeCorridore();
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(0, 0, -28);
+	largeRoom();
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(0, 8, 0);
+	drawRoof();
+	glPopMatrix();
+
 
 	/*
 	glPushMatrix();
@@ -800,10 +825,7 @@ void drawHouse() {
 	smallCorridore();
 	glPopMatrix();
 
-	glPushMatrix();
-	glTranslatef(20, 0, 0);
-	smallRoom();
-	glPopMatrix();
+	
 
 
 
