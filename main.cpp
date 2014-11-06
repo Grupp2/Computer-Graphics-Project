@@ -65,6 +65,7 @@ GLuint texture_sky;
 GLuint texture_wall;
 GLuint texture_glass;
 GLuint texture_roof;
+GLuint texture_wallpaper;
 
 float ctrl_delta = 0.01;
 
@@ -364,9 +365,9 @@ void drawCube(float endPoint[3], int sideSelector[6], float *texture_container, 
 		glPushMatrix(); // left
 		glRotatef(90, 0.0, 1.0, 0.0);
 		if (isOuterWall)
-			drawQuad_XY(leftrightarr, texture_container[1], normalVectorsOuterWalls[3]);
+			drawQuad_XY(leftrightarr, texture_container[1], normalVectorsOuterWalls[2]);
 		else
-			drawQuad_XY(leftrightarr, texture_container[1], normalVectorsInnerWalls[3]);
+			drawQuad_XY(leftrightarr, texture_container[1], normalVectorsInnerWalls[2]);
 		glPopMatrix();
 	}
 	if (sideSelector[3] == 1) {
@@ -403,7 +404,7 @@ void drawCube(float endPoint[3], int sideSelector[6], float *texture_container, 
 }
 
 void smallRoom() {
-	float textures_container[] = { texture_floor, texture_wall, texture_floor };
+	float textures_container[] = { texture_floor, texture_wallpaper, texture_floor };
 
 	int leftSideSelector[6] = {
 		1, // Back
@@ -1302,6 +1303,7 @@ int main(int argc, char** argv) {
 	getimagefromfile("plaster_texture.bmp", &texture_wall);
 	getimagefromfile("glass.bmp", &texture_glass);
 	getimagefromfile("roof.bmp", &texture_roof);
+	getimagefromfile("wallpaper.bmp", &texture_wallpaper);
 	glLightModeli(GL_LIGHT_MODEL_AMBIENT, GL_TRUE);
 	glEnable(GL_LIGHT0);
 	init();
