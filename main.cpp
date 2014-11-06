@@ -50,7 +50,7 @@ GLfloat normalVectors[6][3] = {
 };
 
 GLfloat ambientMtrl[4] = {
-	0.1, 0.1, 0.1, 1.0
+	0.2, 0.2, 0.2, 1.0
 };
 
 GLfloat diffuseMtrl[4] = {
@@ -128,7 +128,7 @@ void reshape(int width, int height) {
 
 void light1(GLfloat *col1, GLfloat *col2, GLfloat *col3) {
 	GLfloat lightPos[4] = {
-		-10.0, 7.9, 10.0, 1.0
+		8.0, 6, -8.0, 1.0
 	};
 	glLightfv(GL_LIGHT1, GL_POSITION, lightPos);
 	glLightfv(GL_LIGHT1, GL_AMBIENT, col1);
@@ -158,8 +158,8 @@ void light3(GLfloat *col1, GLfloat *col2, GLfloat *col3) {
 
 void addLights() {
 	glEnable(GL_LIGHT1);
-	glEnable(GL_LIGHT2);
-	glEnable(GL_LIGHT3);
+	//glEnable(GL_LIGHT2);
+	//glEnable(GL_LIGHT3);
 
 	GLfloat lightColor1[4] = {
 		1.0, 1.0, 1.0, 0.6
@@ -171,23 +171,35 @@ void addLights() {
 		0.2, 0.2, 0.2, 0.2
 	};
 	light1(lightColor1, lightColor2, lightColor3);
-	light2(lightColor1, lightColor2, lightColor3);
-	light3(lightColor1, lightColor2, lightColor3);
+	//light2(lightColor1, lightColor2, lightColor3);
+	//light3(lightColor1, lightColor2, lightColor3);
+}
+
+void disableSpotlight()
+{
+	glDisable(GL_LIGHT0);
+}
+
+void enableSpotlight()
+{
+	glEnable(GL_LIGHT0);
 }
 
 void addTeapot() {
 	glPushMatrix();
+	glPushAttrib(GL_LIGHTING_BIT);
 	glBindTexture(GL_TEXTURE_2D, 0);
-		glTranslatef(-10.0, -4.0, -30.0);
+		glTranslatef(8.0, 2.0, -8.0);
 		glRotatef(teapotAngle, 0.0, 1.0, 0.0);
-		glMaterialfv(GL_FRONT, GL_AMBIENT, ambientMtrl);
-		glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuseMtrl);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, ambientMtrl);
+		glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diffuseMtrl);
 		glutSolidTeapot(1.0);
 	glPopMatrix();
 	if (teapotAngle == 360.0)
 		teapotAngle = 0.0;
 	else
 		teapotAngle += 1.0;
+	glPopAttrib();
 };
 
 void addMtrl() {
@@ -843,8 +855,9 @@ void drawRoof() {
 }
 
 void drawHouse() {
-	//glPushAttrib(GL_LIGHTING_BIT);
-	//addMtrl();
+	glPushAttrib(GL_LIGHTING_BIT);
+	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, ambientMtrl);
+	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diffuseMtrl);
 
 	
 	leftOuterWall();
@@ -1082,18 +1095,18 @@ void render() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glLoadIdentity();
-	
-	glEnable(GL_LIGHT0);
 	glEnable(GL_LIGHTING);
+	//glEnable(GL_LIGHT0);
+
 	spotlight();
 
 	gluLookAt(	x, 1.0f, z,
 				x+lx, 1.0f,  z+lz,
 				0.0f, 1.0f,  0.0f);
 
-	addLights();
+
 	//addMtrl();
-	//addTeapot();
+	//
 
 	glTranslatef(-2, -5, -25);
 	
@@ -1114,7 +1127,11 @@ void render() {
 			glTranslatef(-17.5, 0, 22);
 
 			//drawDoors();
+			addTeapot();
+			addLights();
 			drawHouse();
+
+
 	glPopMatrix();
 	
 	glutSwapBuffers();
@@ -1150,6 +1167,12 @@ void buttons(unsigned char key, int x, int y) {
 		break;
 	case 'o':
 		isActive = true;
+		break;
+	case 's':
+		//disableSpotlight();
+		break;
+	case 'S':
+		//enableSpotlight();
 		break;
 	default:
 		// do nothing...
@@ -1280,6 +1303,7 @@ int main(int argc, char** argv) {
 	getimagefromfile("glass.bmp", &texture_glass);
 	getimagefromfile("roof.bmp", &texture_roof);
 	glLightModeli(GL_LIGHT_MODEL_AMBIENT, GL_TRUE);
+	glEnable(GL_LIGHT0);
 	init();
 	glutMainLoop();
 	return 0;
