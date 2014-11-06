@@ -13,7 +13,7 @@
 #include "imagefile.h"
 #include "exceptioninfo.h"
 #include <math.h>
-
+#include <iostream>
 // angle of rotation for the camera direction
 float angle=0.0;
 // actual vector representing the camera's direction
@@ -38,6 +38,15 @@ bool isOpen = false;
 bool isActive = false;
 float doorAngle = 0.0;
 
+struct LightCoords
+{
+	GLfloat x;
+	GLfloat y;
+	GLfloat z;
+	GLfloat w;
+};
+
+LightCoords l1coord;
 float teapotAngle = 0.0;
 
 GLfloat normalVectors[6][3] = {
@@ -129,7 +138,7 @@ void reshape(int width, int height) {
 
 void light1(GLfloat *col1, GLfloat *col2, GLfloat *col3) {
 	GLfloat lightPos[4] = {
-		8.0, 6, -8.0, 1.0
+		l1coord.x, l1coord.y, l1coord.z, l1coord.w
 	};
 	glLightfv(GL_LIGHT1, GL_POSITION, lightPos);
 	glLightfv(GL_LIGHT1, GL_AMBIENT, col1);
@@ -210,8 +219,8 @@ void addMtrl() {
 
 void drawQuad_XY(float arr[][3], GLuint texture, GLfloat *normVec) {
 
-	for (int b = arr[0][1]; b < arr[2][1]; b++)	{
-		for (int i = arr[0][0]; i < arr[1][0]; i++) {
+	for (float b = arr[0][1]; b < arr[2][1]; b++)	{
+		for (float i = arr[0][0]; i < arr[1][0]; i++) {
 			glColor3f(1, 0, 0);
 			glBindTexture(GL_TEXTURE_2D, texture);
 			glBegin(GL_QUADS);
@@ -219,17 +228,17 @@ void drawQuad_XY(float arr[][3], GLuint texture, GLfloat *normVec) {
 				glTexCoord2f(0, 0);
 				glVertex3f(i, b, 0);
 				glTexCoord2f(1.0, 0);
-				glVertex3f(i + 1, b, 0);
+				glVertex3f(i + 1.0f, b, 0);
 				glTexCoord2f(1.0, 1.0);
-				glVertex3f(i + 1, b + 1, 0);
+				glVertex3f(i + 1.0f, b + 1.0f, 0);
 				glTexCoord2f(0, 1.0);
-				glVertex3f(i, b + 1, 0);
+				glVertex3f(i, b + 1.0f, 0);
 			glEnd();
 		}
 	}
 }
 
-void drawCube(float endPoint[3], int sideSelector[6], float *texture_container) {
+void drawCube(float endPoint[3], int sideSelector[6], GLuint *texture_container) {
 
 	float frontbackarr[4][3] = {
 			{ 0.0, 0.0, 0.0 },
@@ -296,7 +305,7 @@ void drawCube(float endPoint[3], int sideSelector[6], float *texture_container) 
 
 }
 
-void drawCube(float endPoint[3], int sideSelector[6], float *texture_container, bool isOuterWall) {
+void drawCube(float endPoint[3], int sideSelector[6], GLuint *texture_container, bool isOuterWall) {
 
 	float frontbackarr[4][3] = {
 			{ 0.0, 0.0, 0.0 },
@@ -404,7 +413,7 @@ void drawCube(float endPoint[3], int sideSelector[6], float *texture_container, 
 }
 
 void smallRoom() {
-	float textures_container[] = { texture_floor, texture_wallpaper, texture_floor };
+	GLuint textures_container[] = { texture_floor, texture_wallpaper, texture_floor };
 
 	int leftSideSelector[6] = {
 		1, // Back
@@ -457,7 +466,7 @@ void smallRoom() {
 
 
 void leftOuterWall() {
-	float textures_container[] = { texture_wall };
+	GLuint textures_container[] = { texture_wall };
 
 	int SideSelector[6] = {
 		1, // Back
@@ -477,7 +486,7 @@ void leftOuterWall() {
 }
 
 void rightOuterWall() {
-	float textures_container[] = { texture_wall };
+	GLuint textures_container[] = { texture_wall };
 
 	int SideSelector[6] = {
 		1, // Back
@@ -497,7 +506,7 @@ void rightOuterWall() {
 }
 
 void largeRoom() {
-	float textures_container[] = { texture_floor, texture_wall, texture_floor };
+	GLuint textures_container[] = { texture_floor, texture_wall, texture_floor };
 
 
 	int leftSideSelector[6] = {
@@ -587,7 +596,7 @@ void drawWindow()
 }
 
 void smallCorridore() {
-	float textures_container[] = { texture_floor, texture_wall, texture_floor };
+	GLuint textures_container[] = { texture_floor, texture_wall, texture_floor };
 
 	int SideSelector[6] = {
 		0, // Back
@@ -606,7 +615,7 @@ void smallCorridore() {
 }
 
 void largeCorridore() {
-	float textures_container[] = { texture_floor, texture_wall, texture_floor };
+	GLuint textures_container[] = { texture_floor, texture_wall, texture_floor };
 
 	float l1segment[3] = {
 		5, 8, 10
@@ -959,7 +968,7 @@ void drawDoors()
 }
 
 void drawGarden() {
-	float textures_container[] = { texture_grass, texture_brickwall, texture_floor };
+	GLuint textures_container[] = { texture_grass, texture_brickwall, texture_floor };
 
 	int leftSideSelector[6] = {
 		1, // Back
@@ -1094,6 +1103,10 @@ void spotlight() {
 
 void render() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	std::cout << "Light 1 Coordinates Relative to house" << std::endl;
+	std::cout << l1coord.x << std::endl;
+	std::cout << l1coord.y << std::endl;
+	std::cout << l1coord.z << std::endl;
 
 	glLoadIdentity();
 	glEnable(GL_LIGHTING);
@@ -1126,7 +1139,6 @@ void render() {
 
 	glPushMatrix();
 			glTranslatef(-17.5, 0, 22);
-
 			drawDoors();
 			addTeapot();
 			addLights();
@@ -1174,6 +1186,24 @@ void buttons(unsigned char key, int x, int y) {
 		break;
 	case 'S':
 		enableSpotlight();
+		break;
+	case 'u':
+		l1coord.x += 0.1;
+		break;
+	case 'U':
+		l1coord.x -= 0.1;
+		break;
+	case 'j':
+		l1coord.y += 0.1;
+		break;
+	case 'J':
+		l1coord.y -= 0.1;
+		break;
+	case 'm':
+		l1coord.z += 0.1;
+		break;
+	case 'M':
+		l1coord.z -= 0.1;
 		break;
 	default:
 		// do nothing...
@@ -1284,6 +1314,15 @@ void getimagefromfile(const char *src, GLuint *texname) {
 	glBindTexture (GL_TEXTURE_2D, 0);
 }
 
+void initializeLightPosition()
+{
+	//Light 1
+	l1coord.x = 8.0;
+	l1coord.y = 6;
+	l1coord.z = -8.0;
+	l1coord.w = 1.0;
+}
+
 int main(int argc, char** argv) {
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
@@ -1305,6 +1344,7 @@ int main(int argc, char** argv) {
 	getimagefromfile("wallpaper.bmp", &texture_wallpaper);
 	glLightModeli(GL_LIGHT_MODEL_AMBIENT, GL_TRUE);
 	glEnable(GL_LIGHT0);
+	initializeLightPosition();
 	init();
 	glutMainLoop();
 	return 0;
