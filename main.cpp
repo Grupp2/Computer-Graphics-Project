@@ -1146,7 +1146,7 @@ void spotlight() {
 void render() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
-	glEnable(GL_LIGHTING);
+
 	//glEnable(GL_LIGHT0);
 
 	spotlight();
@@ -1378,6 +1378,7 @@ int main(int argc, char** argv) {
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_BLEND);
 	glDisable(GL_COLOR_MATERIAL);
+	glEnable(GL_LIGHTING);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	getimagefromfile("brickwall_2.bmp", &texture_brickwall);
 	getimagefromfile("floor.bmp", &texture_floor);
@@ -1388,7 +1389,7 @@ int main(int argc, char** argv) {
 	getimagefromfile("glass.bmp", &texture_glass);
 	getimagefromfile("roof.bmp", &texture_roof);
 	getimagefromfile("wallpaper.bmp", &texture_wallpaper);
-	//glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
+	glLightModeli(GL_LIGHT_MODEL_AMBIENT, GL_TRUE);
 	glEnable(GL_LIGHT0);
 	initializeLights();
 	init();
