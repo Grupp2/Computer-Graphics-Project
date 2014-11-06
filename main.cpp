@@ -605,12 +605,12 @@ void largeRoom() {
 }
 
 
-void drawWindow()
+void drawWindow(GLfloat x, GLfloat y, GLfloat z)
 {
 	glPushAttrib(GL_LIGHTING_BIT);
 	glPushMatrix();
-	glTranslatef(17, 0, -43);
-
+	//glTranslatef(17, 0, -44);
+	glTranslatef(x, y, z);
 	GLfloat windowMtrl[4] = {
 		0.0, 0.0, 0.0, 0.5
 	};
@@ -951,7 +951,8 @@ void drawHouse() {
 	glPopMatrix();
 
 	glPushMatrix();
-	drawWindow();
+	drawWindow(17, 0, -44);
+	drawWindow(17, 0, -43);// glTranslatef(17, 0, -44);
 	glPopMatrix();
 }
 
