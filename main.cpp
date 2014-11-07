@@ -149,6 +149,7 @@ void setOrthographicProjection()
 	glMatrixMode(GL_MODELVIEW);
 }
 
+#ifdef __linux__
 void render_info()
 {
 	float white[] = { 1.0, 1.0, 1.0 };
@@ -162,19 +163,14 @@ void render_info()
 
 	glColor3fv(white);
 	draw_string(30, 20, "Light 1 (Position is relative to house)");
-#ifdef __linux__
 	sprintf(buf, "Position:  x: %.2f y: %.2f z: %.2f", l1coord.x, l1coord.y, l1coord.z);
-#endif
-#ifdef __WIN32__
-	sprintf_s(buf, "Position:  x: %.2f y: %.2f z: %.2f", l1coord.x, l1coord.y, l1coord.z);
-#endif
-
 	draw_string(30, 40, buf);
 
 	glPopMatrix();
 	resetPerspectiveProjection();
 	glEnable(GL_LIGHTING);
 }
+#endif
 
 void reshape(int width, int height) {
 	glMatrixMode(GL_PROJECTION);
@@ -1214,7 +1210,10 @@ void render() {
 
 	glPopMatrix();
 
+#ifdef __linux__
 	render_info();
+#endif
+
 	glutSwapBuffers();
 }
 
