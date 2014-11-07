@@ -1009,7 +1009,9 @@ void drawDoor(float x, float y, float z)
 {
 
 	glPushMatrix();
-
+	glPushAttrib(GL_LIGHTING_BIT);
+	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, ambientMtrl);
+	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diffuseMtrl);
 	glTranslatef(x, y, z);
 	rotateDoor(x, y, z);
 	
@@ -1025,6 +1027,7 @@ void drawDoor(float x, float y, float z)
 		glTexCoord2f(0, 1);
 		glVertex3f(0, 8, 0);
 	glEnd();
+	glPopAttrib();
 	glPopMatrix();
 }
 void drawDoors()
