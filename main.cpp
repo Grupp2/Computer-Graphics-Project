@@ -63,7 +63,7 @@ GLfloat normalVectors[6][3] = {
 };
 
 GLfloat ambientMtrl[4] = {
-	0.8, 0.8, 0.8, 1.0
+	0.1, 0.1, 0.1, 1.0
 };
 
 GLfloat diffuseMtrl[4] = {
@@ -162,7 +162,7 @@ void render_info()
 
 	glColor3fv(white);
 	draw_string(30, 20, "Light 1 (Position is relative to house)");
-	sprintf_s(buf, "Position:  x: %.2f y: %.2f z: %.2f", l1coord.x, l1coord.y, l1coord.z);
+	sprintf(buf, "Position:  x: %.2f y: %.2f z: %.2f", l1coord.x, l1coord.y, l1coord.z);
 	draw_string(30, 40, buf);
 
 	glPopMatrix();
@@ -1171,7 +1171,7 @@ void render() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 
-	//glEnable(GL_LIGHT0);
+	glEnable(GL_LIGHT0);
 
 	spotlight();
 
