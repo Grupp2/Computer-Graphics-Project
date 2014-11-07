@@ -162,7 +162,7 @@ void render_info()
 
 	glColor3fv(white);
 	draw_string(30, 20, "Light 1 (Position is relative to house)");
-	sprintf(buf, "Position:  x: %.2f y: %.2f z: %.2f", l1coord.x, l1coord.y, l1coord.z);
+	sprintf_s(buf, "Position:  x: %.2f y: %.2f z: %.2f", l1coord.x, l1coord.y, l1coord.z);
 	draw_string(30, 40, buf);
 
 	glPopMatrix();
@@ -441,9 +441,9 @@ void drawCube(float endPoint[3], int sideSelector[6], GLuint *texture_container,
 		glPushMatrix(); // left
 		glRotatef(90, 0.0, 1.0, 0.0);
 		if (isOuterWall)
-			drawQuad_XY(leftrightarr, texture_container[1], normalVectorsOuterWalls[2], left, outer);
+			drawQuad_XY(leftrightarr, texture_container[1], normalVectorsOuterWalls[0], left, outer);
 		else
-			drawQuad_XY(leftrightarr, texture_container[1], normalVectorsInnerWalls[2], left, inner);
+			drawQuad_XY(leftrightarr, texture_container[1], normalVectorsInnerWalls[1], left, inner);
 		glPopMatrix();
 	}
 	if (sideSelector[3] == 1) {
@@ -451,9 +451,9 @@ void drawCube(float endPoint[3], int sideSelector[6], GLuint *texture_container,
 		glRotatef(90, 0.0, 1.0, 0.0);
 		glTranslatef(0.0, 0.0, endPoint[0]);
 		if (isOuterWall)
-			drawQuad_XY(leftrightarr, texture_container[1], normalVectorsOuterWalls[3], right, outer);
+			drawQuad_XY(leftrightarr, texture_container[1], normalVectorsOuterWalls[1], right, outer);
 		else
-			drawQuad_XY(leftrightarr, texture_container[1], normalVectorsInnerWalls[3], right, inner);
+			drawQuad_XY(leftrightarr, texture_container[1], normalVectorsInnerWalls[0], right, inner);
 		glPopMatrix();
 	}
 	if (sideSelector[4] == 1) {
@@ -461,18 +461,18 @@ void drawCube(float endPoint[3], int sideSelector[6], GLuint *texture_container,
 		glRotatef(270, 1.0, 0.0, 0.0);
 		glTranslatef(0.0, 0.0, endPoint[1]);
 		if (isOuterWall)
-			drawQuad_XY(roofgroundarr, texture_container[2], normalVectorsOuterWalls[4], top, outer);
+			drawQuad_XY(roofgroundarr, texture_container[2], normalVectorsOuterWalls[1], top, outer);
 		else
-			drawQuad_XY(roofgroundarr, texture_container[2], normalVectorsInnerWalls[4], top, inner);
+			drawQuad_XY(roofgroundarr, texture_container[2], normalVectorsInnerWalls[0], top, inner);
 		glPopMatrix();
 	}
 	if (sideSelector[5] == 1) {
 		glPushMatrix(); // ground
 		glRotatef(270, 1.0, 0.0, 0.0);
 		if (isOuterWall)
-			drawQuad_XY(roofgroundarr, texture_container[0], normalVectorsOuterWalls[5], bottom, outer);
+			drawQuad_XY(roofgroundarr, texture_container[0], normalVectorsOuterWalls[0], bottom, outer);
 		else
-			drawQuad_XY(roofgroundarr, texture_container[0], normalVectorsInnerWalls[5], bottom, inner);
+			drawQuad_XY(roofgroundarr, texture_container[0], normalVectorsInnerWalls[1], bottom, inner);
 		glPopMatrix();
 	}
 	glPopMatrix();
