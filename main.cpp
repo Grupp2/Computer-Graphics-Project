@@ -1017,7 +1017,7 @@ void drawDoor(float x, float y, float z)
 	
 	glBindTexture(GL_TEXTURE_2D, texture_door);
 	glBegin(GL_QUADS);
-		glNormal3fv(normalVectors[1]);
+		glNormal3fv(normalVectors[0]);
 		glTexCoord2f(0, 0);
 		glVertex3f(0, 0, 0);
 		glTexCoord2f(1, 0);
