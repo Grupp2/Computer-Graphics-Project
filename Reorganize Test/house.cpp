@@ -1,6 +1,7 @@
 #include "house.h"
 
-void smallRoom() {
+void smallRoom()
+{
 	GLuint textures_container[] = { texture_floor, texture_wallpaper, texture_floor };
 
 	int leftSideSelector[6] = {
@@ -51,7 +52,8 @@ void smallRoom() {
 }
 
 
-void leftOuterWall() {
+void leftOuterWall()
+{
 	GLuint textures_container[] = { texture_wall };
 
 	int SideSelector[6] = {
@@ -71,7 +73,8 @@ void leftOuterWall() {
 	glPopMatrix();
 }
 
-void rightOuterWall() {
+void rightOuterWall()
+{
 	GLuint textures_container[] = { texture_wall };
 
 	int SideSelector[6] = {
@@ -91,7 +94,8 @@ void rightOuterWall() {
 	glPopMatrix();
 }
 
-void largeRoom() {
+void largeRoom()
+{
 	GLuint textures_container[] = { texture_floor, texture_wall, texture_floor };
 
 
@@ -181,7 +185,8 @@ void drawWindow(GLfloat x, GLfloat y, GLfloat z)
 	glPopMatrix();
 }
 
-void smallCorridore() {
+void smallCorridore()
+{
 	GLuint textures_container[] = { texture_floor, texture_wall, texture_floor };
 
 	int SideSelector[6] = {
@@ -200,7 +205,8 @@ void smallCorridore() {
 	drawCube(segment, SideSelector, textures_container, false);
 }
 
-void largeCorridore() {
+void largeCorridore()
+{
 	GLuint textures_container[] = { texture_floor, texture_wall, texture_floor };
 
 	float l1segment[3] = {
@@ -387,7 +393,8 @@ void largeCorridore() {
 
 }
 
-void drawRoof() {
+void drawRoof()
+{
 	float frontSide[4][3] = {
 			{ 00.0, 0.0, 00.0 },
 			{ 39.0, 0.0, 00.0 },
@@ -450,7 +457,8 @@ void drawRoof() {
 	glEnd();
 }
 
-void drawHouse() {
+void drawHouse()
+{
 	glPushAttrib(GL_LIGHTING_BIT);
 	addMaterial();
 

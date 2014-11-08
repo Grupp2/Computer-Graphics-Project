@@ -6,21 +6,22 @@
 *  Peter Jenke, 2012
 */
 
+#include <GL/freeglut_std.h>
+#include <GL/gl.h>
+#include <GL/glu.h>
+#include <math.h>
 #include <stdio.h>
 #include <string.h>
-#include <stdarg.h>
-#include <GL/glut.h>
-#include "imagefile.h"
-#include "exceptioninfo.h"
-#include <math.h>
-#include "drawing.h"
-#include "house.h"
-#include "textures.h"
+#include <cstdlib>
+
 #include "door.h"
-#include <iostream>
-#include "skybox.h"
+#include "garden.h"
+#include "house.h"
 #include "lights.h"
 #include "material.h"
+#include "skybox.h"
+#include "textures.h"
+
 // angle of rotation for the camera direction
 float angle=0.0;
 // actual vector representing the camera's direction
@@ -50,7 +51,8 @@ float ctrl_delta = 0.01;
 char s[30], buf[100];
 GLvoid *font_style = GLUT_BITMAP_TIMES_ROMAN_10;
 
-void resetPerspectiveProjection() {
+void resetPerspectiveProjection()
+{
 	// set the current matrix to GL_PROJECTION
 	glMatrixMode(GL_PROJECTION);
 	// restore previous settings
@@ -59,7 +61,8 @@ void resetPerspectiveProjection() {
 	glMatrixMode(GL_MODELVIEW);
 }
 
-void setfont(char* name, int size) {
+void setfont(char* name, int size)
+{
 	font_style = GLUT_BITMAP_HELVETICA_10;
 	if (strcmp(name, "helvetica") == 0) {
 		if (size == 12)
@@ -80,7 +83,8 @@ void setfont(char* name, int size) {
 	}
 }
 
-void draw_string(float x, float y, char *string) {
+void draw_string(float x, float y, const char *string)
+{
 	//char *s;
 	int i = 0;
 
@@ -167,11 +171,13 @@ void render_info()
 }
 
 
-void do_idle() {
+void do_idle()
+{
 	glutPostRedisplay();
 }
 
-void reshape(int width, int height) {
+void reshape(int width, int height)
+{
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 
@@ -207,26 +213,8 @@ void drawDoors()
 	drawDoor(17, 0, -27);
 }
 
-void drawGarden() {
-	GLuint textures_container[] = { texture_grass, texture_brickwall, texture_floor };
-	glPushAttrib(GL_LIGHTING_BIT);
-	int leftSideSelector[6] = {
-		1, // Back
-		1, // front
-		1, // left
-		1, // right
-		0, // roof
-		1 // ground
-	};
-	float leftSegment[3] = {
-		150, 5, 150
-	};
-	addMaterial();
-	drawCube(leftSegment, leftSideSelector, textures_container, false);
-	glPopAttrib();
-}
-
-void render() {
+void render()
+{
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 
@@ -267,7 +255,8 @@ void render() {
 	glutSwapBuffers();
 }
 
-void buttons(unsigned char key, int x, int y) {
+void buttons(unsigned char key, int x, int y)
+{
 	switch (key) {
 	case 27:
 		exit(0);
@@ -337,7 +326,8 @@ void buttons(unsigned char key, int x, int y) {
 	}
 }
 
-void special_buttons(int key, int xx, int yy) {
+void special_buttons(int key, int xx, int yy)
+{
 	float fraction = 0.5f;
 
 		switch (key) {
@@ -362,7 +352,8 @@ void special_buttons(int key, int xx, int yy) {
 		}
 }
 
-void mouse_motion(int x, int y) {
+void mouse_motion(int x, int y)
+{
 	if (x_prev < x)
 		theta += angle_delta;
 	else
@@ -383,7 +374,8 @@ void mouse_motion(int x, int y) {
 	y_prev = y;
 }
 
-void light_point_menu(int value) {
+void light_point_menu(int value)
+{
 	switch (value) {
 	case 'a':
 		selectLight(1);
@@ -400,49 +392,8 @@ void light_point_menu(int value) {
 	}
 }
 
-void getimagefromfile(const char *src, GLuint *texname) 
+void init(void)
 {
-	// Step 1: Create an instance of class ImageFile:
-	ImageFile* ifile;
-	try {
-		ifile = new ImageFile (src, 0);
-	} catch (ExceptionInfo ei) {
-		throw ei;
-	}
-	// Step 2: How many bits per pixel?
-	// If 24: Image without alpha channel, i.e. RGB image.
-	// If 32: Image with alpha channel, i.e. RGBA image.
-	GLenum img_type = GL_RGBA;
-	if (ifile->getBPP() == 24)
-	img_type = GL_RGB;
-	// Step 3: Create and bind a texture object
-	glGenTextures (1, texname);
-	glBindTexture (GL_TEXTURE_2D, *texname);
-	// Step 4: Set texture parameters (wrapping etc.)
-	glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	// Step 5: Assign the data from the image file to the texture object:
-	glTexImage2D (GL_TEXTURE_2D, 0, 3, ifile->getWidth(),
-			ifile->getHeight(), 0, GL_RGB, GL_UNSIGNED_BYTE, ifile->getData());
-    glTexEnvf (GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-	// Step 6: Unbind the texture object.
-	glBindTexture (GL_TEXTURE_2D, 0);
-}
-
-void loadTextures()
-{
-	getimagefromfile("brickwall_2.bmp", &texture_brickwall);
-	getimagefromfile("floor.bmp", &texture_floor);
-	getimagefromfile("fancy_door.bmp", &texture_door);
-	getimagefromfile("grass_3.bmp", &texture_grass);
-	getimagefromfile("sky.bmp", &texture_sky);
-	getimagefromfile("plaster_texture.bmp", &texture_wall);
-	getimagefromfile("glass.bmp", &texture_glass);
-	getimagefromfile("roof.bmp", &texture_roof);
-	getimagefromfile("wallpaper.bmp", &texture_wallpaper);
-}
-
-void init(void) {
 	glutDisplayFunc(render);
 	glutReshapeFunc(reshape);
 	glutIdleFunc(do_idle);
@@ -460,7 +411,8 @@ void init(void) {
 	glutAttachMenu(GLUT_RIGHT_BUTTON);
 }
 
-int main(int argc, char** argv) {
+int main(int argc, char** argv)
+{
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 	glutInitWindowSize(w, h);
@@ -473,7 +425,6 @@ int main(int argc, char** argv) {
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	loadTextures();
 	glLightModelf(GL_LIGHT_MODEL_AMBIENT, GL_TRUE);
-	//glEnable(GL_LIGHT0);
 	glShadeModel(GL_SMOOTH);
 	glEnable(GL_NORMALIZE);
 	initializeLights();

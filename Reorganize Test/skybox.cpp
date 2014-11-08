@@ -1,6 +1,7 @@
 #include "skybox.h"
 
-void drawSkybox() {
+void drawSkybox()
+{
 	float fbl[3] = {
 		0.0, 0.0, 0.0
 	};

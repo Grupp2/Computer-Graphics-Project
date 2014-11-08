@@ -29,6 +29,7 @@ void rotateDoor(float x, float y, float z)
 	}
 	glTranslatef(x, y, z);
 }
+
 void drawDoor(float x, float y, float z)
 {
 	glPushMatrix();

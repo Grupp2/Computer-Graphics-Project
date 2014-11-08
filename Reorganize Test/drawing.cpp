@@ -19,7 +19,8 @@ GLfloat normalVectorsInnerWalls[6][3] = {
 
 
 
-void drawQuad_XY(float arr[][3], GLuint texture, GLfloat *normVec) {
+void drawQuad_XY(float arr[][3], GLuint texture, GLfloat *normVec)
+{
 
 	for (float b = arr[0][1]; b < arr[2][1]; b++)	{
 		for (float i = arr[0][0]; i < arr[1][0]; i++) {
@@ -45,7 +46,8 @@ void drawQuad_XY(float arr[][3], GLuint texture, GLfloat *normVec) {
 		}
 	}
 }
-void drawCube(float endPoint[3], int sideSelector[6], GLuint *texture_container, bool isOuterWall) {
+void drawCube(float endPoint[3], int sideSelector[6], GLuint *texture_container, bool isOuterWall)
+{
 
 	float frontbackarr[4][3] = {
 			{ 0.0, 0.0, 0.0 },

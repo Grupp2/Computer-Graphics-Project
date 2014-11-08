@@ -5,7 +5,8 @@ LightCoords l2coord;
 LightCoords l3coord;
 LightCoords *selectedLight;
 
-void spotlight() {
+void spotlight()
+{
 	GLfloat lightPosition[] = { 0.0, 0.0, 0.0, 1.0 };
 	GLfloat spotDirection[] = { 0.0, 0.0, -1.0 };
 	GLfloat lightDiffuseSpecular[] = { 0.94, 0.9, 0.8, 0.0 };
@@ -21,7 +22,8 @@ void spotlight() {
 
 }
 
-void light1() {
+void light1()
+{
 	GLfloat lightColor1[4] = {
 		0.1, 0.1, 0.1, 1.0
 	};
@@ -36,7 +38,8 @@ void light1() {
 	glLightfv(GL_LIGHT1, GL_DIFFUSE, lightColor2);
 }
 
-void light2() {
+void light2()
+{
 	GLfloat lightColor1[4] = {
 		0.1, 0.1, 0.1, 1.0
 	};
@@ -51,7 +54,8 @@ void light2() {
 	glLightfv(GL_LIGHT2, GL_DIFFUSE, lightColor2);
 }
 
-void light3() {
+void light3()
+{
 	GLfloat lightColor1[4] = {
 		0.1, 0.1, 0.1, 1.0
 	};
