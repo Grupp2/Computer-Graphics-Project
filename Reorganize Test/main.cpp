@@ -187,11 +187,11 @@ void reshape(int width, int height)
 	glViewport(0, 0, (GLsizei)width, (GLsizei)height);
 }
 
-void addTeapot() {
+void addTeapot(GLfloat x, GLfloat y, GLfloat z) {
 	glPushMatrix();
 	glPushAttrib(GL_LIGHTING_BIT);
 	glBindTexture(GL_TEXTURE_2D, 0);
-		glTranslatef(8.0, 2.0, -8.0);
+		glTranslatef(x, y, z);
 		glRotatef(teapotAngle, 0.0, 1.0, 0.0);
 		addMaterial();
 		glutSolidTeapot(1.0);
@@ -244,7 +244,11 @@ void render()
 	glPushMatrix();
 		glTranslatef(-17.5, 0, 22);
 		drawDoors();
-		addTeapot();
+
+		addTeapot(8.0, 2.0, -8.0);
+		addTeapot(30.0, 2.0, -8.0);
+		addTeapot(19.5, 2.0, -35.0);
+
 		addLights();
 		drawHouse();
 	glPopMatrix();
