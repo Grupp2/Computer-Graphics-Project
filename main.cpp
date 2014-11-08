@@ -47,6 +47,8 @@ struct LightCoords
 	GLfloat w;
 };
 
+bool renderInfo = false;
+
 LightCoords *selectedLight;
 LightCoords l1coord;
 
@@ -149,7 +151,6 @@ void setOrthographicProjection()
 	glMatrixMode(GL_MODELVIEW);
 }
 
-#ifdef __linux__
 void render_info()
 {
 	float white[] = { 1.0, 1.0, 1.0 };
@@ -163,14 +164,20 @@ void render_info()
 
 	glColor3fv(white);
 	draw_string(30, 20, "Light 1 (Position is relative to house)");
+#ifdef _WIN32
+	sprintf_s(buf, "Position:  x: %.2f y: %.2f z: %.2f", l1coord.x, l1coord.y, l1coord.z);
+#endif
+#ifdef __linux__
 	sprintf(buf, "Position:  x: %.2f y: %.2f z: %.2f", l1coord.x, l1coord.y, l1coord.z);
+#endif
 	draw_string(30, 40, buf);
+
 
 	glPopMatrix();
 	resetPerspectiveProjection();
 	glEnable(GL_LIGHTING);
 }
-#endif
+
 
 void reshape(int width, int height) {
 	glMatrixMode(GL_PROJECTION);
@@ -186,7 +193,6 @@ void light1(GLfloat *col1, GLfloat *col2, GLfloat *col3) {
 	GLfloat lightPos[4] = {
 		l1coord.x, l1coord.y, l1coord.z, l1coord.w
 	};
-	glutSolidTeapot(1.0);
 	glLightfv(GL_LIGHT1, GL_POSITION, lightPos);
 	glLightfv(GL_LIGHT1, GL_AMBIENT, col1);
 	glLightfv(GL_LIGHT1, GL_DIFFUSE, col2);
@@ -1040,7 +1046,7 @@ void drawDoors()
 
 void drawGarden() {
 	GLuint textures_container[] = { texture_grass, texture_brickwall, texture_floor };
-
+	glPushAttrib(GL_LIGHTING_BIT);
 	int leftSideSelector[6] = {
 		1, // Back
 		1, // front
@@ -1052,8 +1058,10 @@ void drawGarden() {
 	float leftSegment[3] = {
 		150, 5, 150
 	};
-
+	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, ambientMtrl);
+	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diffuseMtrl);
 	drawCube(leftSegment, leftSideSelector, textures_container, false);
+	glPopAttrib();
 }
 
 void drawSkybox() {
@@ -1213,9 +1221,8 @@ void render() {
 
 	glPopMatrix();
 
-#ifdef __linux__
-	render_info();
-#endif
+	if (renderInfo)
+		render_info();
 
 	glutSwapBuffers();
 }
@@ -1274,6 +1281,9 @@ void buttons(unsigned char key, int x, int y) {
 		break;
 	case 'M':
 		selectedLight->z -= 0.1;
+		break;
+	case 'i':
+		renderInfo = !renderInfo;
 		break;
 	default:
 		// do nothing...

@@ -8,6 +8,7 @@ GLuint texture_sky = 0;
 GLuint texture_wall = 0;
 GLuint texture_glass = 0;
 GLuint texture_roof = 0;
+GLuint texture_wallpaper = 0;
 
 
 

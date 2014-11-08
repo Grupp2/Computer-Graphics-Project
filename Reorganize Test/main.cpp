@@ -20,7 +20,7 @@
 #include <iostream>
 #include "skybox.h"
 #include "lights.h"
-
+#include "material.h"
 // angle of rotation for the camera direction
 float angle=0.0;
 // actual vector representing the camera's direction
@@ -43,15 +43,7 @@ int w = 800;
 int h = 600;
 
 float teapotAngle = 0.0;
-
-
-GLfloat ambientMtrl[4] = {
-	0.1, 0.1, 0.1, 1.0
-};
-
-GLfloat diffuseMtrl[4] = {
-	0.55, 0.55, 0.55, 1.0
-};
+bool renderInfo = false;
 
 float ctrl_delta = 0.01;
 
@@ -99,6 +91,82 @@ void draw_string(float x, float y, char *string) {
 	}
 }
 
+void setOrthographicProjection()
+{
+	// switch to projection mode
+	glMatrixMode(GL_PROJECTION);
+	// save previous matrix which contains the 
+	//settings for the perspective projection
+	glPushMatrix();
+	// reset matrix
+	glLoadIdentity();
+	// set a 2D orthographic projection
+	gluOrtho2D(0, w, 0, h);
+	// invert the y axis, down is positive
+	glScalef(1, -1, 1);
+	// move the origin from the bottom left corner
+	// to the upper left corner
+	glTranslatef(0, -h, 0);
+	glMatrixMode(GL_MODELVIEW);
+}
+
+void render_info()
+{
+	float white[] = { 1.0, 1.0, 1.0 };
+
+	glDisable(GL_LIGHTING);
+	glBindTexture(GL_TEXTURE_2D, 0);
+	setfont("8x13", 20);
+	setOrthographicProjection();
+	glPushMatrix();
+	glLoadIdentity();
+
+	LightCoords l1;
+	getLightCoord(1, l1);
+
+	LightCoords l2;
+	getLightCoord(2, l2);
+
+	LightCoords l3;
+	getLightCoord(3, l3);
+
+	glColor3fv(white);
+	draw_string(30, 20, "Light 1 (Position is relative to house)");
+#ifdef _WIN32
+	sprintf_s(buf, "Position:  x: %.2f y: %.2f z: %.2f", l1.x, l1.y, l1.z);
+#endif
+#ifdef __linux__
+	sprintf(buf, "Position:  x: %.2f y: %.2f z: %.2f", l1.x, l1.y, l1.z);
+#endif
+	draw_string(30, 40, buf);
+
+	glColor3fv(white);
+	draw_string(30, 60, "Light 2 (Position is relative to house)");
+#ifdef _WIN32
+	sprintf_s(buf, "Position:  x: %.2f y: %.2f z: %.2f", l2.x, l2.y, l2.z);
+#endif
+#ifdef __linux__
+	sprintf(buf, "Position:  x: %.2f y: %.2f z: %.2f", l2.x, l2.y, l2.z);
+#endif
+	draw_string(30, 80, buf);
+
+	glColor3fv(white);
+	draw_string(30, 100, "Light 3 (Position is relative to house)");
+#ifdef _WIN32
+	sprintf_s(buf, "Position:  x: %.2f y: %.2f z: %.2f", l3.x, l3.y, l3.z);
+#endif
+#ifdef __linux__
+	sprintf(buf, "Position:  x: %.2f y: %.2f z: %.2f", l3.x, l3.y, l3.z);
+#endif
+	draw_string(30, 120, buf);
+
+
+	glPopMatrix();
+	resetPerspectiveProjection();
+	glEnable(GL_LIGHTING);
+}
+
+
 void do_idle() {
 	glutPostRedisplay();
 }
@@ -115,36 +183,33 @@ void reshape(int width, int height) {
 
 void addTeapot() {
 	glPushMatrix();
+	glPushAttrib(GL_LIGHTING_BIT);
 	glBindTexture(GL_TEXTURE_2D, 0);
-		glTranslatef(5.0, 5.0, -10.0);
+		glTranslatef(8.0, 2.0, -8.0);
 		glRotatef(teapotAngle, 0.0, 1.0, 0.0);
-		//glMaterialfv(GL_FRONT, GL_AMBIENT, ambientMtrl);
-		//glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuseMtrl);
+		addMaterial();
 		glutSolidTeapot(1.0);
 	glPopMatrix();
 	if (teapotAngle == 360.0)
 		teapotAngle = 0.0;
 	else
 		teapotAngle += 1.0;
+	glPopAttrib();
 };
 
-void addMtrl() {
-	glMaterialfv(GL_FRONT, GL_AMBIENT, ambientMtrl);
-	glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuseMtrl);
-}
 
 
 void drawDoors()
 {
-	drawDoor(15, 0, 0);
-	drawDoor(5, 0, -15);
-	drawDoor(25, 0, -15);
-	drawDoor(15, 0, -20);
+	drawDoor(17, 0, 0);
+	drawDoor(6, 0, -16);
+	drawDoor(28, 0, -16);
+	drawDoor(17, 0, -27);
 }
 
 void drawGarden() {
-	float textures_container[] = { texture_grass, texture_brickwall, texture_floor };
-
+	GLuint textures_container[] = { texture_grass, texture_brickwall, texture_floor };
+	glPushAttrib(GL_LIGHTING_BIT);
 	int leftSideSelector[6] = {
 		1, // Back
 		1, // front
@@ -156,30 +221,25 @@ void drawGarden() {
 	float leftSegment[3] = {
 		150, 5, 150
 	};
-
-	drawCube(leftSegment, leftSideSelector, textures_container);
+	addMaterial();
+	drawCube(leftSegment, leftSideSelector, textures_container, false);
+	glPopAttrib();
 }
 
 void render() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
 	glLoadIdentity();
-	
+
+	glEnable(GL_LIGHT0);
 
 	spotlight();
 
-	gluLookAt(	x, y, z,
-				x+lx, 1.0f,  z+lz,
-				0.0f, 1.0f,  0.0f);
+	gluLookAt(x, 1.0f, z,
+		x + lx, 1.0f, z + lz,
+		0.0f, 1.0f, 0.0f);
 
-	
-	
+	glTranslatef(-2, -3, -25);
 
-
-	glTranslatef(-2, -3, -20);
-
-	
-	
 	glPushMatrix();
 		glTranslatef(-500.0, -500.0, -500.0);
 		drawSkybox();
@@ -194,16 +254,16 @@ void render() {
 
 
 	glPushMatrix();
-			glTranslatef(-17.5, 0, 17.5);
-			//glPushAttrib(GL_LIGHTING_BIT);
-			addLightColors();
-			addTeapot();
-			addMtrl();
-			drawDoors();
-			drawHouse();
-			//glPopAttrib();
+		glTranslatef(-17.5, 0, 22);
+		drawDoors();
+		addTeapot();
+		addLights();
+		drawHouse();
 	glPopMatrix();
-	
+
+	if (renderInfo)
+		render_info();
+
 	glutSwapBuffers();
 }
 
@@ -217,38 +277,59 @@ void buttons(unsigned char key, int x, int y) {
 		break;
 	case 'X':
 		// increase x-component of active control point
-		
+
 		break;
 	case 'y':
 		// decrease y-component of active control point
-		
+
 		break;
 	case 'Y':
 		// increase y-component of active control point
-		
+
 		break;
 	case 'z':
 		// decrease z-component of active control point
-		
+
 		break;
 	case 'Z':
 		// increase z-component of active control point
-		
+
 		break;
 	case 'o':
 		setisactive(true);
+		break;
+	case 's':
+		disableSpotlight();
+		break;
+	case 'S':
+		enableSpotlight();
+		break;
+	case 'u':
+		getSelectedLight()->x += 0.1;
+		break;
+	case 'U':
+		getSelectedLight()->x -= 0.1;
+		break;
+	case 'j':
+		getSelectedLight()->y += 0.1;
+		break;
+	case 'J':
+		getSelectedLight()->y -= 0.1;
+		break;
+	case 'm':
+		getSelectedLight()->z += 0.1;
+		break;
+	case 'M':
+		getSelectedLight()->z -= 0.1;
+		break;
+	case 'i':
+		renderInfo = !renderInfo;
 		break;
 	case 'L':
 		enableLights();
 		break;
 	case 'l':
 		disableLights();
-		break;
-	case 'S':
-		enableSpotlight();
-		break;
-	case 's':
-		disableSpotlight();
 		break;
 	default:
 		// do nothing...
@@ -302,15 +383,16 @@ void mouse_motion(int x, int y) {
 	y_prev = y;
 }
 
-void ctrl_point_menu(int value) {
+void light_point_menu(int value) {
 	switch (value) {
 	case 'a':
+		selectLight(1);
 		break;
 	case 'b':
+		selectLight(2);
 		break;
 	case 'c':
-		break;
-	case 'd':
+		selectLight(3);
 		break;
 	default:
 		// do nothing...
@@ -357,6 +439,7 @@ void loadTextures()
 	getimagefromfile("plaster_texture.bmp", &texture_wall);
 	getimagefromfile("glass.bmp", &texture_glass);
 	getimagefromfile("roof.bmp", &texture_roof);
+	getimagefromfile("wallpaper.bmp", &texture_wallpaper);
 }
 
 void init(void) {
@@ -366,6 +449,15 @@ void init(void) {
 	glutKeyboardFunc(buttons);
 	glutSpecialFunc(special_buttons);
 	glutMotionFunc(mouse_motion);
+	glClearColor(0.0, 0.0, 0.0, 0.0);
+	glEnable(GL_DEPTH_TEST);
+
+	glutCreateMenu(light_point_menu);
+	glutAddMenuEntry("Choose Light:", 0);
+	glutAddMenuEntry("Light 1", 'a');
+	glutAddMenuEntry("Light 2", 'b');
+	glutAddMenuEntry("Light 3", 'c');
+	glutAttachMenu(GLUT_RIGHT_BUTTON);
 }
 
 int main(int argc, char** argv) {
@@ -376,19 +468,17 @@ int main(int argc, char** argv) {
 	glutCreateWindow("Computer Graphics, Project");
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_BLEND);
-	glEnable(GL_LIGHTING);
 	glDisable(GL_COLOR_MATERIAL);
+	glEnable(GL_LIGHTING);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glShadeModel(GL_SMOOTH);
-	//glBlendEquation(GL_FUNC_ADD);
 	loadTextures();
-	glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
-	glClearColor(0.0, 0.0, 0.0, 0.0);
-	glEnable(GL_DEPTH_TEST);
+	glLightModelf(GL_LIGHT_MODEL_AMBIENT, GL_TRUE);
+	//glEnable(GL_LIGHT0);
+	glShadeModel(GL_SMOOTH);
+	glEnable(GL_NORMALIZE);
+	initializeLights();
 	enableLights();
-
 	init();
-
 	glutMainLoop();
 	return 0;
 }

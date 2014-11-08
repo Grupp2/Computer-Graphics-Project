@@ -3,6 +3,7 @@
 
 #include <GL/glut.h>
 #include "textures.h"
+#include "material.h"
 
 extern bool isOpen;
 extern bool isActive;

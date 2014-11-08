@@ -31,14 +31,15 @@ void rotateDoor(float x, float y, float z)
 }
 void drawDoor(float x, float y, float z)
 {
-
 	glPushMatrix();
-
+	glPushAttrib(GL_LIGHTING_BIT);
+	addMaterial();
 	glTranslatef(x, y, z);
 	rotateDoor(x, y, z);
-	
+
 	glBindTexture(GL_TEXTURE_2D, texture_door);
 	glBegin(GL_QUADS);
+	glNormal3f(0.0, 0.0, 1.0);
 	glTexCoord2f(0, 0);
 	glVertex3f(0, 0, 0);
 	glTexCoord2f(1, 0);
@@ -48,6 +49,7 @@ void drawDoor(float x, float y, float z)
 	glTexCoord2f(0, 1);
 	glVertex3f(0, 8, 0);
 	glEnd();
+	glPopAttrib();
 	glPopMatrix();
 }
 

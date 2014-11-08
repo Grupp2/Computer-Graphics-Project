@@ -1,9 +1,11 @@
 #ifndef HOUSE_H_
 #define HOUSE_H_
 
+
 #include <GL/glut.h>
 #include "drawing.h"
 #include "textures.h"
+#include "material.h"
 
 void drawHouse();
 void smallRoom();

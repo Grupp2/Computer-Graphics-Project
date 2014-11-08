@@ -11,5 +11,6 @@ extern GLuint texture_sky;
 extern GLuint texture_wall;
 extern GLuint texture_glass;
 extern GLuint texture_roof;
+extern GLuint texture_wallpaper;
 
 #endif
