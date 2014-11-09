@@ -23,12 +23,12 @@
 #include "textures.h"
 
 // angle of rotation for the camera direction
-float angle=0.0;
+float angle = 0.0;
 // actual vector representing the camera's direction
-float lx=0.0f,lz=-1.0f;
+float lx=0.0f, lz=-1.0f;
 // XZ position of the camera
-float x=0.0f,z=5.0f;
-float y=1.0;
+float x = 0.0f, z = 5.0f;
+float y = 1.0;
 
 float theta = 0.0;
 float phi = 0.0;
@@ -36,17 +36,11 @@ float phi = 0.0;
 float alpha = 0.0;
 float angle_delta = 0.5;
 
-// The previous mouse position:
-int x_prev = 0;
-int y_prev = 0;
-
 int w = 800;
 int h = 600;
 
 float teapotAngle = 0.0;
 bool renderInfo = false;
-
-float ctrl_delta = 0.01;
 
 char s[30], buf[100];
 GLvoid *font_style = GLUT_BITMAP_TIMES_ROMAN_10;
@@ -85,7 +79,6 @@ void setfont(char* name, int size)
 
 void draw_string(float x, float y, const char *string)
 {
-	//char *s;
 	int i = 0;
 
 	glRasterPos2f(x, y);
@@ -203,22 +196,10 @@ void addTeapot(GLfloat x, GLfloat y, GLfloat z) {
 	glPopAttrib();
 };
 
-
-
-void drawDoors()
-{
-	drawDoor(17, 0, 0);
-	drawDoor(6, 0, -16);
-	drawDoor(28, 0, -16);
-	drawDoor(17, 0, -27);
-}
-
 void render()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
-
-	glEnable(GL_LIGHT0);
 
 	spotlight();
 
@@ -233,22 +214,17 @@ void render()
 		drawSkybox();
 	glPopMatrix();
 
-
-
 	glPushMatrix();
 		glTranslatef(-75, -0.1, 75);
 		drawGarden();
 	glPopMatrix();
 
-
 	glPushMatrix();
 		glTranslatef(-17.5, 0, 22);
 		drawDoors();
-
 		addTeapot(8.0, 2.0, -8.0);
 		addTeapot(30.0, 2.0, -8.0);
 		addTeapot(19.5, 2.0, -35.0);
-
 		addLights();
 		drawHouse();
 	glPopMatrix();
@@ -356,28 +332,6 @@ void special_buttons(int key, int xx, int yy)
 		}
 }
 
-void mouse_motion(int x, int y)
-{
-	if (x_prev < x)
-		theta += angle_delta;
-	else
-		theta -= angle_delta;
-
-	if (y_prev < y)
-		phi += angle_delta;
-	else
-		phi -= angle_delta;
-
-	if (theta > 360.0)
-		theta -= 360.0;
-
-	if (phi > 360.0)
-		phi -= 360.0;
-
-	x_prev = x;
-	y_prev = y;
-}
-
 void light_point_menu(int value)
 {
 	switch (value) {
@@ -403,9 +357,7 @@ void init(void)
 	glutIdleFunc(do_idle);
 	glutKeyboardFunc(buttons);
 	glutSpecialFunc(special_buttons);
-	glutMotionFunc(mouse_motion);
 	glClearColor(0.0, 0.0, 0.0, 0.0);
-	glEnable(GL_DEPTH_TEST);
 
 	glutCreateMenu(light_point_menu);
 	glutAddMenuEntry("Choose Light:", 0);
@@ -413,6 +365,17 @@ void init(void)
 	glutAddMenuEntry("Light 2", 'b');
 	glutAddMenuEntry("Light 3", 'c');
 	glutAttachMenu(GLUT_RIGHT_BUTTON);
+
+	glEnable(GL_DEPTH_TEST);
+	glLightModelf(GL_LIGHT_MODEL_AMBIENT, GL_TRUE);
+	glShadeModel(GL_SMOOTH);
+	glEnable(GL_NORMALIZE);
+	glEnable(GL_TEXTURE_2D);
+	glEnable(GL_BLEND);
+	glDisable(GL_COLOR_MATERIAL);
+	glEnable(GL_LIGHTING);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_LIGHT0);
 }
 
 int main(int argc, char** argv)
@@ -422,18 +385,11 @@ int main(int argc, char** argv)
 	glutInitWindowSize(w, h);
 	glutInitWindowPosition(100, 100);
 	glutCreateWindow("Computer Graphics, Project");
-	glEnable(GL_TEXTURE_2D);
-	glEnable(GL_BLEND);
-	glDisable(GL_COLOR_MATERIAL);
-	glEnable(GL_LIGHTING);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	init();
 	loadTextures();
-	glLightModelf(GL_LIGHT_MODEL_AMBIENT, GL_TRUE);
-	glShadeModel(GL_SMOOTH);
-	glEnable(GL_NORMALIZE);
 	initializeLights();
 	enableLights();
-	init();
 	glutMainLoop();
 	return 0;
 }

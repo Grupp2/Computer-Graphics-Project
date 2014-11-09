@@ -12,5 +12,6 @@ extern float doorAngle;
 void drawDoor(float x, float y, float z);
 void rotateDoor(float x, float y, float z);
 void setisactive(bool xstate);
+void drawDoors();
 
 #endif

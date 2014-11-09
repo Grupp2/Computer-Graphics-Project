@@ -11,7 +11,6 @@ void rotateDoor(float x, float y, float z)
 	glTranslatef(-x, -y, -z);
 	if (isActive)
 	{
-		
 		if (isOpen)
 			doorAngle--;
 		else
@@ -57,4 +56,12 @@ void drawDoor(float x, float y, float z)
 void setisactive(bool b)
 {
 	isActive = b;
+}
+
+void drawDoors()
+{
+	drawDoor(17, 0, 0);
+	drawDoor(6, 0, -16);
+	drawDoor(28, 0, -16);
+	drawDoor(17, 0, -27);
 }
