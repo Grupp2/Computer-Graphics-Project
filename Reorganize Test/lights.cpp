@@ -28,7 +28,7 @@ void light1()
 		0.1, 0.1, 0.1, 1.0
 	};
 	GLfloat lightColor2[4] = {
-		0.5, 0.5, 0.5, 0.5
+		0.5, 0.5, 0.8, 0.5
 	};
 	GLfloat lightPos[4] = {
 		l1coord.x, l1coord.y, l1coord.z, l1coord.w
