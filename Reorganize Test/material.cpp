@@ -1,11 +1,11 @@
 #include "material.h"
 
 GLfloat ambientMtrl[4] = {
-	0.4, 0.4, 0.4, 1.0
+	0.1, 0.1, 0.1, 1.0
 };
 
 GLfloat diffuseMtrl[4] = {
-	0.43, 0.47, 0.54, 1.0
+	0.30, 0.47, 0.54, 1.0
 };
 
 void addMaterial() 
